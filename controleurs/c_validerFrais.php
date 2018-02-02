@@ -20,5 +20,5 @@ $lesMois = $pdo->getLesMoisDisponibles($idVisiteur);
 $lesCles = array_keys($lesMois);
 $moisASelectionner = $lesCles[0];
 include 'vues/v_listeVisiteurs.php';
-          
+           
 ?>
