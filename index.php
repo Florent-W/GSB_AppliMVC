@@ -6,12 +6,12 @@
  *
  * @category  PPE
  * @package   GSB
- * @author    Réseau CERTA <contact@reseaucerta.org>
- * @author    José GIL <jgil@ac-nice.fr>
- * @copyright 2017 Réseau CERTA
- * @license   Réseau CERTA
+ * @author    RÃ©seau CERTA <contact@reseaucerta.org>
+ * @author    JosÃ© GIL <jgil@ac-nice.fr>
+ * @copyright 2017 RÃ©seau CERTA
+ * @license   RÃ©seau CERTA
  * @version   GIT: <0>
- * @link      http://www.reseaucerta.org Contexte « Laboratoire GSB »
+ * @link      http://www.reseaucerta.org Contexte Â« Laboratoire GSB Â»
  */
 
 require_once 'includes/fct.inc.php';
@@ -38,9 +38,6 @@ case 'gererFrais':
     break;
 case 'etatFrais':
     include 'controleurs/c_etatFrais.php';
-    break;
-case 'validerFrais':
-    include 'controleurs/c_validerFrais.php';
     break;
 case 'deconnexion':
     include 'controleurs/c_deconnexion.php';

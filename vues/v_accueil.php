@@ -38,6 +38,10 @@
                            class="btn btn-success btn-lg" role="button">
                             <span class="glyphicon glyphicon-pencil"></span>
                             <br>Renseigner la fiche de frais</a>
+                            <a href="index.php?uc=validerFrais&action=selectionnerMois"
+                           class="btn btn-success btn-lg" role="button">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                            <br>Valider les fiche de frais</a>
                         <a href="index.php?uc=etatFrais&action=selectionnerMois"
                            class="btn btn-primary btn-lg" role="button">
                             <span class="glyphicon glyphicon-list-alt"></span>
