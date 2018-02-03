@@ -1,5 +1,6 @@
 
- 
+ <script>
+ var b = '';</script>
 <div class="row">
     <div class="col-md-4">
         <div>Sélectionner un mois : </div>
@@ -7,7 +8,7 @@
      <div class="col-md-4">
         <form action="index.php?uc=etatFrais&action=voirEtatFrais" 
               method="post" role="form">
-              <select id="lstMois" name="lstMois" onChange="javascript:document.getElementById('visiteur').value = this.value;">
+              <select id="lstMois" name="lstMois" onChange="javascript:document.getElementById('visiteur').value = this.value; updatevariable(this.value)">
               
 <?php
 try
@@ -23,14 +24,14 @@ $reponse = $bdd->query('SELECT * FROM visiteur');
 while ($donnees = $reponse->fetch())
 {
     ?>
-           <option value=" <?php echo $donnees['nom']; ?>"> <?php echo $donnees['nom']; ?> <?php echo $donnees['prenom']; ?></option>
+           <option value=" <?php echo $donnees['id']; ?>"> <?php echo $donnees['nom']; ?> <?php echo $donnees['prenom']; ?></option>
 <?php
 }
  
 $reponse->closeCursor();
  
 ?>
-</select>
+</select> 
                  <label for="lstMois" accesskey="n">Mois : </label>
 <select id="lstMois" name="lstMois" onChange="javascript:document.getElementById('mois').value = this.value;">
  <?php
@@ -53,9 +54,17 @@ if ($mois == $moisASelectionner) {
                     ?>    </select>
         </form>
     </div>
-</div>
+</div><script>
+var value = "";
+function updatevariable(data) { 
+    value = data;
+    alert(value);
+} 
+</script>
 <input type="text" name="visiteur" value="" id="visiteur"/> <!-- test pour voir si on peut prendre la valeur selectionner -->
 <input type="text" name="mois" value="" id="mois"/>
+
+
  <?php 
  $lesFraisForfait = $pdo->getLesFraisForfait($idVisiteur, $mois);
  ?>
