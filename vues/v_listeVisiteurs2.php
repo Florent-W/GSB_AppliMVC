@@ -29,7 +29,7 @@ $mois = htmlspecialchars($_POST['lstMois']);
     <h3>ElÃ©ments forfaitisÃ©s</h3>
     <div class="col-md-4">
         <form method="post" 
-              action="index.php?uc=gererFrais&action=validerMajFraisForfait" 
+              action="index.php?uc=validerFrais&action=selectionnerMois&action2=selectionVisiteur&action3=validerFrais" 
               role="form">
             <fieldset>       
                 <?php
@@ -51,7 +51,9 @@ $mois = htmlspecialchars($_POST['lstMois']);
                 <button class="btn btn-success" type="submit">Corriger</button>
                 <button class="btn btn-danger" type="reset">Réinitialiser</button>
             </fieldset>
-        </form>
+        </form><?php 
+        $action3 = filter_input(INPUT_GET, 'action3', FILTER_SANITIZE_STRING);
+        ?>
     </div>
 </div>
 <div class="panel panel-primary">
@@ -76,7 +78,7 @@ $mois = htmlspecialchars($_POST['lstMois']);
             ?>
         </tr>
         <tr>
-            <?php
+            <?php if($action3 = "validerFrais")
             foreach ($lesFraisForfait as $unFraisForfait) {
                 $quantite = $unFraisForfait['quantite']; ?>
                 <td class="qteForfait"><?php echo $quantite ?> </td>

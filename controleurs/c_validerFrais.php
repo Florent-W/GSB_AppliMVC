@@ -20,6 +20,24 @@ $lesMois = $pdo->getLesMoisDisponibles($idVisiteur);
 $moisASelectionner = $leMois;
 $leVisiteur = filter_input(INPUT_POST, 'lstVisiteur', FILTER_SANITIZE_STRING);
 $visiteurASelectionner = $leVisiteur;
+try
+{
+    $bdd = new PDO('mysql:host=localhost;dbname=gsb_frais', 'root', '');
+}
+catch(Exception $e)
+{
+    die('Erreur : '.$e->getMessage());
+}
+$reponse = $bdd->query('SELECT * FROM visiteur where id = "'.$leVisiteur.'"');
+
+while ($donnees = $reponse->fetch())
+{
+    $leVisiteurNom = $donnees['nom'];
+    $leVisiteurPrenom = $donnees['prenom'];
+
+}
+$reponse->closeCursor();
+
 $lesFrais = filter_input(INPUT_POST, 'lesFrais', FILTER_DEFAULT, FILTER_FORCE_ARRAY);
 
 

@@ -14,8 +14,7 @@
  * @link      http://www.reseaucerta.org Contexte « Laboratoire GSB »
  */
 ?> <?php 
-$action = filter_input(INPUT_GET, 'action', FILTER_SANITIZE_STRING);   
-echo $leVisiteur; 
+$action = filter_input(INPUT_GET, 'action', FILTER_SANITIZE_STRING);    
 ?>
 <div class="row">
     <div class="col-md-4">
@@ -37,17 +36,17 @@ catch(Exception $e)
     die('Erreur : '.$e->getMessage());
 }
 $reponse = $bdd->query('SELECT * FROM visiteur');
-
+    
+    if($leVisiteur == $visiteurASelectionner && $action == "validerMajFraisForfait"  ){ ?>
+    <option selected value="<?php echo $leVisiteur ?>"> <?php echo $leVisiteurNom ?> <?php echo $leVisiteurPrenom ?></option>
+<?php }
 while ($donnees = $reponse->fetch())
-{ 
-    if($visiteurASelectionner == $leVisiteur) { ?>
-    <option selected value="<?php echo $donnees['id']?>"> <?php echo $donnees['nom'] ?> <?php echo $donnees['prenom'] ?></option>
-    <?php
-    }
-    else { ?>
+{ ?>
+    
            <option value="<?php echo $donnees['id']?>"> <?php echo $donnees['nom'] ?> <?php echo $donnees['prenom'] ?></option>
-          <?php  }
-}
+<?php }
+
+
  
 $reponse->closeCursor();
  
