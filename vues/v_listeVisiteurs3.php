@@ -105,23 +105,26 @@ if ($mois == $moisASelectionner) {
      $reponse5 = $bdd->query('SELECT * FROM fichefrais ORDER BY mois DESC LIMIT 1');
      while ($donnees5 = $reponse5->fetch())
      {
-         $mois = $donnees5['mois'];
-         $numAnnee = substr($mois, 0, 4); 
-         $numMois = substr($mois, 4, 2);
+         $moisASelectionner = $donnees5['mois'];
+         $numAnneeSelection = substr($mois, 0, 4); 
+         $numMoisSelection = substr($mois, 4, 2);
         
      }
-     $reponse5->closeCursor();  ?>
-      <option selected value="<?php echo $mois ?>">
-                                <?php echo $numMois . '/' . $numAnnee ?> </option> <?php 
+     $reponse5->closeCursor();   
      foreach ($lesMois as $unMois) {
          $mois = $unMois['mois'];
          $numAnnee = $unMois['numAnnee'];
          $numMois = $unMois['numMois'];
-                            ?>
-                          
+                         if ($mois == $moisASelectionner) { ?>
+     
+      <option selected value="<?php echo $moisASelectionner ?>">
+                                <?php echo $numMoisSelection . '/' . $numAnneeSelection ?> </option>   <?php  
+                         }
+                          else { ?>
                             <option value="<?php echo $mois ?>">
                                 <?php echo $numMois . '/' . $numAnnee ?> </option>
                             <?php
+                         }
                         }             
  }
                     ?>    </select> <button class="btn btn-success" type="submit">Selectionner</button>
