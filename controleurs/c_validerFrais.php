@@ -66,7 +66,7 @@ switch ($action) {
             break;
  
 }
-$lesFraisForfait = $pdo->getLesFraisForfait("b50", "201712");
+$lesFraisForfait = $pdo->getLesFraisForfait($idVisiteur, $mois);
 $lesFraisHorsForfait = $pdo->getLesFraisHorsForfait($idVisiteur, $mois);
 
 require 'vues/v_listeVisiteurs3.php';

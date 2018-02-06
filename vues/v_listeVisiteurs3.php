@@ -146,6 +146,7 @@ if($action == "validerMajFraisForfait") { ?>
               role="form">
             <fieldset>       
                 <?php 
+                if(isset($lesFraisForfait[0])){
                 foreach ($lesFraisForfait as $unFrais) {
                     $idFrais = $unFrais['idfrais'];
                     $libelle = htmlspecialchars($unFrais['libelle']);
@@ -158,7 +159,10 @@ if($action == "validerMajFraisForfait") { ?>
                                value="<?php echo $quantite ?>" 
                                class="form-control">
                     </div>
-                    <?php
+                    <?php }
+                }
+                else{
+                echo "Aucun élément forfaitisé trouvé."; 
                 }
                 ?>
                 <input type="hidden" name="element" value="1">
