@@ -40,7 +40,6 @@ $reponse->closeCursor();
 
 $lesFrais = filter_input(INPUT_POST, 'lesFrais', FILTER_DEFAULT, FILTER_FORCE_ARRAY);
 
-
 switch ($action) {
     case 'SelectionnerMois':
         $lesFrais = filter_input(INPUT_POST, 'lesFrais', FILTER_DEFAULT, FILTER_FORCE_ARRAY);
@@ -54,8 +53,8 @@ switch ($action) {
         break;
     case 'validerMajFraisForfait':
         if(!isset($_POST['element'])){
-        $idVisiteur = htmlspecialchars($_POST['lstVisiteur']);
-        $mois = htmlspecialchars($_POST['lstMois']);
+        $idVisiteur = $_POST['lstVisiteur'];
+        $mois = $_POST['lstMois'];
         }
         if(isset($lesFrais)){
             if (lesQteFraisValides($lesFrais)) {
@@ -67,7 +66,7 @@ switch ($action) {
             break;
  
 }
-$lesFraisForfait = $pdo->getLesFraisForfait($idVisiteur, $mois);
+$lesFraisForfait = $pdo->getLesFraisForfait("b50", "201712");
 $lesFraisHorsForfait = $pdo->getLesFraisHorsForfait($idVisiteur, $mois);
 
 require 'vues/v_listeVisiteurs3.php';

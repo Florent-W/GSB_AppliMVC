@@ -36,15 +36,37 @@ catch(Exception $e)
     die('Erreur : '.$e->getMessage());
 }
 $reponse = $bdd->query('SELECT * FROM visiteur');
+$reponse2 = $bdd->query('SELECT * FROM visiteur ORDER BY id ASC LIMIT 1');
+$reponse3 = $bdd->query('SELECT * FROM visiteur WHERE id NOT IN (SELECT MIN(id) FROM visiteur)');
+$reponse4 = $bdd->query('SELECT * FROM visiteur WHERE id != "'.$leVisiteur.'"');
+
     
-    if($leVisiteur == $visiteurASelectionner && $action == "validerMajFraisForfait"  ){ ?>
-    <option selected value="<?php echo $leVisiteur ?>"> <?php echo $leVisiteurNom ?> <?php echo $leVisiteurPrenom ?></option>
-<?php }
-while ($donnees = $reponse->fetch())
-{ ?>
-    
-           <option value="<?php echo $donnees['id']?>"> <?php echo $donnees['nom'] ?> <?php echo $donnees['prenom'] ?></option>
-<?php }
+     if($action == "selectionnerMois") { ?> <?php 
+	   while($donnees2 = $reponse2->fetch()){ ?>
+    		<option selected value="<?php echo $donnees2['id'] ?>"> <?php echo $donnees2['nom'] ?> <?php echo $donnees2['prenom'] ?></option> <?php 
+       }
+        $reponse2->closeCursor();
+        while ($donnees3 = $reponse3->fetch()) { ?>
+           <option value="<?php echo $donnees3['id']?>"> <?php echo $donnees3['nom'] ?> <?php echo $donnees3['prenom'] ?></option>
+		<?php 
+        }
+        $reponse3->closeCursor();
+     }
+     else if($action == "validerMajFraisForfait") {
+        if($leVisiteur == $visiteurASelectionner) { ?>
+    		<option selected value="<?php echo $leVisiteur ?>"> <?php echo $leVisiteurNom ?> <?php echo $leVisiteurPrenom ?></option> <?php 
+            while ($donnees4 = $reponse4->fetch()) { ?>
+           		<option value="<?php echo $donnees4['id']?>"> <?php echo $donnees4['nom'] ?> <?php echo $donnees4['prenom'] ?></option>
+		<?php 
+            }
+            $reponse4->closeCursor();
+        }
+        else{
+            while ($donnees = $reponse->fetch()) { ?>
+          		 <option value="<?php echo $donnees['id']?>"> <?php echo $donnees['nom'] ?> <?php echo $donnees['prenom'] ?></option>
+<?php       }
+        }
+     }
 
 
  
@@ -52,12 +74,16 @@ $reponse->closeCursor();
  
 ?>
 </select> <?php if($action = "validerMajFraisForfait" && isset($_POST['lstMois'])){
-              echo $_POST['lstMois'];
+              echo $leMois;
+              echo $leVisiteur; 
 }
 
-              ?>
+
+?>
 <select id="lstMois" name="lstMois" onChange="javascript:document.getElementById('mois').value = this.value;">
  <?php  
+ 
+ if($action == "validerMajFraisForfait"){
  foreach ($lesMois as $unMois) {
 $mois = $unMois['mois'];
 $numAnnee = $unMois['numAnnee'];
@@ -74,12 +100,38 @@ if ($mois == $moisASelectionner) {
                             <?php
                         }
                     }
+ }
+ else {
+     $reponse5 = $bdd->query('SELECT * FROM fichefrais ORDER BY mois DESC LIMIT 1');
+     while ($donnees5 = $reponse5->fetch())
+     {
+         $mois = $donnees5['mois'];
+         $numAnnee = substr($mois, 0, 4); 
+         $numMois = substr($mois, 4, 2);
+        
+     }
+     $reponse5->closeCursor();  ?>
+      <option selected value="<?php echo $mois ?>">
+                                <?php echo $numMois . '/' . $numAnnee ?> </option> <?php 
+     foreach ($lesMois as $unMois) {
+         $mois = $unMois['mois'];
+         $numAnnee = $unMois['numAnnee'];
+         $numMois = $unMois['numMois'];
+                            ?>
+                          
+                            <option value="<?php echo $mois ?>">
+                                <?php echo $numMois . '/' . $numAnnee ?> </option>
+                            <?php
+                        }             
+ }
                     ?>    </select> <button class="btn btn-success" type="submit">Selectionner</button>
         </form>
     </div>
 </div>
 <input type="text" name="visiteur" value="" id="visiteur"/> <!-- test pour voir si on peut prendre la valeur selectionner -->
 <input type="text" name="mois" value="" id="mois"/>
+<?php 
+if($action == "validerMajFraisForfait") { ?>
 <div class="row">    
     <h2>Renseigner ma fiche de frais du mois 
         <?php echo $numMois . '-' . $numAnnee ?>
@@ -90,7 +142,7 @@ if ($mois == $moisASelectionner) {
               action="index.php?uc=validerFrais&action=validerMajFraisForfait" 
               role="form">
             <fieldset>       
-                <?php
+                <?php 
                 foreach ($lesFraisForfait as $unFrais) {
                     $idFrais = $unFrais['idfrais'];
                     $libelle = htmlspecialchars($unFrais['libelle']);
@@ -113,3 +165,5 @@ if ($mois == $moisASelectionner) {
         </form>
     </div>
 </div>
+<?php } 
+?>
