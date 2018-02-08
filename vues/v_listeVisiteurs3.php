@@ -193,14 +193,15 @@ if($action == "validerMajFraisForfait") {
         </tr>
            
             <tr>
-                <td><input type="text" name="date" value="<?php echo $date ?>" maxlength="10"></td>
-                <td><input type="text" name="libelle" size="50" value="<?php echo $libelle ?>"></td>
-                <td><input type="text" name="montant" maxlength="11" value="<?php echo $montant ?>"></td>
+                <td><input type="text" name="date" value="<?php echo $date ?>" maxlength="10" readonly></td>
+                <td><input type="text" name="libelle" size="50" value="<?php echo $libelle ?>" readonly></td>
+                <td><input type="text" name="montant" maxlength="11" value="<?php echo $montant ?>" readonly></td>
                 <input type="hidden" name="lstMois" value="<?php echo $leMois ?>">
 				<input type="hidden" name="lstVisiteur" value="<?php echo $leVisiteur ?>">
                 
                  <td>               
-                 <button class="btn btn-success" type="submit" name="idSuppressionLigneHorsForfait" value="<?php echo $id ?>" onclick="return confirm('Voulez-vous vraiment supprimer ce frais ?');">Supprimer</button> 
+                 <button class="btn btn-success" type="submit" name="idReporterLigneHorsForfait" value="<?php echo $id ?>" onclick="return confirm('Voulez-vous vraiment reporter ce frais ?');">Reporter</button> 
+                 <button class="btn btn-danger"  type="submit" name="idSuppressionLigneHorsForfait" value="<?php echo $id ?>" onclick="return confirm('Voulez-vous vraiment supprimer ce frais ?');">Supprimer</button>
                 <button class="btn btn-danger" type="reset">Réinitialiser</button></td>
                            
             </tr>
@@ -210,7 +211,7 @@ if($action == "validerMajFraisForfait") {
         
     </table>
        
-</div> Nombre de justificatifs : <input type="text" name="nbJustificatif" value="<?php echo $nbJustificatifs ?>" size="5"> 
+</div> Nombre de justificatifs : <input type="text" name="nbJustificatif" value="<?php echo $nbJustificatifs ?>" size="5" readonly> 
 <form method="post" 
               action="index.php?uc=validerFrais&action=validerMajFraisForfait" 
               role="form">

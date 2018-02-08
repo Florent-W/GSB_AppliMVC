@@ -71,40 +71,42 @@ switch ($action) {
                 ajouterErreur('Les valeurs des frais doivent être numériques');
                 include 'vues/v_erreurs.php';
             }}
-            else if(isset($_POST['idSuppressionLigneHorsForfait'])){
-                $idSuppressionLigneHorsForfait = $_POST['idSuppressionLigneHorsForfait'];
+            else if(isset($_POST['idReporterLigneHorsForfait'])){
+                $idReporterLigneHorsForfait = $_POST['idReporterLigneHorsForfait'];
                 $libelle = $_POST['libelle'];
-                if((strpos($libelle, "REFUSE : ") === false)){             
-                    $libelle = substr($libelle, 0, 91);
-                $libelle = "REFUSE : " . $libelle;   
-                }
                    
                 $date = $_POST['date'];
                 $date = dateFrancaisVersAnglais($date);
-                echo $date; 
                 $montant = $_POST['montant'];
                 $dateSuivante = getMoisSuivant($date);
                 $moisSuivant = getMoisSuivant($date);
                 $numMois = substr($moisSuivant, 5, 2);
                 $numAnnee = substr($moisSuivant, 0, 4);
-                echo " "; 
                 $moisSuivant = $numAnnee . $numMois;
-                echo " "; 
               
-                echo $date;
-                echo $moisSuivant; 
-                 
-                echo $dateSuivante; 
-                echo " "; 
                 $prochaineFicheFrais = $pdo ->getLesInfosFicheFrais($idVisiteur, $moisSuivant);   
                 if(empty($prochaineFicheFrais[0])) {
-                    echo "b";
                 $pdo ->creeNouvellesLignesFrais($idVisiteur, $moisSuivant);
                 }
-              // $pdo ->majFraisHorsForfait($idSuppressionLigneHorsForfait, $libelle, $date, $montant);
-                 $pdo ->majFraisHorsForfait($idSuppressionLigneHorsForfait, $libelle, $dateSuivante, $moisSuivant, $montant);
+                $pdo ->majFraisHorsForfait($idReporterLigneHorsForfait, $libelle, $dateSuivante, $moisSuivant, $montant);
                 $lesFraisHorsForfait = $pdo->getLesFraisHorsForfait($idVisiteur, $mois);
-            } 
+            }
+            else if(isset($_POST['idSuppressionLigneHorsForfait'])) {
+                $idSupprimerLigneHorsForfait = $_POST['idSuppressionLigneHorsForfait'];
+                $libelle = $_POST['libelle'];
+                if((strpos($libelle, "REFUSE : ") === false)){
+                    $libelle = substr($libelle, 0, 91);
+                    $libelle = "REFUSE : " . $libelle;
+                }
+                
+                $date = $_POST['date'];
+                $date = dateFrancaisVersAnglais($date);
+                $montant = $_POST['montant'];   
+                $mois = $_POST['lstMois']; 
+                
+                $pdo ->majFraisHorsForfait($idSupprimerLigneHorsForfait, $libelle, $date, $mois, $montant);
+                $lesFraisHorsForfait = $pdo->getLesFraisHorsForfait($idVisiteur, $mois);
+            }
             else if(isset($_POST['validation'])){
                 $etat = "VA"; 
                 $pdo ->majEtatFicheFrais($idVisiteur, $mois, $etat); 
