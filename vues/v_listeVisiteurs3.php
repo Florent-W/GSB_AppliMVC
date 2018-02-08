@@ -14,7 +14,8 @@
  * @link      http://www.reseaucerta.org Contexte « Laboratoire GSB »
  */
 ?> <?php 
-$action = filter_input(INPUT_GET, 'action', FILTER_SANITIZE_STRING);    
+$action = filter_input(INPUT_GET, 'action', FILTER_SANITIZE_STRING);  
+
 ?>
 <div class="row">
     <div class="col-md-4">
@@ -53,33 +54,26 @@ $reponse4 = $bdd->query('SELECT * FROM visiteur WHERE id != "'.$leVisiteur.'"');
         $reponse3->closeCursor();
      }
      else if($action == "validerMajFraisForfait") {
-        if($leVisiteur == $visiteurASelectionner) { ?>
-    		<option selected value="<?php echo $leVisiteur ?>"> <?php echo $leVisiteurNom ?> <?php echo $leVisiteurPrenom ?></option> <?php 
-            while ($donnees4 = $reponse4->fetch()) { ?>
-           		<option value="<?php echo $donnees4['id']?>"> <?php echo $donnees4['nom'] ?> <?php echo $donnees4['prenom'] ?></option>
-		<?php 
+         ?>
+       <?php 
+            while ($donnees = $reponse->fetch()) {   
+                if($donnees['id'] == $visiteurASelectionner) { ?>
+    		<option selected value="<?php echo $leVisiteur ?>"> <?php echo $leVisiteurNom ?> <?php echo $leVisiteurPrenom ?></option> 
+    		<?php }
+    		else { 
+    		    ?>
+           		<option value="<?php echo $donnees['id']?>"> <?php echo $donnees['nom']; ?> <?php echo $donnees['prenom'] ?></option> <?php 
             }
             $reponse4->closeCursor();
         }
-        else{
-            while ($donnees = $reponse->fetch()) { ?>
-          		 <option value="<?php echo $donnees['id']?>"> <?php echo $donnees['nom'] ?> <?php echo $donnees['prenom'] ?></option>
-<?php       }
         }
-     }
 
 
  
 $reponse->closeCursor();
  
 ?>
-</select> <?php if($action = "validerMajFraisForfait" && isset($_POST['lstMois'])){
-              echo $leMois;
-              echo $leVisiteur; 
-}
-
-
-?>
+</select>
 <select id="lstMois" name="lstMois" onChange="javascript:document.getElementById('mois').value = this.value;">
  <?php  
  
@@ -133,15 +127,18 @@ if ($mois == $moisASelectionner) {
 </div>
 <input type="text" name="visiteur" value="" id="visiteur"/> <!-- test pour voir si on peut prendre la valeur selectionner -->
 <input type="text" name="mois" value="" id="mois"/>
-<?php 
-if($action == "validerMajFraisForfait") { ?>
+<?php echo $moisASelectionner; 
+echo $leVisiteur; 
+if($action == "validerMajFraisForfait") { 
+    if($ficheFraisTrouver == 1) {
+?>
 <div class="row">    
     <h2>Renseigner ma fiche de frais du mois 
         <?php echo $numMois . '-' . $numAnnee ?>
     </h2>
     <h3>Eléments forfaitisés</h3>
     <div class="col-md-4">
-        <form method="post" 
+        <form method="post"  
               action="index.php?uc=validerFrais&action=validerMajFraisForfait" 
               role="form">
             <fieldset>       
@@ -166,11 +163,61 @@ if($action == "validerMajFraisForfait") { ?>
                 }
                 ?>
                 <input type="hidden" name="element" value="1">
+					<input type="hidden" name="lstVisiteur" value="<?php echo $leVisiteur ?>">
+                	<input type="hidden" name="lstMois" value="<?php echo $leMois ?>">
+                
                 <button class="btn btn-success" type="submit">Corriger</button>
                 <button class="btn btn-danger" type="reset">Réinitialiser</button>
             </fieldset>
         </form>
     </div>
 </div>
-<?php } 
+
+<div class="panel panel-info">
+    <div class="panel-heading">Descriptif des éléments hors forfait </div>
+       
+        <?php
+        foreach ($lesFraisHorsForfait as $unFraisHorsForfait) {
+            $date = $unFraisHorsForfait['date'];
+            $libelle = htmlspecialchars($unFraisHorsForfait['libelle']);
+            $montant = $unFraisHorsForfait['montant']; 
+            $id = $unFraisHorsForfait['id']; 
+            ?> <form method="post" 
+              action="index.php?uc=validerFrais&action=validerMajFraisForfait" 
+              role="form">
+    <table class="table table-bordered table-responsive">
+        <tr>
+            <th class="date">Date (JJ/MM/AAAA)</th>
+            <th class="libelle">Libellé</th>
+            <th class='montant'>Montant</th>                
+        </tr>
+           
+            <tr>
+                <td><input type="text" name="date" value="<?php echo $date ?>" maxlength="10"></td>
+                <td><input type="text" name="libelle" size="50" value="<?php echo $libelle ?>"></td>
+                <td><input type="text" name="montant" maxlength="11" value="<?php echo $montant ?>"></td>
+                <input type="hidden" name="lstMois" value="<?php echo $leMois ?>">
+				<input type="hidden" name="lstVisiteur" value="<?php echo $leVisiteur ?>">
+                
+                 <td>               
+                 <button class="btn btn-success" type="submit" name="idSuppressionLigneHorsForfait" value="<?php echo $id ?>" onclick="return confirm('Voulez-vous vraiment supprimer ce frais ?');">Supprimer</button> 
+                <button class="btn btn-danger" type="reset">Réinitialiser</button></td>
+                           
+            </tr>
+            <?php echo $id; 
+            echo $date;  ?> </form> <?php 
+        } ?>
+        
+    </table>
+       
+</div> Nombre de justificatifs : <input type="text" name="nbJustificatif" value="<?php echo $nbJustificatifs ?>" size="5"> 
+<form method="post" 
+              action="index.php?uc=validerFrais&action=validerMajFraisForfait" 
+              role="form">
+              <input type="hidden" name="lstMois" value="<?php echo $leMois ?>">
+			  <input type="hidden" name="lstVisiteur" value="<?php echo $leVisiteur ?>">
+              <button class="btn btn-success" type="submit" name="validation" onclick="return confirm('Voulez-vous confirmer ?');">Valider</button>
+              </form>
+<?php }
+    } 
 ?>
