@@ -117,7 +117,7 @@ switch ($action) {
 }
 $lesFraisForfait = $pdo->getLesFraisForfait($idVisiteur, $mois);
 
-require 'vues/v_listeVisiteurs3.php';
+require 'vues/v_validationFrais.php';
 
 
  ?>

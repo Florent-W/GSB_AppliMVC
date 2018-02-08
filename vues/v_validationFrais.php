@@ -189,9 +189,10 @@ if($action == "validerMajFraisForfait") {
         <tr>
             <th class="date">Date (JJ/MM/AAAA)</th>
             <th class="libelle">Libellé</th>
-            <th class='montant'>Montant</th>                
+            <th class='montant'>Montant</th>   
+            <th class='selection'></th>               
         </tr>
-           
+            
             <tr>
                 <td><input type="text" name="date" value="<?php echo $date ?>" maxlength="10" readonly></td>
                 <td><input type="text" name="libelle" size="50" value="<?php echo $libelle ?>" readonly></td>
@@ -205,8 +206,7 @@ if($action == "validerMajFraisForfait") {
                 <button class="btn btn-danger" type="reset">Réinitialiser</button></td>
                            
             </tr>
-            <?php echo $id; 
-            echo $date;  ?> </form> <?php 
+         </form> <?php 
         } ?>
         
     </table>
