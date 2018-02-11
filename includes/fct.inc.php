@@ -8,6 +8,7 @@
  * @package   GSB
  * @author    Cheri Bibi - Réseau CERTA <contact@reseaucerta.org>
  * @author    José GIL <jgil@ac-nice.fr>
+ * @author    Florent WELTMANN <florent.weltmann@gmail.com>
  * @copyright 2017 Réseau CERTA
  * @license   Réseau CERTA
  * @version   GIT: <0>
@@ -30,14 +31,16 @@ function estConnecte()
  * @param String $idVisiteur ID du visiteur
  * @param String $nom        Nom du visiteur
  * @param String $prenom     Prénom du visiteur
+ * @param String $type       Type du visiteur
  *
  * @return null
  */
-function connecter($idVisiteur, $nom, $prenom)
+function connecter($idVisiteur, $nom, $prenom, $type)
 {
     $_SESSION['idVisiteur'] = $idVisiteur;
     $_SESSION['nom'] = $nom;
     $_SESSION['prenom'] = $prenom;
+    $_SESSION['type'] = $type; 
 }
 
 /**
@@ -175,7 +178,7 @@ function estDateValide($date)
  *
  * @param String $mois Contient le mois à utiliser
  *
- * @return String le mois d'après
+ * @return String la même date passé en paramètre mais avec un mois de plus
  */
 function getMoisSuivant($mois)
 {
