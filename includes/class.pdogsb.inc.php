@@ -509,6 +509,26 @@ class PdoGsb
         return $lesMois;
     }
     
+    /**
+     * Retourne un mois pour lesquel un visiteur a une fiche de frais validée
+     *
+     * @param String $idVisiteur ID du visiteur
+     *
+     * @return le dernier mois où l'utilisateur à une fiche valide 
+     */
+    public function getMoisDisponibleFicheValide($idVisiteur)
+    {
+        $requetePrepare = PdoGSB::$monPdo->prepare(
+            'SELECT MAX(fichefrais.mois) AS mois FROM fichefrais '
+            . 'WHERE fichefrais.idvisiteur = "b4"   AND fichefrais.idetat = "VA" '
+            . 'ORDER BY fichefrais.mois'
+            );
+        $requetePrepare->bindParam(':unIdVisiteur', $idVisiteur, PDO::PARAM_STR);
+        $requetePrepare->execute();
+        $leMois = $requetePrepare->fetch();
+        $dernierMois = $leMois['mois'];
+        return $dernierMois;
+    }
 
     /**
      * Retourne les informations d'une fiche de frais d'un visiteur pour un

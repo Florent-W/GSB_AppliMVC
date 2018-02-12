@@ -11,7 +11,7 @@
 ?>  <?php 
 // récupération de l'action à faire dans l'URL
 $action = filter_input(INPUT_GET, 'action', FILTER_SANITIZE_STRING);  
-echo $moisUtilisateur; 
+  echo "debut " . $idUtilisateur;
 ?>
 <h2>Mes fiches de frais</h2>
 <div class="row">
@@ -38,13 +38,13 @@ echo $moisUtilisateur;
                         if ($mois == $moisUtilisateur && $id == $idUtilisateur) {
                             ?>
             <option selected value="<?php echo $id . '/' . $mois ?>">
-                                <?php echo $nomUtilisateur  . ' ' . $prenomUtilisateur . ' : ' . $numMois . '/' . $numAnnee ?> </option>
+                                <?php echo  $nomUtilisateur . ' ' . $prenomUtilisateur . ' : ' . $numMois . '/' . $numAnnee ?> </option>
                             <?php
                         } 
         else {
              ?>
         	 <option value="<?php echo $id . '/' . $mois ?>">
-        	 <?php echo $nomUtilisateur  . ' ' . $prenomUtilisateur . ' : ' .$numMois . '/' . $numAnnee ?> </option>
+        	 <?php echo $nomUtilisateur . ' ' . $prenomUtilisateur . ' : ' .$numMois . '/' . $numAnnee ?> </option>
              <?php
          }
                     } 
@@ -64,7 +64,7 @@ echo $moisUtilisateur;
 <?php // Affichage de la fiche de frais selon l'action, l'utilisateur, le mois et si une fiche à été trouvé pour ces valeurs
 
 if($action == "voirEtatFrais") { 
-   // if($ficheFraisTrouver == 1) {
+   if($ficheFraisTrouver == 1) {
 ?>
 <div class="row">    
     <h2>Valider la fiche de frais 
@@ -93,7 +93,7 @@ if($action == "voirEtatFrais") {
                 }      
                 ?>
                 <input type="hidden" name="element" value="1">
-					<input type="hidden" name="lstVisiteur" value="<?php echo $idVisiteur ?>">
+					<input type="hidden" name="lstVisiteur" value="<?php echo $idUtilisateur ?>">
                 	<input type="hidden" name="lstMois" value="<?php echo $moisUtilisateur ?>">
                 
                 <button class="btn btn-success" type="submit">Corriger</button>
@@ -102,7 +102,50 @@ if($action == "voirEtatFrais") {
         </form>
     </div>
 </div>
-
- <?php // }
+<div class="panel panel-info"> <?php // echo $idUtilisateur ?>
+    <div class="panel-heading">Descriptif des éléments hors forfait </div>
+       
+        <?php // Affichage et formulaire permettant de voir les lignes hors forfait pour la ligne concernée, un bouton permettra de supprimer une ligne en y ajoutant "REFUSE : " dans le libellé, un autre permettra de reporter d'un mois, une ligne
+        foreach ($lesFraisHorsForfait as $unFraisHorsForfait) {
+            $date = $unFraisHorsForfait['date'];
+            $libelle = htmlspecialchars($unFraisHorsForfait['libelle']);
+            $montant = $unFraisHorsForfait['montant']; 
+            $id = $unFraisHorsForfait['id']; 
+            ?> 
+    <form method="post" action="index.php?uc=validerFrais&action=validerMajFraisForfait" role="form">
+    <table class="table table-bordered table-responsive">
+        <tr>
+            <th class="date">Date (JJ/MM/AAAA)</th>
+            <th class="libelle">Libellé</th>
+            <th class='montant'>Montant</th>   
+        </tr>
+            
+            <tr>
+                <td><input type="text" name="date" value="<?php echo $date ?>" maxlength="10" readonly></td>
+                <td><input type="text" name="libelle" size="50" value="<?php echo $libelle ?>" readonly></td>
+                <td><input type="text" name="montant" maxlength="11" value="<?php echo $montant ?>" readonly></td>
+                 
+                <input type="hidden" name="lstMois" value="<?php echo $moisUtilisateur ?>">
+				<input type="hidden" name="lstVisiteur" value="<?php echo $idUtilisateur ?>">
+            </tr> 
+         </form> <?php 
+         } ?>
+        
+    </table> <?php echo "Resultat : " . $idUtilisateur; ?>
+</div> Nombre de justificatifs : <input type="text" name="nbJustificatif" value="<?php echo $nbJustificatifs ?>" size="5" readonly> 
+<form method="post" 
+              action="index.php?uc=suivrePaiement&action=voirEtatFrais" 
+              role="form">
+              <input type="hidden" name="lstMois" value="<?php echo $moisUtilisateur ?>">
+			  <input type="hidden" name="lstVisiteur" value="<?php echo $idUtilisateur ?>">
+              <button class="btn btn-success" type="submit" name="miseRemboursementFiche"
+               onclick="return confirm('Voulez-vous confirmer le remboursement ?');" value="1">Fiche payée</button>
+               <button class="btn btn-danger" type="submit" name="misePaiementFiche" value="1"<?php echo $id ?>" onclick="return confirm('Voulez-vous vraiment mettre en paiement ce frais ?');">Mise en paiement</button> 
+               
+              </form>
+	<?php }
+    else {
+     echo "Pas de fiche de frais validée.";
+    }
 } 
 ?>
