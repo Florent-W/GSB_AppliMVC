@@ -32,7 +32,6 @@ if(empty($_POST['misePaiementFiche']) && empty($_POST['miseRemboursementFiche'])
 else {
         $idUtilisateur   = '';  
         $moisUtilisateur = ''; 
-    
 }
 $tousUtilisateurs = $pdo->getIdVisiteurs(); // récupération de tous les id des visiteurs
 $nbUtilisateur    = COUNT($tousUtilisateurs); 
@@ -93,12 +92,23 @@ switch ($action) {
  
                     if($utilisateurProchaineFicheTrouvee == 0) { // On continu à chercher tant qu'une fiche valide n'a pas été trouvé
                         $memeUtilisateur = $pdo ->getLesMoisDisponiblesFichesValides($id); // On regarde si le visiteur en cours à un mois ayant une fiche valide
+                          
                             if(!empty($memeUtilisateur)) { 
-                                $moisUtilisateurChercher =  $pdo -> getMoisDisponibleFicheValide($id); // On attribut un des mois en question
-                                $moisUtilisateur = $moisUtilisateurChercher; 
+                                $ficheATrouver = 0; 
+                                $memeUtilisateur =  $pdo -> getLesMoisDisponiblesFichesValides($id); // On attribut un des mois en question
+                                foreach ($memeUtilisateur as $unMois) { // Parcours des mois
+                                    $mois     = $unMois['mois'];
+                                    $numAnnee = $unMois['numAnnee'];
+                                    $numMois  = $unMois['numMois'];
+                               
+                                    if($ficheATrouver == 0){
+                                        $moisUtilisateur = $mois; // Attribution du mois
+                                        $ficheATrouver = 1;
+                                    }
+                                }
                                 $idUtilisateur = $id;  
                                 $utilisateurProchaineFicheTrouvee = 1; // On dit que la fiche à été trouvée
-                  
+                                
                             }
                     }
                 }
@@ -107,21 +117,16 @@ switch ($action) {
                 } 
                 else {
                     $ficheFraisTrouver = 1;
-                    echo $idUtilisateur; 
-                    echo $moisUtilisateur; 
-                    $lesFraisForfait     = $pdo->getLesFraisForfait($idUtilisateur, $moisUtilisateur);
-                    
-                 
+                    $lesFraisForfait     = $pdo->getLesFraisForfait($idUtilisateur, $moisUtilisateur);       
                 }     
           }
           $lesFraisHorsForfait = $pdo->getLesFraisHorsForfait($idUtilisateur, $moisUtilisateur);
-        
         }
         break; 
-
 }
+
 $nbJustificatifs     =  $pdo->getNbjustificatifs($idUtilisateur, $moisUtilisateur); // Récupération du nombre de justificatif
 $lesFraisForfait     = $pdo->getLesFraisForfait($idUtilisateur, $moisUtilisateur);
 $lesFraisHorsForfait = $pdo->getLesFraisHorsForfait($idUtilisateur, $moisUtilisateur);
 
- include 'vues/v_suiviPaiement.php';?>
+include 'vues/v_suiviPaiement.php';?>
