@@ -19,6 +19,7 @@ require_once 'includes/class.pdogsb.inc.php';
 session_start();
 $pdo = PdoGsb::getPdoGsb();
 $estConnecte = estConnecte();
+
 require 'vues/v_entete.php';
 $uc = filter_input(INPUT_GET, 'uc', FILTER_SANITIZE_STRING);
 if ($uc && !$estConnecte) {
@@ -26,6 +27,8 @@ if ($uc && !$estConnecte) {
 } elseif (empty($uc)) {
     $uc = 'accueil';
 }
+$type = $_SESSION['type']; 
+
 switch ($uc) {
 case 'connexion':
     include 'controleurs/c_connexion.php';
@@ -34,16 +37,40 @@ case 'accueil':
     include 'controleurs/c_accueil.php';
     break;
 case 'gererFrais':
-    include 'controleurs/c_gererFrais.php';
+    if($type == "Visiteur") {
+        include 'controleurs/c_gererFrais.php';
+    }
+    else {
+        ajouterErreur('Accès non autorisé pour cette page');
+        include 'vues/v_erreurs.php';
+    }
     break;
 case 'etatFrais':
-    include 'controleurs/c_etatFrais.php';
+    if($type == "Visiteur") {
+        include 'controleurs/c_etatFrais.php';
+    }
+    else {
+        ajouterErreur('Accès non autorisé pour cette page');
+        include 'vues/v_erreurs.php';
+    }
     break;
 case 'validerFrais':
-    include 'controleurs/c_validerFrais.php';
+    if($type == "Comptable") {
+        include 'controleurs/c_validerFrais.php';
+    }
+    else {
+        ajouterErreur('Accès non autorisé pour cette page');
+        include 'vues/v_erreurs.php';
+    }
     break;
 case 'suivrePaiement':
-    include 'controleurs/c_suivrePaiement.php';
+    if($type == "Comptable") {
+        include 'controleurs/c_suivrePaiement.php';
+    }
+    else {
+        ajouterErreur('Accès non autorisé pour cette page');
+        include 'vues/v_erreurs.php';
+    }
     break;
 case 'deconnexion':
     include 'controleurs/c_deconnexion.php';

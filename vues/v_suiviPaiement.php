@@ -12,11 +12,12 @@
 // récupération de l'action à faire dans l'URL
 $action = filter_input(INPUT_GET, 'action', FILTER_SANITIZE_STRING);  
 ?>
-<h2>Mes fiches de frais</h2>
 <?php 
 if($ficheFraisTrouver == 1) { // Si une fiche bien été trouvée, on affiche la page
-    ?>
+    ?><h2> <u> Suivi du paiement</u> :</h2>
+	 </br>
 	<div class="row">
+	
     	<div class="col-md-4">
         	<h3>Sélectionner un mois : </h3>
     	</div>
@@ -70,9 +71,13 @@ if($ficheFraisTrouver == 1) { // Si une fiche bien été trouvée, on affiche la
 
     if($action == "voirEtatFrais") { // Si on a selectionné une fiche valide
         ?>
-		<div class="row">    
-    		<h2>Valider la fiche de frais </h2>
+        
+        </br> 
+        </br> <h2>Détails de la fiche de frais </h2>
     		<h3>Eléments forfaitisés</h3>
+		<div class="row">    
+			</br>
+    		
     		<div class="col-md-4">
             	<fieldset>       
               	 <?php 
@@ -150,9 +155,12 @@ if($ficheFraisTrouver == 1) { // Si une fiche bien été trouvée, on affiche la
    }       
 }
 
-else {
+else { 
+        ajouterErreur('Pas de fiche de frais validée');
+        include 'vues/v_erreurs.php';
        ?>
-       <h3> Pas de fiche de frais validée </h3>
+       
+       <h2> Retour à l'acceuil : <a href="index.php">ici</a> </h2>
        <?php
 }
 ?>

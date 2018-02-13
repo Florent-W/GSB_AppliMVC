@@ -14,12 +14,14 @@ $action = filter_input(INPUT_GET, 'action', FILTER_SANITIZE_STRING);
 
 ?>
 <div class="row">
-    <div class="col-md-4">
-        <div>Choisir le visiteur : </div>
+    <div class="col-xs-2">
+        <h4>Choisir le visiteur : </h4>
     	</div>
-
-</div>   <form action="index.php?uc=validerFrais&action=validerMajFraisForfait" method="post" role="form"> 
-              <select id="lstVisiteur" name="lstVisiteur">
+     <div class="col-xs-2">
+    
+  <form action="index.php?uc=validerFrais&action=validerMajFraisForfait" method="post" role="form"> 
+  
+              <select id="lstVisiteur" name="lstVisiteur" class="form-control">
               
 <?php          
 try
@@ -64,10 +66,12 @@ $reponse4 = $bdd->query('SELECT * FROM visiteur WHERE id != "'.$leVisiteur.'"');
  
 $reponse->closeCursor();
 ?>
-</select>
-
- 
-<select id="lstMois" name="lstMois">
+</select> </div> 
+ <div class="col-xs-2">
+        <h4> Mois : </h4>
+    	</div>
+     <div class="col-xs-2">
+<select id="lstMois" name="lstMois" class="form-control">
  <?php  // Affichage de la selection des mois selon l'action et le mois déjà selectionné
  if($action == "validerMajFraisForfait"){
     $lesMois = $pdo-> getLesMoisDisponibles($idVisiteur);
@@ -115,8 +119,10 @@ $reponse->closeCursor();
                          }
                         }             
  } ?>    
- </select> 
- <button class="btn btn-success" type="submit">Selectionner</button>
+ </select> </div> 
+ 	<div class="col-xs-2">
+ <button class="btn btn-success" type="submit">Selectionner</button> 
+ </div> </div>
   </form>
   
 <?php // Affichage de la fiche de frais selon l'action, l'utilisateur, le mois et si une fiche à été trouvé pour ces valeurs
@@ -160,6 +166,7 @@ if($action == "validerMajFraisForfait") {
     </div>
 </div>
 
+ </br>
 <div class="panel panel-info">
     <div class="panel-heading">Descriptif des éléments hors forfait </div>
        
@@ -206,7 +213,8 @@ if($action == "validerMajFraisForfait") {
               </form>
 	<?php }
     else {
-     echo "Pas de fiche de frais pour ce visiteur ce mois.";
+        ajouterErreur('Pas de fiche de frais pour ce visiteur ce mois.');
+        include 'vues/v_erreurs.php';
     }
 } 
 ?>
