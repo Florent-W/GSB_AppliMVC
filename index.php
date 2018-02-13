@@ -2,12 +2,13 @@
 /**
  * Index du projet GSB
  *
- * PHP Version 7
+ * PHP Version 5
  *
  * @category  PPE
  * @package   GSB
  * @author    RÃ©seau CERTA <contact@reseaucerta.org>
  * @author    JosÃ© GIL <jgil@ac-nice.fr>
+ * @author    Florent WELTMANN <florent.weltmann@gmail.com>
  * @copyright 2017 RÃ©seau CERTA
  * @license   RÃ©seau CERTA
  * @version   GIT: <0>

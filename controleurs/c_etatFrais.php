@@ -2,7 +2,7 @@
 /**
  * Gestion de l'affichage des frais
  *
- * PHP Version 7
+ * PHP Version 5
  *
  * @category  PPE
  * @package   GSB

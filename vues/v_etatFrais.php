@@ -2,7 +2,7 @@
 /**
  * Vue État de Frais
  *
- * PHP Version 7
+ * PHP Version 5
  *
  * @category  PPE
  * @package   GSB

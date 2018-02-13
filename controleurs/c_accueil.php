@@ -2,7 +2,7 @@
 /**
  * Gestion de l'accueil
  *
- * PHP Version 7
+ * PHP Version 5
  *
  * @category  PPE
  * @package   GSB

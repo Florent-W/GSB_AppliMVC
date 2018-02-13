@@ -2,7 +2,7 @@
 /**
  * Vue Connexion
  *
- * PHP Version 7
+ * PHP Version 5
  *
  * @category  PPE
  * @package   GSB
