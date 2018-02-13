@@ -130,8 +130,8 @@ if($action == "validerMajFraisForfait") {
     if($ficheFraisTrouver == 1) {
 ?>
 <div class="row">    
-    <h2>Valider la fiche de frais 
-    </h2>
+    <h2 class="titreOrange">Valider la fiche de frais 
+    </h2> 
     <h3>Eléments forfaitisés</h3>
     <div class="col-md-4">
         <form method="post"  
@@ -167,7 +167,9 @@ if($action == "validerMajFraisForfait") {
 </div>
 
  </br>
+ <div class ="panel-orange">
 <div class="panel panel-info">
+	
     <div class="panel-heading">Descriptif des éléments hors forfait </div>
        
         <?php // Affichage et formulaire permettant de voir les lignes hors forfait pour la ligne concernée, un bouton permettra de supprimer une ligne en y ajoutant "REFUSE : " dans le libellé, un autre permettra de reporter d'un mois, une ligne
@@ -200,7 +202,7 @@ if($action == "validerMajFraisForfait") {
          </form> <?php 
          } ?>
         
-    </table>
+    </table> </div>
        <?php // Permet de valider une fiche en prenant en compte la date de modification et en passant l'état de la fiche à validé si l'utilisateur le confirme. ?>
 </div> Nombre de justificatifs : <input type="text" name="nbJustificatif" value="<?php echo $nbJustificatifs ?>" size="5" readonly> 
 <form method="post" 

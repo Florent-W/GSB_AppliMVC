@@ -67,16 +67,18 @@
             
             <div class="panel-body">
                 <div class="row">
-                    <div class="col-xs-12 col-md-12">
+                	<div class="orange">
+                    	<div class="col-xs-12 col-md-12">
                             <a href="index.php?uc=validerFrais&action=selectionnerMois"
-                           class="btn btn-success btn-lg" role="button">
+                           	class="btn btn-success btn-lg" role="button">
                             <span class="glyphicon glyphicon-pencil"></span>
                             <br>Valider les fiches de frais</a>
-                             <a href="index.php?uc=suivrePaiement&action=selectionnerMois"
-                           class="btn btn-primary btn-lg" role="button">
+                            <a href="index.php?uc=suivrePaiement&action=selectionnerMois"
+                          	 class="btn btn-primary btn-lg" role="button">
                             <span class="glyphicon glyphicon-list-alt"></span>
                             <br>Suivre le paiement des fiches de frais</a>
-                    </div>
+                   	  	</div>
+                	</div>
                 </div>
             </div>
         </div>

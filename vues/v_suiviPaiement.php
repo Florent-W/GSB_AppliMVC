@@ -14,12 +14,12 @@ $action = filter_input(INPUT_GET, 'action', FILTER_SANITIZE_STRING);
 ?>
 <?php 
 if($ficheFraisTrouver == 1) { // Si une fiche bien été trouvée, on affiche la page
-    ?><h2> <u> Suivi du paiement</u> :</h2>
+    ?><h2 class="titreOrange"> <u> Suivi du paiement</u> :</h2> 
 	 </br>
 	<div class="row">
 	
     	<div class="col-md-4">
-        	<h3>Sélectionner un mois : </h3>
+        	<h3>Sélectionnez une fiche valide : </h3>
     	</div>
     	<div class="col-md-4">
         	<form action="index.php?uc=suivrePaiement&action=voirEtatFrais" 
@@ -104,9 +104,14 @@ if($ficheFraisTrouver == 1) { // Si une fiche bien été trouvée, on affiche la
              </fieldset>
    		 </div>
 		</div>
-		<div class="panel panel-info"> <?php // echo $idUtilisateur ?>
-    		<div class="panel-heading">Descriptif des éléments hors forfait </div>
-       
+		 <div class="suivi">
+		<div class="panel-orange">
+			
+			<div class="panel panel-info">
+    			<div class="panel-heading">Descriptif des éléments hors forfait </div>
+       				<form method="post" 
+              		action="index.php?uc=suivrePaiement&action=voirEtatFrais" 
+              		role="form">
         		<?php // Affichage permettant de voir les lignes hors forfait pour la ligne concernée
                 foreach ($lesFraisHorsForfait as $unFraisHorsForfait) {
                     $date    = $unFraisHorsForfait['date'];
@@ -126,23 +131,18 @@ if($ficheFraisTrouver == 1) { // Si une fiche bien été trouvée, on affiche la
             			<tr>
                 			<td><input type="text" name="date" value="<?php echo $date ?>" maxlength="10" readonly></td>
                 			<td><input type="text" name="libelle" size="50" value="<?php echo $libelle ?>" readonly></td>
-                			<td><input type="text" name="montant" maxlength="11" value="<?php echo $montant ?>" readonly></td>
-                 
-                			<input type="hidden" name="lstMois" value="<?php echo $moisUtilisateur ?>">
-							<input type="hidden" name="lstVisiteur" value="<?php echo $idUtilisateur ?>">
+                			<td><input type="text" name="montant" maxlength="11" value="<?php echo $montant ?>" readonly></td>             
            			   </tr> 
             
           			<?php 
                 } ?>
         
-    			</table> 
+    			</table> </div>
 		</div> Nombre de justificatifs : <input type="text" name="nbJustificatif" value="<?php echo $nbJustificatifs ?>" size="5" readonly> 
 
  		<?php // Formulaire permettant d'indiquer que la fiche à été payée ou qu'elle reste en paiement 
          ?> 
-		<form method="post" 
-              action="index.php?uc=suivrePaiement&action=voirEtatFrais" 
-              role="form">
+		
               	<input type="hidden" name="lstMois" value="<?php echo $moisUtilisateur ?>">
 			  	<input type="hidden" name="lstVisiteur" value="<?php echo $idUtilisateur ?>">
               	<button class="btn btn-success" type="submit" name="miseRemboursementFiche"
@@ -155,12 +155,10 @@ if($ficheFraisTrouver == 1) { // Si une fiche bien été trouvée, on affiche la
    }       
 }
 
-else { 
-        ajouterErreur('Pas de fiche de frais validée');
-        include 'vues/v_erreurs.php';
-       ?>
-       
-       <h2> Retour à l'acceuil : <a href="index.php">ici</a> </h2>
-       <?php
+else {       
+      include 'controleurs/c_accueil.php'; 
+      
+      ajouterErreur('Pas de fiche de frais validée. Retour au menu.');
+      include 'vues/v_erreurs.php';
 }
 ?>

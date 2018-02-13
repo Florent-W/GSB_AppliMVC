@@ -21,6 +21,10 @@ session_start();
 $pdo = PdoGsb::getPdoGsb();
 $estConnecte = estConnecte();
 
+if($estConnecte AND isset($_SESSION['type'])) {
+    $type = $_SESSION['type']; 
+}
+
 require 'vues/v_entete.php';
 $uc = filter_input(INPUT_GET, 'uc', FILTER_SANITIZE_STRING);
 if ($uc && !$estConnecte) {
@@ -28,7 +32,8 @@ if ($uc && !$estConnecte) {
 } elseif (empty($uc)) {
     $uc = 'accueil';
 }
-$type = $_SESSION['type']; 
+
+
 
 switch ($uc) {
 case 'connexion':
