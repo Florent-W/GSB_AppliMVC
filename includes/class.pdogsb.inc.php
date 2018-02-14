@@ -506,7 +506,7 @@ class PdoGsb
     {
         $requetePrepare = PdoGSB::$monPdo->prepare(
             'SELECT MAX(fichefrais.mois) AS mois FROM fichefrais '
-            . 'WHERE fichefrais.idvisiteur = "b4"   AND fichefrais.idetat = "VA" '
+            . 'WHERE fichefrais.idvisiteur = :unIdVisiteur   AND fichefrais.idetat = "VA" '
             . 'ORDER BY fichefrais.mois'
             );
         $requetePrepare->bindParam(':unIdVisiteur', $idVisiteur, PDO::PARAM_STR);
@@ -569,7 +569,41 @@ class PdoGsb
         $requetePrepare->bindParam(':unMois', $mois, PDO::PARAM_STR);
         $requetePrepare->execute();
     }
-
+    
+    
+    public function recuperationMotDePasse($idVisiteur) {
+        $requetePrepare = PdoGSB::$monPdo->prepare(
+            'SELECT visiteur.mdp FROM visiteur WHERE visiteur.id = :unIdVisiteur'
+            );
+        $requetePrepare->bindParam(':unIdVisiteur', $idVisiteur, PDO::PARAM_STR);
+        $requetePrepare->execute();
+        $motDePasse = $requetePrepare->fetch();
+        return $motDePasse['mdp'];
+    }
+    
+    public function majMotDePasse($idVisiteur, $motDePasse) {
+        $requetePrepare = PdoGSB::$monPdo->prepare(
+            'UPDATE visiteur '
+            . 'SET mdp = :unMotDePasse '
+            . 'WHERE visiteur.id = :unIdVisiteur '
+            );
+        $requetePrepare->bindParam(':unIdVisiteur', $idVisiteur, PDO::PARAM_STR);
+        $requetePrepare->bindParam(':unMotDePasse', $motDePasse, PDO::PARAM_STR);
+        $requetePrepare->execute();
+       
+        
+    }
+  
+    public function getIdVisiteur($login)
+    {
+        $requetePrepare = PdoGsb::$monPdo->prepare(
+            'SELECT visiteur.id FROM visiteur WHERE visiteur.login = :unLogin'
+        );
+        $requetePrepare->bindParam(':unLogin', $login, PDO::PARAM_STR);
+        $requetePrepare->execute();
+        $unId = $requetePrepare->fetch();
+        return $unId['id'];
+    }
 }
 
    

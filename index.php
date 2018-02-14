@@ -42,6 +42,9 @@ case 'connexion':
 case 'accueil':
     include 'controleurs/c_accueil.php';
     break;
+case 'majMotDePasse':
+    include 'controleurs/c_miseAJourMotdePasse.php';
+    break; 
 case 'gererFrais':
     if($type == "Visiteur") {
         include 'controleurs/c_gererFrais.php';
