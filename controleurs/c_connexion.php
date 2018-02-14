@@ -31,38 +31,18 @@ case 'demandeConnexion':
 case 'valideConnexion':
     $login = filter_input(INPUT_POST, 'login', FILTER_SANITIZE_STRING);
     $mdp = filter_input(INPUT_POST, 'mdp', FILTER_SANITIZE_STRING);
-    echo $login; 
     $idVisiteur = $pdo->getIdVisiteur($login);
-   
-    
-    
-    echo $idVisiteur; 
-    
+        
     $recuperationMotDePasseUtilisateur =  $pdo->recuperationMotDePasse($idVisiteur);
-    echo "Recuperation mot de passe base de donnee : " . $recuperationMotDePasseUtilisateur;
-    $key = 'password to (en/de)crypt';
+    $cle = 'c444013c7b716bf8da1548398648efadf3390154b42a8a66987c120c9feae39a';
     $encrypted = $recuperationMotDePasseUtilisateur;
     
-    $data = base64_decode($encrypted);
-    $iv = substr($data, 0, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC));
-    
-    $decrypted = rtrim(
-        mcrypt_decrypt(
-            MCRYPT_RIJNDAEL_128,
-            hash('sha256', $key, true),
-            substr($data, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC)),
-            MCRYPT_MODE_CBC,
-            $iv
-            ),
-        "\0"
-        );
-    echo " Trouve : " . $decrypted . "Fin ";
-    echo $mdp; 
-    echo $decrypted; 
+    $decrypted = hash_hmac('sha256', $mdp, $cle);
+          
     
     $visiteur = $pdo->getInfosVisiteur($login, $encrypted);
     
-    if (!is_array($visiteur) OR ($mdp != $decrypted)) {
+    if (!is_array($visiteur) OR ($recuperationMotDePasseUtilisateur != $decrypted)) {
         ajouterErreur('Login ou mot de passe incorrect');
         include 'vues/v_erreurs.php';
         include 'vues/v_connexion.php';

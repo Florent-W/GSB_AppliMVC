@@ -11,6 +11,7 @@
 ?>  <?php 
 // récupération de l'action à faire dans l'URL
 $action = filter_input(INPUT_GET, 'action', FILTER_SANITIZE_STRING);  
+echo $ficheFraisTrouver; 
 ?>
 <?php 
 if($ficheFraisTrouver == 1) { // Si une fiche bien été trouvée, on affiche la page
@@ -66,7 +67,9 @@ if($ficheFraisTrouver == 1) { // Si une fiche bien été trouvée, on affiche la
         	</form>
     	</div>
 	</div>
-
+	<form method="post" 
+              		action="index.php?uc=suivrePaiement&action=voirEtatFrais" 
+              		role="form">
 	<?php // Affichage de la fiche de frais selon l'action, l'utilisateur, le mois et si une fiche à été trouvé pour ces valeurs
 
     if($action == "voirEtatFrais") { // Si on a selectionné une fiche valide
@@ -105,13 +108,24 @@ if($ficheFraisTrouver == 1) { // Si une fiche bien été trouvée, on affiche la
    		 </div>
 		</div>
 		 <div class="suivi">
+		
+		  <?php 
+		 $nombreFraisHorsForfait = COUNT($lesFraisHorsForfait);
+		 if($nombreFraisHorsForfait == 0) { ?>
+		      <div class="panel-orange">
+		 
+		 <div class="panel panel-info"><div class="panel-heading"> Aucun élément hors-forfait</div>
+		     </div>
+		     </div> 
+		     <?php
+		 }
+		 else {
+		 ?>
 		<div class="panel-orange">
 			
 			<div class="panel panel-info">
     			<div class="panel-heading">Descriptif des éléments hors forfait </div>
-       				<form method="post" 
-              		action="index.php?uc=suivrePaiement&action=voirEtatFrais" 
-              		role="form">
+       				
         		<?php // Affichage permettant de voir les lignes hors forfait pour la ligne concernée
                 foreach ($lesFraisHorsForfait as $unFraisHorsForfait) {
                     $date    = $unFraisHorsForfait['date'];
@@ -138,7 +152,11 @@ if($ficheFraisTrouver == 1) { // Si une fiche bien été trouvée, on affiche la
                 } ?>
         
     			</table> </div>
-		</div> Nombre de justificatifs : <input type="text" name="nbJustificatif" value="<?php echo $nbJustificatifs ?>" size="5" readonly> 
+		</div>
+		<?php }
+		?>
+		
+		 Nombre de justificatifs : <input type="text" name="nbJustificatif" value="<?php echo $nbJustificatifs ?>" size="5" readonly> 
 
  		<?php // Formulaire permettant d'indiquer que la fiche à été payée ou qu'elle reste en paiement 
          ?> 
@@ -149,16 +167,16 @@ if($ficheFraisTrouver == 1) { // Si une fiche bien été trouvée, on affiche la
                	onclick="return confirm('Voulez-vous confirmer le remboursement ?');" value="1">Fiche payée</button>
                	<button class="btn btn-danger" type="submit" name="misePaiementFiche" value="1"<?php echo $id ?>" onclick="return confirm('Voulez-vous vraiment mettre en paiement ce frais ?');">Mise en paiement</button> 
                
-       </form>
+       </form> </div>
   		<?php 
   
    }       
 }
 
 else {       
+    /*
       include 'controleurs/c_accueil.php'; 
-      
       ajouterErreur('Pas de fiche de frais validée. Retour au menu.');
-      include 'vues/v_erreurs.php';
+      include 'vues/v_erreurs.php'; */
 }
 ?>

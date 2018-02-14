@@ -4,34 +4,48 @@
 
 $tousUtilisateurs =  $pdo->getIdVisiteurs();
 
+$motDePasseDejaHasher = 3; 
+$hashageReussi = 0; 
 
-if(isset($_POST['visiteur'])) {
+if(isset($_POST['visiteur']) || isset($_POST['confirmation'])) { 
+    if(isset($_POST['visiteur'])) {
     $idVisiteur = $_POST['visiteur'];
-    // echo $idVisiteur; 
+   
+    }
+    else if(isset($_POST['confirmation'])) {
+    $idVisiteur = $_POST['visiteurconfirmation'];  
+    }
     $recuperationMotDePasse =  $pdo->recuperationMotDePasse($idVisiteur);
+    $motDePasseDejaHasher = 0;
     
+    if(strlen($recuperationMotDePasse) == 64 && !isset($_POST['confirmation'])) { 
+        $motDePasseDejaHasher = 2;
+    }
+    else {
+        $motDePasseDejaHasher = 0;
+    }
+     }
     
-    $key = 'password to (en/de)crypt';
-    $string = $recuperationMotDePasse;
+     
+          
+        else if(isset($_POST['refuser']))   {
+            $motDePasseDejaHasher = 1;
+        }
+   
+    if($motDePasseDejaHasher == 0) {         
     
-    $iv = mcrypt_create_iv(
-        mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC),
-        MCRYPT_DEV_URANDOM
-        );
+        $cle = 'c444013c7b716bf8da1548398648efadf3390154b42a8a66987c120c9feae39a';    
     
-    $encrypted = base64_encode(
-        $iv .
-        mcrypt_encrypt(
-            MCRYPT_RIJNDAEL_128,
-            hash('sha256', $key, true),
-            $string,
-            MCRYPT_MODE_CBC,
-            $iv
-            )
-        );
-    echo $encrypted . "  a"; 
+        $encrypted =  hash_hmac('sha256', $recuperationMotDePasse, $cle); 
+           
    
 
  $pdo-> majMotDePasse($idVisiteur, $encrypted); 
+ $hashageReussi = 1;
+ ?>
+ 
+ 
+
+ <?php 
 }
- include('vues/v_miseAJourMotDePasse.php'); 
+ include('vues/v_miseAJourMotDePasse.php'); ?> 

@@ -43,7 +43,13 @@ case 'accueil':
     include 'controleurs/c_accueil.php';
     break;
 case 'majMotDePasse':
-    include 'controleurs/c_miseAJourMotdePasse.php';
+    if($type == "Administrateur") {
+        include 'controleurs/c_miseAJourMotdePasse.php';
+    }
+    else {
+        ajouterErreur('Accès non autorisé pour cette page');
+        include 'vues/v_erreurs.php';
+    }
     break; 
 case 'gererFrais':
     if($type == "Visiteur") {
