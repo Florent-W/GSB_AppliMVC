@@ -124,39 +124,36 @@ if($ficheFraisTrouver == 1) { // Si une fiche bien été trouvée, on affiche la
 				<div class="panel panel-info">
     				<div class="panel-heading">Descriptif des éléments hors forfait </div>
        				<table class="table table-bordered table-responsive">
+       					<tr>
+            				<th class="date">Date (JJ/MM/AAAA)</th>
+            				<th class="libelle">Libellé</th>
+            				<th class='montant'>Montant</th>   
+       				   	</tr>
         			<?php // Affichage permettant de voir les lignes hors forfait pour la ligne concernée
-                    foreach ($lesFraisHorsForfait as $unFraisHorsForfait) {
-                        $date    = $unFraisHorsForfait['date'];
-                        $libelle = htmlspecialchars($unFraisHorsForfait['libelle']);
-                        $montant = $unFraisHorsForfait['montant']; 
-                        $id      = $unFraisHorsForfait['id']; 
-                        $ligneRefuser = strpos($libelle, "REFUSE : "); 
+                        foreach ($lesFraisHorsForfait as $unFraisHorsForfait) {
+                            $date    = $unFraisHorsForfait['date'];
+                            $libelle = htmlspecialchars($unFraisHorsForfait['libelle']);
+                            $montant = $unFraisHorsForfait['montant']; 
+                            $id      = $unFraisHorsForfait['id']; 
+                            $ligneRefuser = strpos($libelle, "REFUSE : "); 
                     
-                        if($ligneRefuser === false) { // On affiche seulement les lignes qui ne sont pas refusées
-                    ?> 
-    
-        					<tr>
-            					<th class="date">Date (JJ/MM/AAAA)</th>
-            					<th class="libelle">Libellé</th>
-            					<th class='montant'>Montant</th>   
-       				   		</tr>
-            
-            				<tr>
-                				<td><input type="text" name="date" value="<?php echo $date ?>" maxlength="10" readonly></td>
-                				<td><input type="text" name="libelle" size="50" value="<?php echo $libelle ?>" readonly></td>
-                				<td><input type="text" name="montant" maxlength="11" value="<?php echo $montant ?>" readonly></td>             
-           			  	 	</tr> 
-            
-          				<?php 
-                        } 
-                     } ?>       
+                            if($ligneRefuser === false) { // On affiche seulement les lignes qui ne sont pas refusées
+                                ?>         					            
+            					<tr>
+                					<td><input type="text" name="date" value="<?php echo $date ?>" maxlength="10" readonly></td>
+                					<td><input type="text" name="libelle" size="50" value="<?php echo $libelle ?>" readonly></td>
+                					<td><input type="text" name="montant" maxlength="11" value="<?php echo $montant ?>" readonly></td>             
+           			  	 		</tr>             
+          						<?php 
+                             } 
+                        } ?>       
     				</table> 
     			</div>
 			</div>
-		<?php }
+	<?php }
 		?>
-		
-		 Nombre de justificatifs : <input type="text" name="nbJustificatif" value="<?php echo $nbJustificatifs ?>" size="5" readonly> 
+				
+		 <div> Nombre de justificatifs : <input type="text" name="nbJustificatif" value="<?php echo $nbJustificatifs ?>" size="5" readonly> </div>
 
  		<?php // Formulaire permettant d'indiquer que la fiche à été payée ou qu'elle reste en paiement 
          ?> 

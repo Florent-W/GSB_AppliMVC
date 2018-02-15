@@ -1,0 +1,6 @@
+{
+  "require": {
+    "phpunit/phpunit": "*",
+    "php": ">=5.3.17"
+  }
+}

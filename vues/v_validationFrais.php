@@ -167,59 +167,61 @@ if($action == "validerMajFraisForfait") {
 </div>
 
  </br>
- <div class ="panel-orange">
-<div class="panel panel-info">
-<?php 
+<div class ="panel-orange">
+	<div class="panel panel-info">
+		<?php 
  
- if($nombreFraisHorsForfait == 0) { ?>
-     <div class="panel-heading">Aucun élément hors-forfait </div>
- <?php 
- }
+        if($nombreFraisHorsForfait == 0) { ?>
+     		<div class="panel-heading">Aucun élément hors-forfait </div>
+ 			<?php 
+        }
  
- else {
- ?>
-    <div class="panel-heading">Descriptif des éléments hors forfait </div>
-       <table class="table table-bordered table-responsive">
-        <?php // Affichage et formulaire permettant de voir les lignes hors forfait pour la ligne concernée, un bouton permettra de supprimer une ligne en y ajoutant "REFUSE : " dans le libellé, un autre permettra de reporter d'un mois, une ligne
-        foreach ($lesFraisHorsForfait as $unFraisHorsForfait) {
-            $date = $unFraisHorsForfait['date'];
-            $libelle = htmlspecialchars($unFraisHorsForfait['libelle']);
-            $montant = $unFraisHorsForfait['montant']; 
-            $id = $unFraisHorsForfait['id']; 
+        else {
+            ?>
+    		<div class="panel-heading">Descriptif des éléments hors forfait </div>
+       		<table class="table table-bordered table-responsive"> 
+        		<tr>
+            		<th class="date">Date (JJ/MM/AAAA)</th>
+            		<th class="libelle">Libellé</th>
+            		<th class='montant'>Montant</th>   
+            		<th class='selection'></th>               
+        		</tr>
+        		<?php // Affichage et formulaire permettant de voir les lignes hors forfait pour la ligne concernée, un bouton permettra de supprimer une ligne en y ajoutant "REFUSE : " dans le libellé, un autre permettra de reporter d'un mois, une ligne
+                foreach ($lesFraisHorsForfait as $unFraisHorsForfait) {
+                    $date    = $unFraisHorsForfait['date'];
+                    $libelle = htmlspecialchars($unFraisHorsForfait['libelle']);
+                    $montant = $unFraisHorsForfait['montant']; 
+                    $id      = $unFraisHorsForfait['id']; 
             
-            $ligneRefuser = strpos($libelle, "REFUSE : "); 
-            if($ligneRefuser === false) {   ?> 
+                    $ligneRefuser = strpos($libelle, "REFUSE : "); 
+                    if($ligneRefuser === false) {   ?> 
   		
-    <form method="post" action="index.php?uc=validerFrais&action=validerMajFraisForfait" role="form">
-    
-        <tr>
-            <th class="date">Date (JJ/MM/AAAA)</th>
-            <th class="libelle">Libellé</th>
-            <th class='montant'>Montant</th>   
-            <th class='selection'></th>               
-        </tr>
-            
-            <tr>
-                <td><input type="text" name="date" value="<?php echo $date ?>" maxlength="10" readonly></td>
-                <td><input type="text" name="libelle" size="50" value="<?php echo $libelle ?>" readonly></td>
-                <td><input type="text" name="montant" maxlength="11" value="<?php echo $montant ?>" readonly></td>
-                 <td>               
-                 <button class="btn btn-success" type="submit" name="idReporterLigneHorsForfait" value="<?php echo $id ?>" onclick="return confirm('Voulez-vous vraiment reporter ce frais ?');">Reporter</button> 
-                 <button class="btn btn-danger"  type="submit" name="idSuppressionLigneHorsForfait" value="<?php echo $id ?>" onclick="return confirm('Voulez-vous vraiment supprimer ce frais ?');">Supprimer</button>
-                <button class="btn btn-danger" type="reset">Réinitialiser</button></td>
-                <input type="hidden" name="lstMois" value="<?php echo $leMois ?>">
-				<input type="hidden" name="lstVisiteur" value="<?php echo $leVisiteur ?>">
-            </tr> 
-         </form> <?php 
-            }  
+    					<form method="post" action="index.php?uc=validerFrais&action=validerMajFraisForfait" role="form">
+            				<tr>
+                				<td><input type="text" name="date" value="<?php echo $date ?>" maxlength="10" readonly></td>
+                				<td><input type="text" name="libelle" size="50" value="<?php echo $libelle ?>" readonly></td>
+                				<td><input type="text" name="montant" maxlength="11" value="<?php echo $montant ?>" readonly></td>
+                 				<td>               
+                 					<button class="btn btn-success" type="submit" name="idReporterLigneHorsForfait" value="<?php echo $id ?>" onclick="return confirm('Voulez-vous vraiment reporter ce frais ?');">Reporter</button> 
+                 					<button class="btn btn-danger"  type="submit" name="idSuppressionLigneHorsForfait" value="<?php echo $id ?>" onclick="return confirm('Voulez-vous vraiment supprimer ce frais ?');">Supprimer</button>
+                					<button class="btn btn-danger" type="reset">Réinitialiser</button>
+                				</td>
+                	
+                				<input type="hidden" name="lstMois" value="<?php echo $leMois ?>">
+								<input type="hidden" name="lstVisiteur" value="<?php echo $leVisiteur ?>">
+            				</tr> 
+        	 			</form> <?php 
+                    }  
         
-        }?>
+                } ?>
         
-    </table>  <?php  } 
-    
-    ?> </div>
-       <?php // Permet de valider une fiche en prenant en compte la date de modification et en passant l'état de la fiche à validé si l'utilisateur le confirme. ?>
-</div> Nombre de justificatifs : <input type="text" name="nbJustificatif" value="<?php echo $nbJustificatifs ?>" size="5" readonly> 
+    		</table>  
+    		<?php  
+            } 
+         ?> 
+ 	</div>
+    <?php // Permet de valider une fiche en prenant en compte la date de modification et en passant l'état de la fiche à validé si l'utilisateur le confirme. ?>
+</div> <div> Nombre de justificatifs : <input type="text" name="nbJustificatif" value="<?php echo $nbJustificatifs ?>" size="5" readonly> </div>
 <form method="post" 
               action="index.php?uc=validerFrais&action=validerMajFraisForfait" 
               role="form">
@@ -227,8 +229,9 @@ if($action == "validerMajFraisForfait") {
 			  <input type="hidden" name="lstVisiteur" value="<?php echo $leVisiteur ?>">
               <button class="btn btn-success" type="submit" name="validation"
                onclick="return confirm('Voulez-vous confirmer ?');">Valider</button>
-              </form>
-	<?php }
+ </form>
+<?php 
+    }
     else {
         ajouterErreur('Pas de fiche de frais pour ce visiteur ce mois.');
         include 'vues/v_erreurs.php';

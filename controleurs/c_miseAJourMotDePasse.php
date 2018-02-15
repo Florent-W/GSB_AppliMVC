@@ -20,11 +20,11 @@ $hashageReussi = 0; // Permet de dire si le hashage à été fait
 
 if(isset($_POST['visiteur']) || isset($_POST['confirmation'])) { // Si l'utilisateur à été selectionné ou que l'utilisateur souhaite confirmer le hashage, on récupère l'id du visiteur sélectionné
     if(isset($_POST['visiteur'])) {
-    $idVisiteur = $_POST['visiteur'];
+        $idVisiteur = $_POST['visiteur'];
    
     }
     else if(isset($_POST['confirmation'])) {
-    $idVisiteur = $_POST['visiteurconfirmation'];  
+        $idVisiteur = $_POST['visiteurconfirmation'];  
     }
     $recuperationMotDePasse =  $pdo->recuperationMotDePasse($idVisiteur); // Récupération du mot de passe dans la base de donnée
     $motDePasseDejaHasher   = 0;
