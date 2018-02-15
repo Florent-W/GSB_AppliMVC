@@ -2321,13 +2321,13 @@ th {
   border: 1px solid #ff9933;
 }
 
-.panel-orange > .panel-info > form > .table-bordered > thead > tr > th,
-.panel-orange > .panel-info > form > .table-bordered > tbody > tr > th,
-.panel-orange > .panel-info > form > .table-bordered > tfoot > tr > th,
-.panel-orange > .panel-info > form > .table-bordered > thead > tr > td,
-.panel-orange > .panel-info > form > .table-bordered > tbody > tr > td,
-.panel-orange > .panel-info > form > .table-bordered > tfoot > tr > td {
-  border: 2px solid #ff9933;
+.panel-orange > .panel-info > .table-bordered > thead > tr > th,
+.panel-orange > .panel-info > .table-bordered > tbody > tr > th,
+.panel-orange > .panel-info > .table-bordered > tfoot > tr > th,
+.panel-orange > .panel-info > .table-bordered > thead > tr > td,
+.panel-orange > .panel-info > .table-bordered > tbody > tr > td,
+.panel-orange > .panel-info > .table-bordered > tfoot > tr > td {
+  border: 3px solid #ff9933;
 }
 .table-bordered > thead > tr > th,
 .table-bordered > tbody > tr > th,
@@ -5787,7 +5787,7 @@ button.list-group-item-danger.active:focus {
   border-color: #bce8f1;
 }
 .panel-orange > .panel-info {
-  border-color: #ff9933;
+  border: 5px solid #ff9933;
 }
 .panel-orange > .panel-info > .panel-heading {
   color: #ffff;

@@ -170,7 +170,7 @@ if($action == "validerMajFraisForfait") {
  <div class ="panel-orange">
 <div class="panel panel-info">
 <?php 
- $nombreFraisHorsForfait = COUNT($lesFraisHorsForfait);
+ 
  if($nombreFraisHorsForfait == 0) { ?>
      <div class="panel-heading">Aucun élément hors-forfait </div>
  <?php 
@@ -179,16 +179,19 @@ if($action == "validerMajFraisForfait") {
  else {
  ?>
     <div class="panel-heading">Descriptif des éléments hors forfait </div>
-       
+       <table class="table table-bordered table-responsive">
         <?php // Affichage et formulaire permettant de voir les lignes hors forfait pour la ligne concernée, un bouton permettra de supprimer une ligne en y ajoutant "REFUSE : " dans le libellé, un autre permettra de reporter d'un mois, une ligne
         foreach ($lesFraisHorsForfait as $unFraisHorsForfait) {
             $date = $unFraisHorsForfait['date'];
             $libelle = htmlspecialchars($unFraisHorsForfait['libelle']);
             $montant = $unFraisHorsForfait['montant']; 
             $id = $unFraisHorsForfait['id']; 
-            ?> 
+            
+            $ligneRefuser = strpos($libelle, "REFUSE : "); 
+            if($ligneRefuser === false) {   ?> 
+  		
     <form method="post" action="index.php?uc=validerFrais&action=validerMajFraisForfait" role="form">
-    <table class="table table-bordered table-responsive">
+    
         <tr>
             <th class="date">Date (JJ/MM/AAAA)</th>
             <th class="libelle">Libellé</th>
@@ -208,7 +211,9 @@ if($action == "validerMajFraisForfait") {
 				<input type="hidden" name="lstVisiteur" value="<?php echo $leVisiteur ?>">
             </tr> 
          </form> <?php 
-         } ?>
+            }  
+        
+        }?>
         
     </table>  <?php  } 
     

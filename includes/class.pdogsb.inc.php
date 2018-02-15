@@ -570,7 +570,13 @@ class PdoGsb
         $requetePrepare->execute();
     }
     
-    
+    /**
+     * Recupération du mot de passe d'un visiteur
+     *
+     * @param String $idVisiteur ID du visiteur
+     *
+     * @return le mot de passe du visiteur
+     */
     public function recuperationMotDePasse($idVisiteur) {
         $requetePrepare = PdoGSB::$monPdo->prepare(
             'SELECT visiteur.mdp FROM visiteur WHERE visiteur.id = :unIdVisiteur'
@@ -580,7 +586,14 @@ class PdoGsb
         $motDePasse = $requetePrepare->fetch();
         return $motDePasse['mdp'];
     }
-    
+    /**
+     * Mise à jour du mot de passe d'un visiteur
+     *
+     * @param String $idVisiteur ID du visiteur
+     * @param String $motDePasse Le nouveau mot de passe
+     *
+     * @return null
+     */
     public function majMotDePasse($idVisiteur, $motDePasse) {
         $requetePrepare = PdoGSB::$monPdo->prepare(
             'UPDATE visiteur '
@@ -593,7 +606,13 @@ class PdoGsb
        
         
     }
-  
+    /**
+     * Recupération de l'id d'un visiteur
+     *
+     * @param String $login login du visiteur
+     *
+     * @return l'id du visiteur
+     */
     public function getIdVisiteur($login)
     {
         $requetePrepare = PdoGsb::$monPdo->prepare(

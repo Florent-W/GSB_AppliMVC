@@ -6,11 +6,11 @@
  *
  * @category  PPE
  * @package   GSB
- * @author    RÃ©seau CERTA <contact@reseaucerta.org>
- * @author    JosÃ© GIL <jgil@ac-nice.fr>
+ * @author    Réseau CERTA <contact@reseaucerta.org>
+ * @author    José GIL <jgil@ac-nice.fr>
  * @author    Florent WELTMANN <florent.weltmann@gmail.com>
- * @copyright 2017 RÃ©seau CERTA
- * @license   RÃ©seau CERTA
+ * @copyright 2017 Réseau CERTA
+ * @license   Réseau CERTA
  * @version   GIT: <0>
  * @link      http://www.reseaucerta.org Contexte Â« Laboratoire GSB Â»
  */
@@ -21,6 +21,10 @@ session_start();
 $pdo = PdoGsb::getPdoGsb();
 $estConnecte = estConnecte();
 
+if($estConnecte AND isset($_SESSION['type'])) {
+    $type = $_SESSION['type']; 
+}
+
 require 'vues/v_entete.php';
 $uc = filter_input(INPUT_GET, 'uc', FILTER_SANITIZE_STRING);
 if ($uc && !$estConnecte) {
@@ -28,8 +32,8 @@ if ($uc && !$estConnecte) {
 } elseif (empty($uc)) {
     $uc = 'accueil';
 }
-$type = $_SESSION['type']; 
 
+// Choix de la page et gestion de l'autorisation d'accès à des parties du site
 switch ($uc) {
 case 'connexion':
     include 'controleurs/c_connexion.php';
@@ -37,6 +41,15 @@ case 'connexion':
 case 'accueil':
     include 'controleurs/c_accueil.php';
     break;
+case 'majMotDePasse':
+    if($type == "Administrateur") {
+        include 'controleurs/c_miseAJourMotdePasse.php';
+    }
+    else {
+        ajouterErreur('Accès non autorisé pour cette page');
+        include 'vues/v_erreurs.php';
+    }
+    break; 
 case 'gererFrais':
     if($type == "Visiteur") {
         include 'controleurs/c_gererFrais.php';

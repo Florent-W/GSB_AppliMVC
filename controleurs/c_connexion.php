@@ -22,8 +22,6 @@ if (!$uc) {
 
 
 
-
-
 switch ($action) {
 case 'demandeConnexion':
     include 'vues/v_connexion.php';
@@ -33,20 +31,20 @@ case 'valideConnexion':
     $mdp = filter_input(INPUT_POST, 'mdp', FILTER_SANITIZE_STRING);
     $idVisiteur = $pdo->getIdVisiteur($login);
         
-    $recuperationMotDePasseUtilisateur =  $pdo->recuperationMotDePasse($idVisiteur);
-    $cle = 'c444013c7b716bf8da1548398648efadf3390154b42a8a66987c120c9feae39a';
+    $recuperationMotDePasseUtilisateur =  $pdo->recuperationMotDePasse($idVisiteur); // Recuperation du mot de passe dans la base de donnée qui doit être normalement hashé
+    $cle = 'c444013c7b716bf8da1548398648efadf3390154b42a8a66987c120c9feae39a'; // Clé de décryptage
     $encrypted = $recuperationMotDePasseUtilisateur;
     
-    $decrypted = hash_hmac('sha256', $mdp, $cle);
+    $decrypted = hash_hmac('sha256', $mdp, $cle); // Hashage du mot de passe rentré par l'utilisateur dans le formulaire de connexion
           
     
-    $visiteur = $pdo->getInfosVisiteur($login, $encrypted);
+    $visiteur = $pdo->getInfosVisiteur($login, $encrypted); // Récupération des infos de l'utilisateur
     
-    if (!is_array($visiteur) OR ($recuperationMotDePasseUtilisateur != $decrypted)) {
+    if (!is_array($visiteur) OR ($recuperationMotDePasseUtilisateur != $decrypted)) { // Si les informations rentrées ne correspondent pas à un visiteur ou bien le mot de passe de l'utilisateur dans la base de donnée ne correspond pas au mot de passe rentré et hasher, une erreur de connexion est affiché
         ajouterErreur('Login ou mot de passe incorrect');
         include 'vues/v_erreurs.php';
         include 'vues/v_connexion.php';
-    } else {
+    } else { // Sinon on le laisse se connecter puisque les informations correspondent
         $id = $visiteur['id'];
         $nom = $visiteur['nom'];
         $prenom = $visiteur['prenom'];

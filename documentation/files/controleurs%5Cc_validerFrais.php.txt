@@ -11,11 +11,11 @@
 
 // Récupération du visiteur et d'autres informations nécessaires pour pouvoir faire marcher la sélection des visiteurs et des mois
 $idVisiteur = $_SESSION['idVisiteur'];
-$mois = getMois(date('d/m/Y'));
-$numAnnee = substr($mois, 0, 4);
-$numMois = substr($mois, 4, 2);
-$action = filter_input(INPUT_GET, 'action', FILTER_SANITIZE_STRING);
-$leMois = filter_input(INPUT_POST, 'lstMois', FILTER_SANITIZE_STRING);
+$mois       = getMois(date('d/m/Y'));
+$numAnnee   = substr($mois, 0, 4);
+$numMois    = substr($mois, 4, 2);
+$action     = filter_input(INPUT_GET, 'action', FILTER_SANITIZE_STRING);
+$leMois     = filter_input(INPUT_POST, 'lstMois', FILTER_SANITIZE_STRING);
 $moisASelectionner = $leMois;
 $leVisiteur = filter_input(INPUT_POST, 'lstVisiteur', FILTER_SANITIZE_STRING);
 $visiteurASelectionner = $leVisiteur;
@@ -31,7 +31,7 @@ $reponse = $bdd->query('SELECT * FROM visiteur where id = "'.$leVisiteur.'"');
 
 while ($donnees = $reponse->fetch())
 {
-    $leVisiteurNom = $donnees['nom'];
+    $leVisiteurNom    = $donnees['nom'];
     $leVisiteurPrenom = $donnees['prenom'];
 
 }
@@ -58,13 +58,13 @@ switch ($action) {
         if(isset($_POST['lstMois'])) {
            $mois = $_POST['lstMois'];
            }
-        $lesInfosFicheFrais = $pdo->getLesInfosFicheFrais($idVisiteur, $leMois); // Recupération des informations de la fiche de frais selon l'id du visiteur selectionné et le mois
+        $lesInfosFicheFrais  = $pdo->getLesInfosFicheFrais($idVisiteur, $leMois); // Recupération des informations de la fiche de frais selon l'id du visiteur selectionné et le mois
         $lesFraisHorsForfait = $pdo->getLesFraisHorsForfait($idVisiteur, $mois);  // Recupération des informations des lignes hors forfait de la fiche de frais selon l'id du visiteur selectionné et le mois
-        $ficheFraisTrouver = 0;
+        $ficheFraisTrouver   = 0;
         if(!empty($lesInfosFicheFrais)){ // Si une fiche de frais à été trouvée, on l'indique
             $ficheFraisTrouver = 1;
         }
-        
+       
         $nbJustificatifs = $lesInfosFicheFrais['nbJustificatifs']; // Récupération du nombre de justificatif
         if(isset($lesFrais)){ // Si il y a des frais et qu'ils sont valides, on peut mettre à jour la fiche de frais avec les nouvelles informations
             if (lesQteFraisValides($lesFrais)) {
@@ -81,7 +81,7 @@ switch ($action) {
             $libelle = $_POST['libelle'];
    
             $date = $_POST['date'];
-            $date = dateFrancaisVersAnglais($date);
+            $date = dateFrancaisVersAnglais($date); // conversion de la date
             $montant = $_POST['montant'];
             $dateSuivante = getMoisSuivant($date);
             $moisSuivant = getMoisSuivant($date);
@@ -102,15 +102,15 @@ switch ($action) {
         else if(isset($_POST['idSuppressionLigneHorsForfait'])) {
             $idSupprimerLigneHorsForfait = $_POST['idSuppressionLigneHorsForfait'];
             $libelle = $_POST['libelle'];
-            if((strpos($libelle, "REFUSE : ") === false)){
+            if((strpos($libelle, "REFUSE : ") === false)){ //Si "REFUSE : " n'a pas encore été ajouté au libellé, on l'ajoute en faisant attention que le libellé ne fasse pas plus de 100 caractères
                  $libelle = substr($libelle, 0, 91);
                  $libelle = "REFUSE : " . $libelle;
             }
                 
-            $date = $_POST['date'];
-            $date = dateFrancaisVersAnglais($date);
+            $date    = $_POST['date'];
+            $date    = dateFrancaisVersAnglais($date);
             $montant = $_POST['montant'];   
-            $mois = $_POST['lstMois']; 
+            $mois    = $_POST['lstMois']; 
                 
             // Mise à jour de la ligne hors forfait avec le nouveau libellé
             $pdo ->majFraisHorsForfait($idSupprimerLigneHorsForfait, $libelle, $date, $mois, $montant);
@@ -120,13 +120,22 @@ switch ($action) {
         else if(isset($_POST['validation'])){
             $etat = "VA"; 
             $pdo ->majEtatFicheFrais($idVisiteur, $mois, $etat); 
-            }
-            break;
+        }
+        break;
            
- 
 }
-$lesFraisForfait = $pdo->getLesFraisForfait($idVisiteur, $mois);
+$lesFraisForfait        = $pdo->getLesFraisForfait($idVisiteur, $mois);
+$lesFraisHorsForfait    = $pdo->getLesFraisHorsForfait($idVisiteur, $mois);
+$nombreFraisHorsForfait = 0;
 
+foreach ($lesFraisHorsForfait as $unFraisHorsForfait) {
+            
+    $libelle = $unFraisHorsForfait['libelle']; 
+    $ligneRefuser = strpos($libelle, "REFUSE : ");  
+    if($ligneRefuser === false) {
+        $nombreFraisHorsForfait = $nombreFraisHorsForfait + 1; // Compte du nombre de ligne hors-forfait non refusé pour une fiche de frais
+    }
+}
 require 'vues/v_validationFrais.php';
 
 

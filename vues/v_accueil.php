@@ -17,13 +17,16 @@
 ?>
 <div id="accueil">
     <h2>
-        Gestion des frais<small> - <?php echo $_SESSION['type'] ?> : 
-            <?php 
+        Gestion des frais<small> - <?php 
+        if(!empty($_SESSION['type'])) {
+            echo $_SESSION['type'] . " : " ;
+        }
+       
             echo $_SESSION['prenom'] . ' ' . $_SESSION['nom']
             ?></small>
     </h2>
 </div>
-	<?php if($_SESSION['type'] == "Visiteur") {?>
+<?php if($_SESSION['type'] == "Visiteur") {?>
 <div class="row">
     <div class="col-md-12">
         <div class="panel panel-primary">
@@ -51,8 +54,9 @@
             </div>
         </div>
     </div>
-</div> <?php } 
-    else if($_SESSION['type'] == "Comptable") {
+</div> 
+<?php } 
+else if($_SESSION['type'] == "Comptable") {
             ?>
 <div class="row">
     <div class="col-md-12">
@@ -84,4 +88,25 @@
         </div>
     </div>
 </div> <?php }
-            ?>
+else { ?>
+    <div class="row">
+    	<div class="col-md-12">
+    		<div class="panel panel-primary">
+    			<div class="panel-heading">
+    				<h3 class="panel-title">
+   						 <span class="glyphicon glyphicon-bookmark"></span>
+   						 Navigation
+    				</h3>
+    			</div>
+    					<div class="panel-body">
+    			<?php    if(empty($_SESSION['type'])) {
+    			            ajouterErreur('Aucun rôle ne vous est défini, consultez un des administrateurs pour régler ce problème.');
+                            include 'vues/v_erreurs.php'; 
+    			         }   ?>
+    					</div>			
+    		</div>
+    	</div>	
+    </div>	
+     <?php 
+}
+   ?>

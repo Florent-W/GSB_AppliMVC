@@ -11,7 +11,7 @@
 ?>  <?php 
 // récupération de l'action à faire dans l'URL
 $action = filter_input(INPUT_GET, 'action', FILTER_SANITIZE_STRING);  
-echo $ficheFraisTrouver; 
+
 ?>
 <?php 
 if($ficheFraisTrouver == 1) { // Si une fiche bien été trouvée, on affiche la page
@@ -110,49 +110,49 @@ if($ficheFraisTrouver == 1) { // Si une fiche bien été trouvée, on affiche la
 		 <div class="suivi">
 		
 		  <?php 
-		 $nombreFraisHorsForfait = COUNT($lesFraisHorsForfait);
-		 if($nombreFraisHorsForfait == 0) { ?>
+		 if($nombreFraisHorsForfait == 0) { // Si il n'y pas de frais hors-forfait, on affiche un message?>
 		      <div class="panel-orange">
 		 
-		 <div class="panel panel-info"><div class="panel-heading"> Aucun élément hors-forfait</div>
-		     </div>
+				 <div class="panel panel-info"><div class="panel-heading"> Aucun élément hors-forfait</div>
+		     	</div>
 		     </div> 
 		     <?php
 		 }
 		 else {
 		 ?>
-		<div class="panel-orange">
-			
-			<div class="panel panel-info">
-    			<div class="panel-heading">Descriptif des éléments hors forfait </div>
-       				
-        		<?php // Affichage permettant de voir les lignes hors forfait pour la ligne concernée
-                foreach ($lesFraisHorsForfait as $unFraisHorsForfait) {
-                    $date    = $unFraisHorsForfait['date'];
-                    $libelle = htmlspecialchars($unFraisHorsForfait['libelle']);
-                    $montant = $unFraisHorsForfait['montant']; 
-                    $id      = $unFraisHorsForfait['id']; 
+			<div class="panel-orange">
+				<div class="panel panel-info">
+    				<div class="panel-heading">Descriptif des éléments hors forfait </div>
+       				<table class="table table-bordered table-responsive">
+        			<?php // Affichage permettant de voir les lignes hors forfait pour la ligne concernée
+                    foreach ($lesFraisHorsForfait as $unFraisHorsForfait) {
+                        $date    = $unFraisHorsForfait['date'];
+                        $libelle = htmlspecialchars($unFraisHorsForfait['libelle']);
+                        $montant = $unFraisHorsForfait['montant']; 
+                        $id      = $unFraisHorsForfait['id']; 
+                        $ligneRefuser = strpos($libelle, "REFUSE : "); 
+                    
+                        if($ligneRefuser === false) { // On affiche seulement les lignes qui ne sont pas refusées
                     ?> 
     
-    				<table class="table table-bordered table-responsive">
-    
-        				<tr>
-            				<th class="date">Date (JJ/MM/AAAA)</th>
-            				<th class="libelle">Libellé</th>
-            				<th class='montant'>Montant</th>   
-       				   </tr>
+        					<tr>
+            					<th class="date">Date (JJ/MM/AAAA)</th>
+            					<th class="libelle">Libellé</th>
+            					<th class='montant'>Montant</th>   
+       				   		</tr>
             
-            			<tr>
-                			<td><input type="text" name="date" value="<?php echo $date ?>" maxlength="10" readonly></td>
-                			<td><input type="text" name="libelle" size="50" value="<?php echo $libelle ?>" readonly></td>
-                			<td><input type="text" name="montant" maxlength="11" value="<?php echo $montant ?>" readonly></td>             
-           			   </tr> 
+            				<tr>
+                				<td><input type="text" name="date" value="<?php echo $date ?>" maxlength="10" readonly></td>
+                				<td><input type="text" name="libelle" size="50" value="<?php echo $libelle ?>" readonly></td>
+                				<td><input type="text" name="montant" maxlength="11" value="<?php echo $montant ?>" readonly></td>             
+           			  	 	</tr> 
             
-          			<?php 
-                } ?>
-        
-    			</table> </div>
-		</div>
+          				<?php 
+                        } 
+                     } ?>       
+    				</table> 
+    			</div>
+			</div>
 		<?php }
 		?>
 		
@@ -161,22 +161,22 @@ if($ficheFraisTrouver == 1) { // Si une fiche bien été trouvée, on affiche la
  		<?php // Formulaire permettant d'indiquer que la fiche à été payée ou qu'elle reste en paiement 
          ?> 
 		
-              	<input type="hidden" name="lstMois" value="<?php echo $moisUtilisateur ?>">
-			  	<input type="hidden" name="lstVisiteur" value="<?php echo $idUtilisateur ?>">
-              	<button class="btn btn-success" type="submit" name="miseRemboursementFiche"
+         <input type="hidden" name="lstMois" value="<?php echo $moisUtilisateur ?>">
+		 <input type="hidden" name="lstVisiteur" value="<?php echo $idUtilisateur ?>">
+         <button class="btn btn-success" type="submit" name="miseRemboursementFiche"
                	onclick="return confirm('Voulez-vous confirmer le remboursement ?');" value="1">Fiche payée</button>
-               	<button class="btn btn-danger" type="submit" name="misePaiementFiche" value="1"<?php echo $id ?>" onclick="return confirm('Voulez-vous vraiment mettre en paiement ce frais ?');">Mise en paiement</button> 
+         <button class="btn btn-danger" type="submit" name="misePaiementFiche" value="1"<?php echo $id ?>" onclick="return confirm('Voulez-vous vraiment mettre en paiement ce frais ?');">Mise en paiement</button> 
                
-       </form> </div>
+      </form> 
+    </div>
   		<?php 
-  
    }       
 }
 
-else {       
-    /*
+else {   // Si aucune fiche de frais n'est à validée, un message d'erreur est affiché avec un retour au menu
+   
       include 'controleurs/c_accueil.php'; 
       ajouterErreur('Pas de fiche de frais validée. Retour au menu.');
-      include 'vues/v_erreurs.php'; */
+      include 'vues/v_erreurs.php'; 
 }
 ?>

@@ -85,9 +85,9 @@ switch ($action) {
                 $moisUtilisateur   = $moisProchainUtilisateur;
                 $ficheFraisTrouver = 1; 
             }
-
-            if (isset($moisProchainUtilisateur) AND (empty($memeUtilisateur)))  { // Sinon on cherche un utilisateur et un mois où il y a une fiche valide
-                foreach($tousUtilisateurs as $utilisateur)  { // Parcours de tous les utilisateurs
+             
+            if (empty($memeUtilisateur))  { // Sinon on cherche un utilisateur et un mois où il y a une fiche valide
+               foreach($tousUtilisateurs as $utilisateur)  { // Parcours de tous les utilisateurs
                     $id = $utilisateur['id'];   
  
                     if($utilisateurProchaineFicheTrouvee == 0) { // On continu à chercher tant qu'une fiche valide n'a pas été trouvé
@@ -103,7 +103,7 @@ switch ($action) {
                                
                                     if($ficheATrouver == 0){
                                         $moisUtilisateur = $mois; // Attribution du mois
-                                        $ficheATrouver = 1;
+                                        $ficheATrouver   = 1;
                                     }
                                 }
                                 $idUtilisateur = $id;  
@@ -116,7 +116,7 @@ switch ($action) {
                     $ficheFraisTrouver = 0;
                 } 
                 else {
-                    $ficheFraisTrouver = 1;
+                    $ficheFraisTrouver   = 1;
                     $lesFraisForfait     = $pdo->getLesFraisForfait($idUtilisateur, $moisUtilisateur);       
                 }     
           }
@@ -128,5 +128,15 @@ switch ($action) {
 $nbJustificatifs     =  $pdo->getNbjustificatifs($idUtilisateur, $moisUtilisateur); // Récupération du nombre de justificatif
 $lesFraisForfait     = $pdo->getLesFraisForfait($idUtilisateur, $moisUtilisateur);
 $lesFraisHorsForfait = $pdo->getLesFraisHorsForfait($idUtilisateur, $moisUtilisateur);
+
+$nombreFraisHorsForfait = 0;
+foreach ($lesFraisHorsForfait as $unFraisHorsForfait) {
+    
+    $libelle      = $unFraisHorsForfait['libelle'];
+    $ligneRefuser = strpos($libelle, "REFUSE : ");
+    if($ligneRefuser === false) {
+        $nombreFraisHorsForfait = $nombreFraisHorsForfait + 1; // Récupération du nombre de ligne hors-forfait mais valide
+    }
+}
 
 include 'vues/v_suiviPaiement.php';?>
