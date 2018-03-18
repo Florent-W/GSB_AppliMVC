@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the PHPUnit_MockObject package.
  *
@@ -18,12 +19,14 @@
  */
 interface PHPUnit_Framework_MockObject_Invokable extends PHPUnit_Framework_MockObject_Verifiable
 {
+
     /**
      * Invokes the invocation object $invocation so that it can be checked for
      * expectations or matched against stubs.
      *
-     * @param PHPUnit_Framework_MockObject_Invocation $invocation The invocation object passed from mock object
-     *
+     * @param PHPUnit_Framework_MockObject_Invocation $invocation
+     *            The invocation object passed from mock object
+     *            
      * @return object
      */
     public function invoke(PHPUnit_Framework_MockObject_Invocation $invocation);
@@ -31,8 +34,9 @@ interface PHPUnit_Framework_MockObject_Invokable extends PHPUnit_Framework_MockO
     /**
      * Checks if the invocation matches.
      *
-     * @param PHPUnit_Framework_MockObject_Invocation $invocation The invocation object passed from mock object
-     *
+     * @param PHPUnit_Framework_MockObject_Invocation $invocation
+     *            The invocation object passed from mock object
+     *            
      * @return bool
      */
     public function matches(PHPUnit_Framework_MockObject_Invocation $invocation);

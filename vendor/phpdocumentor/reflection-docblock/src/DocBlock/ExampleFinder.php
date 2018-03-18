@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of phpDocumentor.
  *
@@ -9,7 +10,6 @@
  * @license   http://www.opensource.org/licenses/mit-license.php MIT
  * @link      http://phpdoc.org
  */
-
 namespace phpDocumentor\Reflection\DocBlock;
 
 use phpDocumentor\Reflection\DocBlock\Tags\Example;
@@ -19,6 +19,7 @@ use phpDocumentor\Reflection\DocBlock\Tags\Example;
  */
 class ExampleFinder
 {
+
     /** @var string */
     private $sourceDirectory = '';
 
@@ -35,12 +36,12 @@ class ExampleFinder
     public function find(Example $example)
     {
         $filename = $example->getFilePath();
-
+        
         $file = $this->getExampleFileContents($filename);
-        if (!$file) {
+        if (! $file) {
             return "** File not found : {$filename} **";
         }
-
+        
         return implode('', array_slice($file, $example->getStartingLine() - 1, $example->getLineCount()));
     }
 
@@ -104,7 +105,7 @@ class ExampleFinder
     private function getExampleFileContents($filename)
     {
         $normalizedPath = null;
-
+        
         foreach ($this->exampleDirectories as $directory) {
             $exampleFileFromConfig = $this->constructExamplePath($directory, $filename);
             if (is_readable($exampleFileFromConfig)) {
@@ -112,8 +113,8 @@ class ExampleFinder
                 break;
             }
         }
-
-        if (!$normalizedPath) {
+        
+        if (! $normalizedPath) {
             if (is_readable($this->getExamplePathFromSource($filename))) {
                 $normalizedPath = $this->getExamplePathFromSource($filename);
             } elseif (is_readable($this->getExamplePathFromExampleDirectory($filename))) {
@@ -122,7 +123,7 @@ class ExampleFinder
                 $normalizedPath = $filename;
             }
         }
-
+        
         return $normalizedPath && is_readable($normalizedPath) ? file($normalizedPath) : null;
     }
 
@@ -160,11 +161,6 @@ class ExampleFinder
      */
     private function getExamplePathFromSource($file)
     {
-        return sprintf(
-            '%s%s%s',
-            trim($this->getSourceDirectory(), '\\/'),
-            DIRECTORY_SEPARATOR,
-            trim($file, '"')
-        );
+        return sprintf('%s%s%s', trim($this->getSourceDirectory(), '\\/'), DIRECTORY_SEPARATOR, trim($file, '"'));
     }
 }

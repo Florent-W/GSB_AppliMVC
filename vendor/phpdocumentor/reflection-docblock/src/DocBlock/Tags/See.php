@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of phpDocumentor.
  *
@@ -9,7 +10,6 @@
  * @license   http://www.opensource.org/licenses/mit-license.php MIT
  * @link      http://phpdoc.org
  */
-
 namespace phpDocumentor\Reflection\DocBlock\Tags;
 
 use phpDocumentor\Reflection\DocBlock\DescriptionFactory;
@@ -27,6 +27,7 @@ use Webmozart\Assert\Assert;
  */
 class See extends BaseTag implements Factory\StaticMethod
 {
+
     protected $name = 'see';
 
     /** @var Reference */
@@ -45,25 +46,25 @@ class See extends BaseTag implements Factory\StaticMethod
     }
 
     /**
+     *
      * {@inheritdoc}
      */
-    public static function create(
-        $body,
-        FqsenResolver $resolver = null,
-        DescriptionFactory $descriptionFactory = null,
-        TypeContext $context = null
-    ) {
+    public static function create($body, FqsenResolver $resolver = null, DescriptionFactory $descriptionFactory = null, TypeContext $context = null)
+    {
         Assert::string($body);
-        Assert::allNotNull([$resolver, $descriptionFactory]);
-
-        $parts       = preg_split('/\s+/Su', $body, 2);
+        Assert::allNotNull([
+            $resolver,
+            $descriptionFactory
+        ]);
+        
+        $parts = preg_split('/\s+/Su', $body, 2);
         $description = isset($parts[1]) ? $descriptionFactory->create($parts[1], $context) : null;
-
+        
         // https://tools.ietf.org/html/rfc2396#section-3
         if (preg_match('/\w:\/\/\w/i', $parts[0])) {
             return new static(new Url($parts[0]), $description);
         }
-
+        
         return new static(new FqsenRef($resolver->resolve($parts[0], $context)), $description);
     }
 

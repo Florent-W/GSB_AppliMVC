@@ -3,12 +3,11 @@
 /*
  * This file is part of the Prophecy.
  * (c) Konstantin Kudryashov <ever.zet@gmail.com>
- *     Marcello Duarte <marcello.duarte@gmail.com>
+ * Marcello Duarte <marcello.duarte@gmail.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace Prophecy\Argument\Token;
 
 /**
@@ -16,12 +15,13 @@ namespace Prophecy\Argument\Token;
  *
  * @author Boris Mikhaylov <kaguxmail@gmail.com>
  */
-
 class ArrayCountToken implements TokenInterface
 {
+
     private $count;
 
     /**
+     *
      * @param integer $value
      */
     public function __construct($value)
@@ -32,8 +32,9 @@ class ArrayCountToken implements TokenInterface
     /**
      * Scores 6 when argument has preset number of elements.
      *
-     * @param $argument
-     *
+     * @param
+     *            $argument
+     *            
      * @return bool|int
      */
     public function scoreArgument($argument)
@@ -64,7 +65,8 @@ class ArrayCountToken implements TokenInterface
     /**
      * Returns true if object is either array or instance of \Countable
      *
-     * @param $argument
+     * @param
+     *            $argument
      * @return bool
      */
     private function isCountable($argument)

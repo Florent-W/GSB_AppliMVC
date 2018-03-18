@@ -1,6 +1,6 @@
 {
-  "require": {
-    "phpunit/phpunit": "*",
-    "php": ">=5.3.17"
-  }
+	"require": {
+		"phpunit/phpunit": "*",
+		"php": ">=5.3.17"
+	}
 }

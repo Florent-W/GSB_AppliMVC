@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Comparator package.
  *
@@ -7,7 +8,6 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace SebastianBergmann\Comparator;
 
 /**
@@ -15,12 +15,15 @@ namespace SebastianBergmann\Comparator;
  */
 class Factory
 {
+
     /**
+     *
      * @var Comparator[]
      */
     private $comparators = array();
 
     /**
+     *
      * @var Factory
      */
     private static $instance;
@@ -30,37 +33,40 @@ class Factory
      */
     public function __construct()
     {
-        $this->register(new TypeComparator);
-        $this->register(new ScalarComparator);
-        $this->register(new NumericComparator);
-        $this->register(new DoubleComparator);
-        $this->register(new ArrayComparator);
-        $this->register(new ResourceComparator);
-        $this->register(new ObjectComparator);
-        $this->register(new ExceptionComparator);
-        $this->register(new SplObjectStorageComparator);
-        $this->register(new DOMNodeComparator);
-        $this->register(new MockObjectComparator);
-        $this->register(new DateTimeComparator);
+        $this->register(new TypeComparator());
+        $this->register(new ScalarComparator());
+        $this->register(new NumericComparator());
+        $this->register(new DoubleComparator());
+        $this->register(new ArrayComparator());
+        $this->register(new ResourceComparator());
+        $this->register(new ObjectComparator());
+        $this->register(new ExceptionComparator());
+        $this->register(new SplObjectStorageComparator());
+        $this->register(new DOMNodeComparator());
+        $this->register(new MockObjectComparator());
+        $this->register(new DateTimeComparator());
     }
 
     /**
+     *
      * @return Factory
      */
     public static function getInstance()
     {
         if (self::$instance === null) {
-            self::$instance = new self;
+            self::$instance = new self();
         }
-
+        
         return self::$instance;
     }
 
     /**
      * Returns the correct comparator for comparing two values.
      *
-     * @param  mixed      $expected The first value to compare
-     * @param  mixed      $actual   The second value to compare
+     * @param mixed $expected
+     *            The first value to compare
+     * @param mixed $actual
+     *            The second value to compare
      * @return Comparator
      */
     public function getComparatorFor($expected, $actual)
@@ -80,12 +86,13 @@ class Factory
      * existing comparators, meaning that its accept() method will be tested
      * before those of the other comparators.
      *
-     * @param Comparator $comparator The registered comparator
+     * @param Comparator $comparator
+     *            The registered comparator
      */
     public function register(Comparator $comparator)
     {
         array_unshift($this->comparators, $comparator);
-
+        
         $comparator->setFactory($this);
     }
 
@@ -94,7 +101,8 @@ class Factory
      *
      * This comparator will no longer be returned by getInstance().
      *
-     * @param Comparator $comparator The unregistered comparator
+     * @param Comparator $comparator
+     *            The unregistered comparator
      */
     public function unregister(Comparator $comparator)
     {

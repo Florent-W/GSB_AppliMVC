@@ -1,4 +1,5 @@
 <?php
+
 /*
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -16,7 +17,6 @@
  * and is licensed under the MIT license. For more information, see
  * <http://www.doctrine-project.org>.
  */
-
 namespace Doctrine\Instantiator\Exception;
 
 use Exception;
@@ -30,50 +30,31 @@ use UnexpectedValueException as BaseUnexpectedValueException;
  */
 class UnexpectedValueException extends BaseUnexpectedValueException implements ExceptionInterface
 {
+
     /**
+     *
      * @param ReflectionClass $reflectionClass
-     * @param Exception       $exception
+     * @param Exception $exception
      *
      * @return self
      */
     public static function fromSerializationTriggeredException(ReflectionClass $reflectionClass, Exception $exception)
     {
-        return new self(
-            sprintf(
-                'An exception was raised while trying to instantiate an instance of "%s" via un-serialization',
-                $reflectionClass->getName()
-            ),
-            0,
-            $exception
-        );
+        return new self(sprintf('An exception was raised while trying to instantiate an instance of "%s" via un-serialization', $reflectionClass->getName()), 0, $exception);
     }
 
     /**
+     *
      * @param ReflectionClass $reflectionClass
-     * @param string          $errorString
-     * @param int             $errorCode
-     * @param string          $errorFile
-     * @param int             $errorLine
+     * @param string $errorString
+     * @param int $errorCode
+     * @param string $errorFile
+     * @param int $errorLine
      *
      * @return UnexpectedValueException
      */
-    public static function fromUncleanUnSerialization(
-        ReflectionClass $reflectionClass,
-        $errorString,
-        $errorCode,
-        $errorFile,
-        $errorLine
-    ) {
-        return new self(
-            sprintf(
-                'Could not produce an instance of "%s" via un-serialization, since an error was triggered '
-                . 'in file "%s" at line "%d"',
-                $reflectionClass->getName(),
-                $errorFile,
-                $errorLine
-            ),
-            0,
-            new Exception($errorString, $errorCode)
-        );
+    public static function fromUncleanUnSerialization(ReflectionClass $reflectionClass, $errorString, $errorCode, $errorFile, $errorLine)
+    {
+        return new self(sprintf('Could not produce an instance of "%s" via un-serialization, since an error was triggered ' . 'in file "%s" at line "%d"', $reflectionClass->getName(), $errorFile, $errorLine), 0, new Exception($errorString, $errorCode));
     }
 }

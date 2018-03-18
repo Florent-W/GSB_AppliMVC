@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of PHPUnit.
  *
@@ -13,6 +14,7 @@
  */
 class PHPUnit_Util_TestDox_ResultPrinter_Text extends PHPUnit_Util_TestDox_ResultPrinter
 {
+
     /**
      * Handler for 'start class' event.
      *
@@ -27,7 +29,7 @@ class PHPUnit_Util_TestDox_ResultPrinter_Text extends PHPUnit_Util_TestDox_Resul
      * Handler for 'on test' event.
      *
      * @param string $name
-     * @param bool   $success
+     * @param bool $success
      */
     protected function onTest($name, $success = true)
     {
@@ -36,7 +38,7 @@ class PHPUnit_Util_TestDox_ResultPrinter_Text extends PHPUnit_Util_TestDox_Resul
         } else {
             $this->write(' [ ] ');
         }
-
+        
         $this->write($name . "\n");
     }
 

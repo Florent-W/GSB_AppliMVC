@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of sebastian/diff.
  *
@@ -7,39 +8,44 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace SebastianBergmann\Diff;
 
 class Diff
 {
+
     /**
+     *
      * @var string
      */
     private $from;
 
     /**
+     *
      * @var string
      */
     private $to;
 
     /**
+     *
      * @var Chunk[]
      */
     private $chunks;
 
     /**
-     * @param string  $from
-     * @param string  $to
+     *
+     * @param string $from
+     * @param string $to
      * @param Chunk[] $chunks
      */
     public function __construct($from, $to, array $chunks = array())
     {
-        $this->from   = $from;
-        $this->to     = $to;
+        $this->from = $from;
+        $this->to = $to;
         $this->chunks = $chunks;
     }
 
     /**
+     *
      * @return string
      */
     public function getFrom()
@@ -48,6 +54,7 @@ class Diff
     }
 
     /**
+     *
      * @return string
      */
     public function getTo()
@@ -56,6 +63,7 @@ class Diff
     }
 
     /**
+     *
      * @return Chunk[]
      */
     public function getChunks()
@@ -64,6 +72,7 @@ class Diff
     }
 
     /**
+     *
      * @param Chunk[] $chunks
      */
     public function setChunks(array $chunks)

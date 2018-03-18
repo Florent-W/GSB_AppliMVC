@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of phpDocumentor.
  *
@@ -9,10 +10,10 @@
  * @license   http://www.opensource.org/licenses/mit-license.php MIT
  * @link      http://phpdoc.org
  */
-
 namespace phpDocumentor\Reflection;
 
 interface Type
 {
+
     public function __toString();
 }

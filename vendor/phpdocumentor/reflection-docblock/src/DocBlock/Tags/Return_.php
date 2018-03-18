@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of phpDocumentor.
  *
@@ -9,7 +10,6 @@
  * @license   http://www.opensource.org/licenses/mit-license.php MIT
  * @link      http://phpdoc.org
  */
-
 namespace phpDocumentor\Reflection\DocBlock\Tags;
 
 use phpDocumentor\Reflection\DocBlock\Description;
@@ -24,6 +24,7 @@ use Webmozart\Assert\Assert;
  */
 final class Return_ extends BaseTag implements Factory\StaticMethod
 {
+
     protected $name = 'return';
 
     /** @var Type */
@@ -36,23 +37,22 @@ final class Return_ extends BaseTag implements Factory\StaticMethod
     }
 
     /**
+     *
      * {@inheritdoc}
      */
-    public static function create(
-        $body,
-        TypeResolver $typeResolver = null,
-        DescriptionFactory $descriptionFactory = null,
-        TypeContext $context = null
-    )
+    public static function create($body, TypeResolver $typeResolver = null, DescriptionFactory $descriptionFactory = null, TypeContext $context = null)
     {
         Assert::string($body);
-        Assert::allNotNull([$typeResolver, $descriptionFactory]);
-
+        Assert::allNotNull([
+            $typeResolver,
+            $descriptionFactory
+        ]);
+        
         $parts = preg_split('/\s+/Su', $body, 2);
-
+        
         $type = $typeResolver->resolve(isset($parts[0]) ? $parts[0] : '', $context);
         $description = $descriptionFactory->create(isset($parts[1]) ? $parts[1] : '', $context);
-
+        
         return new static($type, $description);
     }
 

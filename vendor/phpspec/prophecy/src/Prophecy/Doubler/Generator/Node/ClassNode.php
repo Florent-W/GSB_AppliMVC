@@ -3,12 +3,11 @@
 /*
  * This file is part of the Prophecy.
  * (c) Konstantin Kudryashov <ever.zet@gmail.com>
- *     Marcello Duarte <marcello.duarte@gmail.com>
+ * Marcello Duarte <marcello.duarte@gmail.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace Prophecy\Doubler\Generator\Node;
 
 use Prophecy\Exception\Doubler\MethodNotExtendableException;
@@ -21,15 +20,20 @@ use Prophecy\Exception\InvalidArgumentException;
  */
 class ClassNode
 {
+
     private $parentClass = 'stdClass';
-    private $interfaces  = array();
-    private $properties  = array();
+
+    private $interfaces = array();
+
+    private $properties = array();
+
     private $unextendableMethods = array();
 
     /**
+     *
      * @var MethodNode[]
      */
-    private $methods     = array();
+    private $methods = array();
 
     public function getParentClass()
     {
@@ -37,6 +41,7 @@ class ClassNode
     }
 
     /**
+     *
      * @param string $class
      */
     public function setParentClass($class)
@@ -45,6 +50,7 @@ class ClassNode
     }
 
     /**
+     *
      * @return string[]
      */
     public function getInterfaces()
@@ -53,6 +59,7 @@ class ClassNode
     }
 
     /**
+     *
      * @param string $interface
      */
     public function addInterface($interface)
@@ -60,11 +67,12 @@ class ClassNode
         if ($this->hasInterface($interface)) {
             return;
         }
-
+        
         array_unshift($this->interfaces, $interface);
     }
 
     /**
+     *
      * @param string $interface
      *
      * @return bool
@@ -82,17 +90,20 @@ class ClassNode
     public function addProperty($name, $visibility = 'public')
     {
         $visibility = strtolower($visibility);
-
-        if (!in_array($visibility, array('public', 'private', 'protected'))) {
-            throw new InvalidArgumentException(sprintf(
-                '`%s` property visibility is not supported.', $visibility
-            ));
+        
+        if (! in_array($visibility, array(
+            'public',
+            'private',
+            'protected'
+        ))) {
+            throw new InvalidArgumentException(sprintf('`%s` property visibility is not supported.', $visibility));
         }
-
+        
         $this->properties[$name] = $visibility;
     }
 
     /**
+     *
      * @return MethodNode[]
      */
     public function getMethods()
@@ -102,10 +113,8 @@ class ClassNode
 
     public function addMethod(MethodNode $method)
     {
-        if (!$this->isExtendable($method->getName())){
-            $message = sprintf(
-                'Method `%s` is not extendable, so can not be added.', $method->getName()
-            );
+        if (! $this->isExtendable($method->getName())) {
+            $message = sprintf('Method `%s` is not extendable, so can not be added.', $method->getName());
             throw new MethodNotExtendableException($message, $this->getParentClass(), $method->getName());
         }
         $this->methods[$method->getName()] = $method;
@@ -117,6 +126,7 @@ class ClassNode
     }
 
     /**
+     *
      * @param string $name
      *
      * @return MethodNode|null
@@ -127,6 +137,7 @@ class ClassNode
     }
 
     /**
+     *
      * @param string $name
      *
      * @return bool
@@ -137,6 +148,7 @@ class ClassNode
     }
 
     /**
+     *
      * @return string[]
      */
     public function getUnextendableMethods()
@@ -145,22 +157,24 @@ class ClassNode
     }
 
     /**
+     *
      * @param string $unextendableMethod
      */
     public function addUnextendableMethod($unextendableMethod)
     {
-        if (!$this->isExtendable($unextendableMethod)){
+        if (! $this->isExtendable($unextendableMethod)) {
             return;
         }
         $this->unextendableMethods[] = $unextendableMethod;
     }
 
     /**
+     *
      * @param string $method
      * @return bool
      */
     public function isExtendable($method)
     {
-        return !in_array($method, $this->unextendableMethods);
+        return ! in_array($method, $this->unextendableMethods);
     }
 }

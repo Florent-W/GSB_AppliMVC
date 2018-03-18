@@ -8,7 +8,6 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace Symfony\Component\Yaml\Tests;
 
 use PHPUnit\Framework\TestCase;
@@ -16,9 +15,13 @@ use Symfony\Component\Yaml\Yaml;
 
 class YamlTest extends TestCase
 {
+
     public function testParseAndDump()
     {
-        $data = array('lorem' => 'ipsum', 'dolor' => 'sit');
+        $data = array(
+            'lorem' => 'ipsum',
+            'dolor' => 'sit'
+        );
         $yml = Yaml::dump($data);
         $parsed = Yaml::parse($yml);
         $this->assertEquals($data, $parsed);
@@ -30,7 +33,10 @@ class YamlTest extends TestCase
      */
     public function testZeroIndentationThrowsException()
     {
-        Yaml::dump(array('lorem' => 'ipsum', 'dolor' => 'sit'), 2, 0);
+        Yaml::dump(array(
+            'lorem' => 'ipsum',
+            'dolor' => 'sit'
+        ), 2, 0);
     }
 
     /**
@@ -39,6 +45,9 @@ class YamlTest extends TestCase
      */
     public function testNegativeIndentationThrowsException()
     {
-        Yaml::dump(array('lorem' => 'ipsum', 'dolor' => 'sit'), 2, -4);
+        Yaml::dump(array(
+            'lorem' => 'ipsum',
+            'dolor' => 'sit'
+        ), 2, - 4);
     }
 }

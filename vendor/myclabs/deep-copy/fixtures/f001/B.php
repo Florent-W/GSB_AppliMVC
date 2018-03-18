@@ -1,9 +1,9 @@
 <?php
-
 namespace DeepCopy\f001;
 
 class B extends A
 {
+
     private $bProp;
 
     public function getBProp()
@@ -14,7 +14,7 @@ class B extends A
     public function setBProp($prop)
     {
         $this->bProp = $prop;
-
+        
         return $this;
     }
 }

@@ -3,12 +3,11 @@
 /*
  * This file is part of the Prophecy.
  * (c) Konstantin Kudryashov <ever.zet@gmail.com>
- *     Marcello Duarte <marcello.duarte@gmail.com>
+ * Marcello Duarte <marcello.duarte@gmail.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace Prophecy\Argument\Token;
 
 use Prophecy\Exception\InvalidArgumentException;
@@ -20,28 +19,29 @@ use Prophecy\Exception\InvalidArgumentException;
  */
 class TypeToken implements TokenInterface
 {
+
     private $type;
 
     /**
+     *
      * @param string $type
      */
     public function __construct($type)
     {
         $checker = "is_{$type}";
-        if (!function_exists($checker) && !interface_exists($type) && !class_exists($type)) {
-            throw new InvalidArgumentException(sprintf(
-                'Type or class name expected as an argument to TypeToken, but got %s.', $type
-            ));
+        if (! function_exists($checker) && ! interface_exists($type) && ! class_exists($type)) {
+            throw new InvalidArgumentException(sprintf('Type or class name expected as an argument to TypeToken, but got %s.', $type));
         }
-
+        
         $this->type = $type;
     }
 
     /**
      * Scores 5 if argument has the same type this token was constructed with.
      *
-     * @param $argument
-     *
+     * @param
+     *            $argument
+     *            
      * @return bool|int
      */
     public function scoreArgument($argument)
@@ -50,7 +50,7 @@ class TypeToken implements TokenInterface
         if (function_exists($checker)) {
             return call_user_func($checker, $argument) ? 5 : false;
         }
-
+        
         return $argument instanceof $this->type ? 5 : false;
     }
 

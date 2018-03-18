@@ -1,15 +1,16 @@
 <?php
-
 namespace DeepCopy\Matcher\Doctrine;
 
 use DeepCopy\Matcher\Matcher;
 use Doctrine\Common\Persistence\Proxy;
 
 /**
+ *
  * @final
  */
 class DoctrineProxyMatcher implements Matcher
 {
+
     /**
      * Matches a Doctrine Proxy class.
      *

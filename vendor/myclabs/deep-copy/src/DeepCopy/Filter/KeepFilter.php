@@ -1,9 +1,9 @@
 <?php
-
 namespace DeepCopy\Filter;
 
 class KeepFilter implements Filter
 {
+
     /**
      * Keeps the value of the object property.
      *

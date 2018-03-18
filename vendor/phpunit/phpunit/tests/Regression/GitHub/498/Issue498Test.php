@@ -2,6 +2,7 @@
 
 class Issue498Test extends PHPUnit_Framework_TestCase
 {
+
     /**
      * @test
      * @dataProvider shouldBeTrueDataProvider
@@ -24,21 +25,29 @@ class Issue498Test extends PHPUnit_Framework_TestCase
 
     public function shouldBeTrueDataProvider()
     {
-
-        //throw new Exception("Can't create the data");
+        
+        // throw new Exception("Can't create the data");
         return [
-            [true],
-            [false]
+            [
+                true
+            ],
+            [
+                false
+            ]
         ];
     }
 
     public function shouldBeFalseDataProvider()
     {
         throw new Exception("Can't create the data");
-
+        
         return [
-            [true],
-            [false]
+            [
+                true
+            ],
+            [
+                false
+            ]
         ];
     }
 }

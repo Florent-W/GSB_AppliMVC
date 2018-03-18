@@ -1,10 +1,11 @@
 <?php
-
 namespace DeepCopy\Matcher;
 
 interface Matcher
 {
+
     /**
+     *
      * @param object $object
      * @param string $property
      *

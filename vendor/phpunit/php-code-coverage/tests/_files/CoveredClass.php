@@ -1,9 +1,10 @@
 <?php
+
 class CoveredParentClass
 {
+
     private function privateMethod()
-    {
-    }
+    {}
 
     protected function protectedMethod()
     {
@@ -18,9 +19,9 @@ class CoveredParentClass
 
 class CoveredClass extends CoveredParentClass
 {
+
     private function privateMethod()
-    {
-    }
+    {}
 
     protected function protectedMethod()
     {

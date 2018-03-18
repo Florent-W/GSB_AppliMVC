@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of phpDocumentor.
  *
@@ -9,7 +10,6 @@
  * @license   http://www.opensource.org/licenses/mit-license.php MIT
  * @link      http://phpdoc.org
  */
-
 namespace phpDocumentor\Reflection\DocBlock\Tags;
 
 use phpDocumentor\Reflection\DocBlock\Description;
@@ -24,6 +24,7 @@ use Webmozart\Assert\Assert;
  */
 final class Uses extends BaseTag implements Factory\StaticMethod
 {
+
     protected $name = 'uses';
 
     /** @var Fqsen */
@@ -32,33 +33,30 @@ final class Uses extends BaseTag implements Factory\StaticMethod
     /**
      * Initializes this tag.
      *
-     * @param Fqsen       $refers
+     * @param Fqsen $refers
      * @param Description $description
      */
     public function __construct(Fqsen $refers, Description $description = null)
     {
-        $this->refers      = $refers;
+        $this->refers = $refers;
         $this->description = $description;
     }
 
     /**
+     *
      * {@inheritdoc}
      */
-    public static function create(
-        $body,
-        FqsenResolver $resolver = null,
-        DescriptionFactory $descriptionFactory = null,
-        TypeContext $context = null
-    ) {
+    public static function create($body, FqsenResolver $resolver = null, DescriptionFactory $descriptionFactory = null, TypeContext $context = null)
+    {
         Assert::string($body);
-        Assert::allNotNull([$resolver, $descriptionFactory]);
-
+        Assert::allNotNull([
+            $resolver,
+            $descriptionFactory
+        ]);
+        
         $parts = preg_split('/\s+/Su', $body, 2);
-
-        return new static(
-            $resolver->resolve($parts[0], $context),
-            $descriptionFactory->create(isset($parts[1]) ? $parts[1] : '', $context)
-        );
+        
+        return new static($resolver->resolve($parts[0], $context), $descriptionFactory->create(isset($parts[1]) ? $parts[1] : '', $context));
     }
 
     /**

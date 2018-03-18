@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the PHPUnit_MockObject package.
  *
@@ -15,6 +16,7 @@
  */
 class PHPUnit_Framework_MockObject_Stub_ReturnReference extends PHPUnit_Framework_MockObject_Stub_Return
 {
+
     public function __construct(&$value)
     {
         $this->value = &$value;

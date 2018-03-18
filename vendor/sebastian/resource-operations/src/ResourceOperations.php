@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of resource-operations.
  *
@@ -7,12 +8,13 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace SebastianBergmann\ResourceOperations;
 
 class ResourceOperations
 {
+
     /**
+     *
      * @return string[]
      */
     public static function getFunctions()
@@ -664,7 +666,7 @@ class ResourceOperations
             'xmlwriter_open_uri',
             'xslt_create',
             'zip_open',
-            'zip_read',
+            'zip_read'
         ];
     }
 }

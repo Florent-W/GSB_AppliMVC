@@ -8,7 +8,6 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace Symfony\Component\Yaml;
 
 use Symfony\Component\Yaml\Exception\ParseException;
@@ -18,11 +17,12 @@ use Symfony\Component\Yaml\Exception\ParseException;
  * YAML strings.
  *
  * @author Matthew Lewinski <matthew@lewinski.org>
- *
+ *        
  * @internal
  */
 class Unescaper
 {
+
     /**
      * Regex fragment that matches an escaped character in a double quoted string.
      */
@@ -31,8 +31,9 @@ class Unescaper
     /**
      * Unescapes a single quoted string.
      *
-     * @param string $value A single quoted string
-     *
+     * @param string $value
+     *            A single quoted string
+     *            
      * @return string The unescaped string
      */
     public function unescapeSingleQuotedString($value)
@@ -43,8 +44,9 @@ class Unescaper
     /**
      * Unescapes a double quoted string.
      *
-     * @param string $value A double quoted string
-     *
+     * @param string $value
+     *            A double quoted string
+     *            
      * @return string The unescaped string
      */
     public function unescapeDoubleQuotedString($value)
@@ -52,16 +54,17 @@ class Unescaper
         $callback = function ($match) {
             return $this->unescapeCharacter($match[0]);
         };
-
+        
         // evaluate the string
-        return preg_replace_callback('/'.self::REGEX_ESCAPED_CHARACTER.'/u', $callback, $value);
+        return preg_replace_callback('/' . self::REGEX_ESCAPED_CHARACTER . '/u', $callback, $value);
     }
 
     /**
      * Unescapes a character that was found in a double-quoted string.
      *
-     * @param string $value An escaped character
-     *
+     * @param string $value
+     *            An escaped character
+     *            
      * @return string The unescaped character
      */
     private function unescapeCharacter($value)
@@ -121,8 +124,9 @@ class Unescaper
     /**
      * Get the UTF-8 character for the given code point.
      *
-     * @param int $c The unicode code point
-     *
+     * @param int $c
+     *            The unicode code point
+     *            
      * @return string The corresponding UTF-8 character
      */
     private static function utf8chr($c)
@@ -131,12 +135,12 @@ class Unescaper
             return chr($c);
         }
         if (0x800 > $c) {
-            return chr(0xC0 | $c >> 6).chr(0x80 | $c & 0x3F);
+            return chr(0xC0 | $c >> 6) . chr(0x80 | $c & 0x3F);
         }
         if (0x10000 > $c) {
-            return chr(0xE0 | $c >> 12).chr(0x80 | $c >> 6 & 0x3F).chr(0x80 | $c & 0x3F);
+            return chr(0xE0 | $c >> 12) . chr(0x80 | $c >> 6 & 0x3F) . chr(0x80 | $c & 0x3F);
         }
-
-        return chr(0xF0 | $c >> 18).chr(0x80 | $c >> 12 & 0x3F).chr(0x80 | $c >> 6 & 0x3F).chr(0x80 | $c & 0x3F);
+        
+        return chr(0xF0 | $c >> 18) . chr(0x80 | $c >> 12 & 0x3F) . chr(0x80 | $c >> 6 & 0x3F) . chr(0x80 | $c & 0x3F);
     }
 }

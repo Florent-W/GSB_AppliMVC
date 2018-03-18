@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of sebastian/diff.
  *
@@ -7,53 +8,60 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace SebastianBergmann\Diff;
 
 class Chunk
 {
+
     /**
+     *
      * @var int
      */
     private $start;
 
     /**
+     *
      * @var int
      */
     private $startRange;
 
     /**
+     *
      * @var int
      */
     private $end;
 
     /**
+     *
      * @var int
      */
     private $endRange;
 
     /**
+     *
      * @var array
      */
     private $lines;
 
     /**
-     * @param int   $start
-     * @param int   $startRange
-     * @param int   $end
-     * @param int   $endRange
+     *
+     * @param int $start
+     * @param int $startRange
+     * @param int $end
+     * @param int $endRange
      * @param array $lines
      */
     public function __construct($start = 0, $startRange = 1, $end = 0, $endRange = 1, array $lines = array())
     {
-        $this->start      = (int) $start;
+        $this->start = (int) $start;
         $this->startRange = (int) $startRange;
-        $this->end        = (int) $end;
-        $this->endRange   = (int) $endRange;
-        $this->lines      = $lines;
+        $this->end = (int) $end;
+        $this->endRange = (int) $endRange;
+        $this->lines = $lines;
     }
 
     /**
+     *
      * @return int
      */
     public function getStart()
@@ -62,6 +70,7 @@ class Chunk
     }
 
     /**
+     *
      * @return int
      */
     public function getStartRange()
@@ -70,6 +79,7 @@ class Chunk
     }
 
     /**
+     *
      * @return int
      */
     public function getEnd()
@@ -78,6 +88,7 @@ class Chunk
     }
 
     /**
+     *
      * @return int
      */
     public function getEndRange()
@@ -86,6 +97,7 @@ class Chunk
     }
 
     /**
+     *
      * @return array
      */
     public function getLines()
@@ -94,6 +106,7 @@ class Chunk
     }
 
     /**
+     *
      * @param array $lines
      */
     public function setLines(array $lines)

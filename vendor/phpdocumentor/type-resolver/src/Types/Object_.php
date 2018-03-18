@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of phpDocumentor.
  *
@@ -9,7 +10,6 @@
  * @license   http://www.opensource.org/licenses/mit-license.php MIT
  * @link      http://phpdoc.org
  */
-
 namespace phpDocumentor\Reflection\Types;
 
 use phpDocumentor\Reflection\Fqsen;
@@ -24,6 +24,7 @@ use phpDocumentor\Reflection\Type;
  */
 final class Object_ implements Type
 {
+
     /** @var Fqsen|null */
     private $fqsen;
 
@@ -35,13 +36,10 @@ final class Object_ implements Type
      */
     public function __construct(Fqsen $fqsen = null)
     {
-        if (strpos((string)$fqsen, '::') !== false || strpos((string)$fqsen, '()') !== false) {
-            throw new \InvalidArgumentException(
-                'Object types can only refer to a class, interface or trait but a method, function, constant or '
-                . 'property was received: ' . (string)$fqsen
-            );
+        if (strpos((string) $fqsen, '::') !== false || strpos((string) $fqsen, '()') !== false) {
+            throw new \InvalidArgumentException('Object types can only refer to a class, interface or trait but a method, function, constant or ' . 'property was received: ' . (string) $fqsen);
         }
-
+        
         $this->fqsen = $fqsen;
     }
 
@@ -63,9 +61,9 @@ final class Object_ implements Type
     public function __toString()
     {
         if ($this->fqsen) {
-            return (string)$this->fqsen;
+            return (string) $this->fqsen;
         }
-
+        
         return 'object';
     }
 }

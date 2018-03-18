@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of PHPUnit.
  *
@@ -13,32 +14,39 @@
  */
 class PHPUnit_Framework_WarningTestCase extends PHPUnit_Framework_TestCase
 {
+
     /**
+     *
      * @var string
      */
     protected $message = '';
 
     /**
+     *
      * @var bool
      */
     protected $backupGlobals = false;
 
     /**
+     *
      * @var bool
      */
     protected $backupStaticAttributes = false;
 
     /**
+     *
      * @var bool
      */
     protected $runTestInSeparateProcess = false;
 
     /**
+     *
      * @var bool
      */
     protected $useErrorHandler = false;
 
     /**
+     *
      * @param string $message
      */
     public function __construct($message = '')
@@ -48,6 +56,7 @@ class PHPUnit_Framework_WarningTestCase extends PHPUnit_Framework_TestCase
     }
 
     /**
+     *
      * @throws PHPUnit_Framework_Exception
      */
     protected function runTest()
@@ -56,6 +65,7 @@ class PHPUnit_Framework_WarningTestCase extends PHPUnit_Framework_TestCase
     }
 
     /**
+     *
      * @return string
      */
     public function getMessage()

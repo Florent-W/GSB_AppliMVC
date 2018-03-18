@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the PHPUnit_MockObject package.
  *
@@ -22,17 +23,21 @@
  */
 class PHPUnit_Framework_MockObject_Matcher_InvokedAtIndex implements PHPUnit_Framework_MockObject_Matcher_Invocation
 {
+
     /**
+     *
      * @var int
      */
     protected $sequenceIndex;
 
     /**
+     *
      * @var int
      */
-    protected $currentIndex = -1;
+    protected $currentIndex = - 1;
 
     /**
+     *
      * @param int $sequenceIndex
      */
     public function __construct($sequenceIndex)
@@ -41,6 +46,7 @@ class PHPUnit_Framework_MockObject_Matcher_InvokedAtIndex implements PHPUnit_Fra
     }
 
     /**
+     *
      * @return string
      */
     public function toString()
@@ -49,26 +55,28 @@ class PHPUnit_Framework_MockObject_Matcher_InvokedAtIndex implements PHPUnit_Fra
     }
 
     /**
+     *
      * @param PHPUnit_Framework_MockObject_Invocation $invocation
      *
      * @return bool
      */
     public function matches(PHPUnit_Framework_MockObject_Invocation $invocation)
     {
-        $this->currentIndex++;
-
+        $this->currentIndex ++;
+        
         return $this->currentIndex == $this->sequenceIndex;
     }
 
     /**
+     *
      * @param PHPUnit_Framework_MockObject_Invocation $invocation
      */
     public function invoked(PHPUnit_Framework_MockObject_Invocation $invocation)
-    {
-    }
+    {}
 
     /**
-     * Verifies that the current expectation is valid. If everything is OK the
+     * Verifies that the current expectation is valid.
+     * If everything is OK the
      * code should just return, if not it must throw an exception.
      *
      * @throws PHPUnit_Framework_ExpectationFailedException
@@ -76,12 +84,7 @@ class PHPUnit_Framework_MockObject_Matcher_InvokedAtIndex implements PHPUnit_Fra
     public function verify()
     {
         if ($this->currentIndex < $this->sequenceIndex) {
-            throw new PHPUnit_Framework_ExpectationFailedException(
-                sprintf(
-                    'The expected invocation at index %s was never reached.',
-                    $this->sequenceIndex
-                )
-            );
+            throw new PHPUnit_Framework_ExpectationFailedException(sprintf('The expected invocation at index %s was never reached.', $this->sequenceIndex));
         }
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of PHPUnit.
  *
@@ -16,12 +17,15 @@
  */
 class PHPUnit_Framework_Constraint_IsInstanceOf extends PHPUnit_Framework_Constraint
 {
+
     /**
+     *
      * @var string
      */
     protected $className;
 
     /**
+     *
      * @param string $className
      */
     public function __construct($className)
@@ -31,11 +35,13 @@ class PHPUnit_Framework_Constraint_IsInstanceOf extends PHPUnit_Framework_Constr
     }
 
     /**
-     * Evaluates the constraint for parameter $other. Returns true if the
+     * Evaluates the constraint for parameter $other.
+     * Returns true if the
      * constraint is met, false otherwise.
      *
-     * @param mixed $other Value or object to evaluate.
-     *
+     * @param mixed $other
+     *            Value or object to evaluate.
+     *            
      * @return bool
      */
     protected function matches($other)
@@ -49,18 +55,14 @@ class PHPUnit_Framework_Constraint_IsInstanceOf extends PHPUnit_Framework_Constr
      * The beginning of failure messages is "Failed asserting that" in most
      * cases. This method should return the second part of that sentence.
      *
-     * @param mixed $other Evaluated value or object.
-     *
+     * @param mixed $other
+     *            Evaluated value or object.
+     *            
      * @return string
      */
     protected function failureDescription($other)
     {
-        return sprintf(
-            '%s is an instance of %s "%s"',
-            $this->exporter->shortenedExport($other),
-            $this->getType(),
-            $this->className
-        );
+        return sprintf('%s is an instance of %s "%s"', $this->exporter->shortenedExport($other), $this->getType(), $this->className);
     }
 
     /**
@@ -70,11 +72,7 @@ class PHPUnit_Framework_Constraint_IsInstanceOf extends PHPUnit_Framework_Constr
      */
     public function toString()
     {
-        return sprintf(
-            'is instance of %s "%s"',
-            $this->getType(),
-            $this->className
-        );
+        return sprintf('is instance of %s "%s"', $this->getType(), $this->className);
     }
 
     private function getType()
@@ -84,9 +82,8 @@ class PHPUnit_Framework_Constraint_IsInstanceOf extends PHPUnit_Framework_Constr
             if ($reflection->isInterface()) {
                 return 'interface';
             }
-        } catch (ReflectionException $e) {
-        }
-
+        } catch (ReflectionException $e) {}
+        
         return 'class';
     }
 }

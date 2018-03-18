@@ -1,6 +1,8 @@
 <?php
+
 class Issue1351Test extends PHPUnit_Framework_TestCase
 {
+
     protected $instance;
 
     /**

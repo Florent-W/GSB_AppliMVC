@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Recursion Context package.
  *
@@ -7,7 +8,6 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace SebastianBergmann\RecursionContext;
 
 /**
@@ -16,12 +16,15 @@ namespace SebastianBergmann\RecursionContext;
  */
 final class Context
 {
+
     /**
+     *
      * @var array[]
      */
     private $arrays;
 
     /**
+     *
      * @var \SplObjectStorage
      */
     private $objects;
@@ -31,17 +34,18 @@ final class Context
      */
     public function __construct()
     {
-        $this->arrays  = array();
-        $this->objects = new \SplObjectStorage;
+        $this->arrays = array();
+        $this->objects = new \SplObjectStorage();
     }
 
     /**
      * Adds a value to the context.
      *
-     * @param array|object $value The value to add.
-     *
+     * @param array|object $value
+     *            The value to add.
+     *            
      * @return int|string The ID of the stored value, either as a string or integer.
-     *
+     *        
      * @throws InvalidArgumentException Thrown if $value is not an array or object
      */
     public function add(&$value)
@@ -51,19 +55,18 @@ final class Context
         } elseif (is_object($value)) {
             return $this->addObject($value);
         }
-
-        throw new InvalidArgumentException(
-            'Only arrays and objects are supported'
-        );
+        
+        throw new InvalidArgumentException('Only arrays and objects are supported');
     }
 
     /**
      * Checks if the given value exists within the context.
      *
-     * @param array|object $value The value to check.
-     *
+     * @param array|object $value
+     *            The value to check.
+     *            
      * @return int|string|false The string or integer ID of the stored value if it has already been seen, or false if the value is not stored.
-     *
+     *        
      * @throws InvalidArgumentException Thrown if $value is not an array or object
      */
     public function contains(&$value)
@@ -73,13 +76,12 @@ final class Context
         } elseif (is_object($value)) {
             return $this->containsObject($value);
         }
-
-        throw new InvalidArgumentException(
-            'Only arrays and objects are supported'
-        );
+        
+        throw new InvalidArgumentException('Only arrays and objects are supported');
     }
 
     /**
+     *
      * @param array $array
      *
      * @return bool|int
@@ -87,61 +89,64 @@ final class Context
     private function addArray(array &$array)
     {
         $key = $this->containsArray($array);
-
+        
         if ($key !== false) {
             return $key;
         }
-
-        $key            = count($this->arrays);
+        
+        $key = count($this->arrays);
         $this->arrays[] = &$array;
-
-        if (!isset($array[PHP_INT_MAX]) && !isset($array[PHP_INT_MAX - 1])) {
+        
+        if (! isset($array[PHP_INT_MAX]) && ! isset($array[PHP_INT_MAX - 1])) {
             $array[] = $key;
             $array[] = $this->objects;
         } else { /* cover the improbable case too */
             do {
                 $key = random_int(PHP_INT_MIN, PHP_INT_MAX);
             } while (isset($array[$key]));
-
+            
             $array[$key] = $key;
-
+            
             do {
                 $key = random_int(PHP_INT_MIN, PHP_INT_MAX);
             } while (isset($array[$key]));
-
+            
             $array[$key] = $this->objects;
         }
-
+        
         return $key;
     }
 
     /**
+     *
      * @param object $object
      *
      * @return string
      */
     private function addObject($object)
     {
-        if (!$this->objects->contains($object)) {
+        if (! $this->objects->contains($object)) {
             $this->objects->attach($object);
         }
-
+        
         return spl_object_hash($object);
     }
 
     /**
+     *
      * @param array $array
      *
      * @return int|false
      */
     private function containsArray(array &$array)
     {
-        $end = array_slice($array, -2);
-
+        $end = array_slice($array, - 2);
+        
         return isset($end[1]) && $end[1] === $this->objects ? $end[0] : false;
     }
 
     /**
+     *
      * @param object $value
      *
      * @return string|false
@@ -151,7 +156,7 @@ final class Context
         if ($this->objects->contains($value)) {
             return spl_object_hash($value);
         }
-
+        
         return false;
     }
 

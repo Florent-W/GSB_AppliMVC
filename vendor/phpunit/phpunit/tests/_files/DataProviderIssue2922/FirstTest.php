@@ -1,5 +1,4 @@
 <?php
-
 namespace Foo\DataProviderIssue2922;
 
 use PHPUnit\Framework\TestCase;
@@ -9,6 +8,7 @@ use PHPUnit\Framework\TestCase;
  */
 class FirstTest extends TestCase
 {
+
     /**
      * @dataProvider provide
      */

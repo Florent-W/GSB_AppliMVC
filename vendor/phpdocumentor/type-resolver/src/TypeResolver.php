@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of phpDocumentor.
  *
@@ -9,7 +10,6 @@
  * @license   http://www.opensource.org/licenses/mit-license.php MIT
  * @link      http://phpdoc.org
  */
-
 namespace phpDocumentor\Reflection;
 
 use phpDocumentor\Reflection\Types\Array_;
@@ -21,6 +21,7 @@ use phpDocumentor\Reflection\Types\Object_;
 
 final class TypeResolver
 {
+
     /** @var string Definition of the ARRAY operator for types */
     const OPERATOR_ARRAY = '[]';
 
@@ -51,7 +52,7 @@ final class TypeResolver
         '$this' => Types\This::class,
         'static' => Types\Static_::class,
         'parent' => Types\Parent_::class,
-        'iterable' => Iterable_::class,
+        'iterable' => Iterable_::class
     );
 
     /** @var FqsenResolver */
@@ -77,32 +78,31 @@ final class TypeResolver
      * This method only works as expected if the namespace and aliases are set;
      * no dynamic reflection is being performed here.
      *
-     * @param string $type     The relative or absolute type.
+     * @param string $type
+     *            The relative or absolute type.
      * @param Context $context
      *
-     * @uses Context::getNamespace()        to determine with what to prefix the type name.
+     * @uses Context::getNamespace() to determine with what to prefix the type name.
      * @uses Context::getNamespaceAliases() to check whether the first part of the relative type name should not be
-     *     replaced with another namespace.
-     *
+     *       replaced with another namespace.
+     *      
      * @return Type|null
      */
     public function resolve($type, Context $context = null)
     {
-        if (!is_string($type)) {
-            throw new \InvalidArgumentException(
-                'Attempted to resolve type but it appeared not to be a string, received: ' . var_export($type, true)
-            );
+        if (! is_string($type)) {
+            throw new \InvalidArgumentException('Attempted to resolve type but it appeared not to be a string, received: ' . var_export($type, true));
         }
-
+        
         $type = trim($type);
-        if (!$type) {
+        if (! $type) {
             throw new \InvalidArgumentException('Attempted to resolve "' . $type . '" but it appears to be empty');
         }
-
+        
         if ($context === null) {
             $context = new Context('');
         }
-
+        
         switch (true) {
             case $this->isNullableType($type):
                 return $this->resolveNullableType($type, $context);
@@ -119,9 +119,7 @@ final class TypeResolver
             // @codeCoverageIgnoreStart
             default:
                 // I haven't got the foggiest how the logic would come here but added this as a defense.
-                throw new \RuntimeException(
-                    'Unable to resolve type "' . $type . '", there is no known method to resolve it'
-                );
+                throw new \RuntimeException('Unable to resolve type "' . $type . '", there is no known method to resolve it');
         }
         // @codeCoverageIgnoreEnd
     }
@@ -136,39 +134,36 @@ final class TypeResolver
      */
     public function addKeyword($keyword, $typeClassName)
     {
-        if (!class_exists($typeClassName)) {
-            throw new \InvalidArgumentException(
-                'The Value Object that needs to be created with a keyword "' . $keyword . '" must be an existing class'
-                . ' but we could not find the class ' . $typeClassName
-            );
+        if (! class_exists($typeClassName)) {
+            throw new \InvalidArgumentException('The Value Object that needs to be created with a keyword "' . $keyword . '" must be an existing class' . ' but we could not find the class ' . $typeClassName);
         }
-
-        if (!in_array(Type::class, class_implements($typeClassName))) {
-            throw new \InvalidArgumentException(
-                'The class "' . $typeClassName . '" must implement the interface "phpDocumentor\Reflection\Type"'
-            );
+        
+        if (! in_array(Type::class, class_implements($typeClassName))) {
+            throw new \InvalidArgumentException('The class "' . $typeClassName . '" must implement the interface "phpDocumentor\Reflection\Type"');
         }
-
+        
         $this->keywords[$keyword] = $typeClassName;
     }
 
     /**
      * Detects whether the given type represents an array.
      *
-     * @param string $type A relative or absolute type as defined in the phpDocumentor documentation.
-     *
+     * @param string $type
+     *            A relative or absolute type as defined in the phpDocumentor documentation.
+     *            
      * @return bool
      */
     private function isTypedArray($type)
     {
-        return substr($type, -2) === self::OPERATOR_ARRAY;
+        return substr($type, - 2) === self::OPERATOR_ARRAY;
     }
 
     /**
      * Detects whether the given type represents a PHPDoc keyword.
      *
-     * @param string $type A relative or absolute type as defined in the phpDocumentor documentation.
-     *
+     * @param string $type
+     *            A relative or absolute type as defined in the phpDocumentor documentation.
+     *            
      * @return bool
      */
     private function isKeyword($type)
@@ -179,13 +174,14 @@ final class TypeResolver
     /**
      * Detects whether the given type represents a relative structural element name.
      *
-     * @param string $type A relative or absolute type as defined in the phpDocumentor documentation.
-     *
+     * @param string $type
+     *            A relative or absolute type as defined in the phpDocumentor documentation.
+     *            
      * @return bool
      */
     private function isPartialStructuralElementName($type)
     {
-        return ($type[0] !== self::OPERATOR_NAMESPACE) && !$this->isKeyword($type);
+        return ($type[0] !== self::OPERATOR_NAMESPACE) && ! $this->isKeyword($type);
     }
 
     /**
@@ -201,7 +197,8 @@ final class TypeResolver
     }
 
     /**
-     * Tests whether the given type is a compound type (i.e. `string|int`).
+     * Tests whether the given type is a compound type (i.e.
+     * `string|int`).
      *
      * @param string $type
      *
@@ -213,7 +210,8 @@ final class TypeResolver
     }
 
     /**
-     * Test whether the given type is a nullable type (i.e. `?string`)
+     * Test whether the given type is a nullable type (i.e.
+     * `?string`)
      *
      * @param string $type
      *
@@ -225,7 +223,8 @@ final class TypeResolver
     }
 
     /**
-     * Resolves the given typed array string (i.e. `string[]`) into an Array object with the right types set.
+     * Resolves the given typed array string (i.e.
+     * `string[]`) into an Array object with the right types set.
      *
      * @param string $type
      * @param Context $context
@@ -234,7 +233,7 @@ final class TypeResolver
      */
     private function resolveTypedArray($type, Context $context)
     {
-        return new Array_($this->resolve(substr($type, 0, -2), $context));
+        return new Array_($this->resolve(substr($type, 0, - 2), $context));
     }
 
     /**
@@ -247,7 +246,7 @@ final class TypeResolver
     private function resolveKeyword($type)
     {
         $className = $this->keywords[strtolower($type)];
-
+        
         return new $className();
     }
 
@@ -265,7 +264,8 @@ final class TypeResolver
     }
 
     /**
-     * Resolves a compound type (i.e. `string|int`) into the appropriate Type objects or FQSEN.
+     * Resolves a compound type (i.e.
+     * `string|int`) into the appropriate Type objects or FQSEN.
      *
      * @param string $type
      * @param Context $context
@@ -275,16 +275,17 @@ final class TypeResolver
     private function resolveCompoundType($type, Context $context)
     {
         $types = [];
-
+        
         foreach (explode('|', $type) as $part) {
             $types[] = $this->resolve($part, $context);
         }
-
+        
         return new Compound($types);
     }
 
     /**
-     * Resolve nullable types (i.e. `?string`) into a Nullable type wrapper
+     * Resolve nullable types (i.e.
+     * `?string`) into a Nullable type wrapper
      *
      * @param string $type
      * @param Context $context

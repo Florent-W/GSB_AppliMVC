@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of phpDocumentor.
  *
@@ -9,7 +10,6 @@
  * @license   http://www.opensource.org/licenses/mit-license.php MIT
  * @link      http://phpdoc.org
  */
-
 namespace phpDocumentor\Reflection\Types;
 
 use phpDocumentor\Reflection\Type;
@@ -21,10 +21,11 @@ use phpDocumentor\Reflection\Type;
  *
  * 1. Untyped (`array`), where the key and value type is unknown and hence classified as 'Mixed_'.
  * 2. Types (`string[]`), where the value type is provided by preceding an opening and closing square bracket with a
- *    type name.
+ * type name.
  */
 final class Array_ implements Type
 {
+
     /** @var Type */
     private $valueType;
 
@@ -40,12 +41,15 @@ final class Array_ implements Type
     public function __construct(Type $valueType = null, Type $keyType = null)
     {
         if ($keyType === null) {
-            $keyType = new Compound([ new String_(), new Integer() ]);
+            $keyType = new Compound([
+                new String_(),
+                new Integer()
+            ]);
         }
         if ($valueType === null) {
             $valueType = new Mixed_();
         }
-
+        
         $this->valueType = $valueType;
         $this->keyType = $keyType;
     }
@@ -80,7 +84,7 @@ final class Array_ implements Type
         if ($this->valueType instanceof Mixed_) {
             return 'array';
         }
-
+        
         return $this->valueType . '[]';
     }
 }

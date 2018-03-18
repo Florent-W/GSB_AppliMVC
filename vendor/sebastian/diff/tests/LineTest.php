@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of sebastian/diff.
  *
@@ -7,7 +8,6 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace SebastianBergmann\Diff;
 
 use PHPUnit\Framework\TestCase;
@@ -17,14 +17,16 @@ use PHPUnit\Framework\TestCase;
  */
 class LineTest extends TestCase
 {
+
     /**
+     *
      * @var Line
      */
     private $line;
 
     protected function setUp()
     {
-        $this->line = new Line;
+        $this->line = new Line();
     }
 
     public function testCanBeCreatedWithoutArguments()

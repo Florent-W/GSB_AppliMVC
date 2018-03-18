@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the PHPUnit_MockObject package.
  *
@@ -15,6 +16,7 @@
  */
 class PHPUnit_Framework_MockObject_Stub_ReturnArgument extends PHPUnit_Framework_MockObject_Stub_Return
 {
+
     protected $argumentIndex;
 
     public function __construct($argumentIndex)

@@ -10,19 +10,19 @@ if ($neverHappens) {
  */
 class Foo
 {
+
     public function bar()
-    {
-    }
+    {}
 }
 
 class Bar
 {
+
     /**
      * @codeCoverageIgnore
      */
     public function foo()
-    {
-    }
+    {}
 }
 
 function baz()
@@ -32,6 +32,6 @@ function baz()
 
 interface Bor
 {
-    public function foo();
 
+    public function foo();
 }

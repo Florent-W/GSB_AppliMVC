@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of phpDocumentor.
  *
@@ -9,7 +10,6 @@
  * @license   http://www.opensource.org/licenses/mit-license.php MIT
  * @link      http://phpdoc.org
  */
-
 namespace phpDocumentor\Reflection;
 
 use phpDocumentor\Reflection\DocBlock\Tag;
@@ -17,6 +17,7 @@ use Webmozart\Assert\Assert;
 
 final class DocBlock
 {
+
     /** @var string The opening line for this docblock. */
     private $summary = '';
 
@@ -39,43 +40,39 @@ final class DocBlock
     private $isTemplateEnd = false;
 
     /**
+     *
      * @param string $summary
      * @param DocBlock\Description $description
      * @param DocBlock\Tag[] $tags
-     * @param Types\Context $context The context in which the DocBlock occurs.
-     * @param Location $location The location within the file that this DocBlock occurs in.
+     * @param Types\Context $context
+     *            The context in which the DocBlock occurs.
+     * @param Location $location
+     *            The location within the file that this DocBlock occurs in.
      * @param bool $isTemplateStart
      * @param bool $isTemplateEnd
      */
-    public function __construct(
-        $summary = '',
-        DocBlock\Description $description = null,
-        array $tags = [],
-        Types\Context $context = null,
-        Location $location = null,
-        $isTemplateStart = false,
-        $isTemplateEnd = false
-    )
+    public function __construct($summary = '', DocBlock\Description $description = null, array $tags = [], Types\Context $context = null, Location $location = null, $isTemplateStart = false, $isTemplateEnd = false)
     {
         Assert::string($summary);
         Assert::boolean($isTemplateStart);
         Assert::boolean($isTemplateEnd);
         Assert::allIsInstanceOf($tags, Tag::class);
-
+        
         $this->summary = $summary;
         $this->description = $description ?: new DocBlock\Description('');
         foreach ($tags as $tag) {
             $this->addTag($tag);
         }
-
+        
         $this->context = $context;
         $this->location = $location;
-
+        
         $this->isTemplateEnd = $isTemplateEnd;
         $this->isTemplateStart = $isTemplateStart;
     }
 
     /**
+     *
      * @return string
      */
     public function getSummary()
@@ -84,6 +81,7 @@ final class DocBlock
     }
 
     /**
+     *
      * @return DocBlock\Description
      */
     public function getDescription()
@@ -121,15 +119,15 @@ final class DocBlock
      *
      * ```
      * /**#@+
-     *  * My DocBlock
-     *  * /
+     * * My DocBlock
+     * * /
      * ```
      *
      * The description and tags (not the summary!) are copied onto all subsequent DocBlocks and also applied to all
      * elements that follow until another DocBlock is found that contains the closing marker (`#@-`).
      *
      * @see self::isTemplateEnd() for the check whether a closing marker was provided.
-     *
+     *     
      * @return boolean
      */
     public function isTemplateStart()
@@ -141,7 +139,7 @@ final class DocBlock
      * Returns whether this DocBlock is the end of a Template section.
      *
      * @see self::isTemplateStart() for a more complete description of the Docblock Template functionality.
-     *
+     *     
      * @return boolean
      */
     public function isTemplateEnd()
@@ -160,57 +158,61 @@ final class DocBlock
     }
 
     /**
-     * Returns an array of tags matching the given name. If no tags are found
+     * Returns an array of tags matching the given name.
+     * If no tags are found
      * an empty array is returned.
      *
-     * @param string $name String to search by.
-     *
+     * @param string $name
+     *            String to search by.
+     *            
      * @return Tag[]
      */
     public function getTagsByName($name)
     {
         Assert::string($name);
-
+        
         $result = array();
-
+        
         /** @var Tag $tag */
         foreach ($this->getTags() as $tag) {
             if ($tag->getName() != $name) {
                 continue;
             }
-
+            
             $result[] = $tag;
         }
-
+        
         return $result;
     }
 
     /**
      * Checks if a tag of a certain type is present in this DocBlock.
      *
-     * @param string $name Tag name to check for.
-     *
+     * @param string $name
+     *            Tag name to check for.
+     *            
      * @return bool
      */
     public function hasTag($name)
     {
         Assert::string($name);
-
+        
         /** @var Tag $tag */
         foreach ($this->getTags() as $tag) {
             if ($tag->getName() == $name) {
                 return true;
             }
         }
-
+        
         return false;
     }
 
     /**
      * Adds a tag to this DocBlock.
      *
-     * @param Tag $tag The tag to add.
-     *
+     * @param Tag $tag
+     *            The tag to add.
+     *            
      * @return void
      */
     private function addTag(Tag $tag)

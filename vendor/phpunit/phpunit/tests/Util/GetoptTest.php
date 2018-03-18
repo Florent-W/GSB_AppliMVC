@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of PHPUnit.
  *
@@ -7,30 +8,32 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 class Util_GetoptTest extends PHPUnit_Framework_TestCase
 {
+
     public function testItIncludeTheLongOptionsAfterTheArgument()
     {
         $args = [
             'command',
             'myArgument',
-            '--colors',
+            '--colors'
         ];
-        $actual = PHPUnit_Util_Getopt::getopt($args, '', ['colors==']);
-
+        $actual = PHPUnit_Util_Getopt::getopt($args, '', [
+            'colors=='
+        ]);
+        
         $expected = [
             [
                 [
                     '--colors',
-                    null,
-                ],
+                    null
+                ]
             ],
             [
-                'myArgument',
-            ],
+                'myArgument'
+            ]
         ];
-
+        
         $this->assertEquals($expected, $actual);
     }
 
@@ -39,22 +42,22 @@ class Util_GetoptTest extends PHPUnit_Framework_TestCase
         $args = [
             'command',
             'myArgument',
-            '-v',
+            '-v'
         ];
         $actual = PHPUnit_Util_Getopt::getopt($args, 'v');
-
+        
         $expected = [
             [
                 [
                     'v',
-                    null,
-                ],
+                    null
+                ]
             ],
             [
-                'myArgument',
-            ],
+                'myArgument'
+            ]
         ];
-
+        
         $this->assertEquals($expected, $actual);
     }
 }

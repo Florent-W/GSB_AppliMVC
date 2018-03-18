@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of PHPUnit.
  *
@@ -13,15 +14,17 @@
  */
 class PHPUnit_Util_Filesystem
 {
+
     /**
+     *
      * @var array
      */
     protected static $buffer = [];
 
     /**
      * Maps class names to source file names:
-     *   - PEAR CS:   Foo_Bar_Baz -> Foo/Bar/Baz.php
-     *   - Namespace: Foo\Bar\Baz -> Foo/Bar/Baz.php
+     * - PEAR CS: Foo_Bar_Baz -> Foo/Bar/Baz.php
+     * - Namespace: Foo\Bar\Baz -> Foo/Bar/Baz.php
      *
      * @param string $className
      *
@@ -29,10 +32,9 @@ class PHPUnit_Util_Filesystem
      */
     public static function classNameToFilename($className)
     {
-        return str_replace(
-            ['_', '\\'],
-            DIRECTORY_SEPARATOR,
-            $className
-        ) . '.php';
+        return str_replace([
+            '_',
+            '\\'
+        ], DIRECTORY_SEPARATOR, $className) . '.php';
     }
 }

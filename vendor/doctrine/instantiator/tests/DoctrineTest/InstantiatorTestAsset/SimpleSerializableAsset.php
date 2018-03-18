@@ -1,4 +1,5 @@
 <?php
+
 /*
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -16,7 +17,6 @@
  * and is licensed under the MIT license. For more information, see
  * <http://www.doctrine-project.org>.
  */
-
 namespace DoctrineTest\InstantiatorTestAsset;
 
 use BadMethodCallException;
@@ -29,6 +29,7 @@ use Serializable;
  */
 class SimpleSerializableAsset implements Serializable
 {
+
     /**
      * Constructor - should not be called
      *
@@ -40,7 +41,8 @@ class SimpleSerializableAsset implements Serializable
     }
 
     /**
-     * {@inheritDoc}
+     *
+     * {@inheritdoc}
      */
     public function serialize()
     {
@@ -48,10 +50,9 @@ class SimpleSerializableAsset implements Serializable
     }
 
     /**
-     * {@inheritDoc}
      *
-     * Should not be called
-     *
+     * {@inheritdoc} Should not be called
+     *              
      * @throws BadMethodCallException
      */
     public function unserialize($serialized)

@@ -9,10 +9,10 @@ if (defined('HHVM_VERSION')) {
 --FILE--
 <?php
 $_SERVER['argv'][1] = '--no-configuration';
-$_SERVER['argv'][]  = '--report-useless-tests';
-$_SERVER['argv'][]  = '--process-isolation';
-$_SERVER['argv'][]  = 'Issue1348Test';
-$_SERVER['argv'][]  = __DIR__ . '/1348/Issue1348Test.php';
+$_SERVER['argv'][] = '--report-useless-tests';
+$_SERVER['argv'][] = '--process-isolation';
+$_SERVER['argv'][] = 'Issue1348Test';
+$_SERVER['argv'][] = __DIR__ . '/1348/Issue1348Test.php';
 
 require __DIR__ . '/../../bootstrap.php';
 PHPUnit_TextUI_Command::main();
@@ -21,7 +21,7 @@ PHPUnit %s by Sebastian Bergmann and contributors.
 
 .
 STDOUT does not break test result
-E                                                                  2 / 2 (100%)
+E 2 / 2 (100%)
 
 Time: %s, Memory: %s
 

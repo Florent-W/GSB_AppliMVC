@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the PHP_TokenStream package.
  *
@@ -11,33 +12,37 @@
 /**
  * A caching factory for token stream objects.
  *
- * @author    Sebastian Bergmann <sebastian@phpunit.de>
+ * @author Sebastian Bergmann <sebastian@phpunit.de>
  * @copyright Sebastian Bergmann <sebastian@phpunit.de>
- * @license   http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @link      http://github.com/sebastianbergmann/php-token-stream/tree
- * @since     Class available since Release 1.0.0
+ * @license http://www.opensource.org/licenses/BSD-3-Clause The BSD 3-Clause License
+ * @link http://github.com/sebastianbergmann/php-token-stream/tree
+ * @since Class available since Release 1.0.0
  */
 class PHP_Token_Stream_CachingFactory
 {
+
     /**
+     *
      * @var array
      */
     protected static $cache = array();
 
     /**
-     * @param  string $filename
+     *
+     * @param string $filename
      * @return PHP_Token_Stream
      */
     public static function get($filename)
     {
-        if (!isset(self::$cache[$filename])) {
+        if (! isset(self::$cache[$filename])) {
             self::$cache[$filename] = new PHP_Token_Stream($filename);
         }
-
+        
         return self::$cache[$filename];
     }
 
     /**
+     *
      * @param string $filename
      */
     public static function clear($filename = null)

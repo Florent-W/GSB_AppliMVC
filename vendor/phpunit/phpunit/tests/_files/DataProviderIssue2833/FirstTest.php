@@ -1,11 +1,11 @@
 <?php
-
 namespace Foo\DataProviderIssue2833;
 
 use PHPUnit\Framework\TestCase;
 
 class FirstTest extends TestCase
 {
+
     /**
      * @dataProvider provide
      */
@@ -17,7 +17,11 @@ class FirstTest extends TestCase
     public function provide()
     {
         SecondTest::DUMMY;
-
-        return [[true]];
+        
+        return [
+            [
+                true
+            ]
+        ];
     }
 }

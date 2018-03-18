@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of phpDocumentor.
  *
@@ -9,7 +10,6 @@
  * @license   http://www.opensource.org/licenses/mit-license.php MIT
  * @link      http://phpdoc.org
  */
-
 namespace phpDocumentor\Reflection\DocBlock;
 
 use phpDocumentor\Reflection\DocBlock\Tags\Formatter;
@@ -26,7 +26,7 @@ use Webmozart\Assert\Assert;
  * Because parsing a Description text can be a verbose process this is handled by the {@see DescriptionFactory}. It is
  * thus recommended to use that to create a Description object, like this:
  *
- *     $description = $descriptionFactory->create('This is a {@see Description}', $context);
+ * $description = $descriptionFactory->create('This is a {@see Description}', $context);
  *
  * The description factory will interpret the given body and create a body template and list of tags from them, and pass
  * that onto the constructor if this class.
@@ -37,10 +37,10 @@ use Webmozart\Assert\Assert;
  *
  * If you do not want to use the DescriptionFactory you can pass a body template and tag listing like this:
  *
- *     $description = new Description(
- *         'This is a %1$s',
- *         [ new See(new Fqsen('\phpDocumentor\Reflection\DocBlock\Description')) ]
- *     );
+ * $description = new Description(
+ * 'This is a %1$s',
+ * [ new See(new Fqsen('\phpDocumentor\Reflection\DocBlock\Description')) ]
+ * );
  *
  * It is generally recommended to use the Factory as that will also apply escaping rules, while the Description object
  * is mainly responsible for rendering.
@@ -50,6 +50,7 @@ use Webmozart\Assert\Assert;
  */
 class Description
 {
+
     /** @var string */
     private $bodyTemplate;
 
@@ -65,11 +66,11 @@ class Description
     public function __construct($bodyTemplate, array $tags = [])
     {
         Assert::string($bodyTemplate);
-
+        
         $this->bodyTemplate = $bodyTemplate;
         $this->tags = $tags;
     }
-    
+
     /**
      * Returns the tags for this DocBlock.
      *
@@ -93,7 +94,7 @@ class Description
         if ($formatter === null) {
             $formatter = new PassthroughFormatter();
         }
-
+        
         $tags = [];
         foreach ($this->tags as $tag) {
             $tags[] = '{' . $formatter->format($tag) . '}';

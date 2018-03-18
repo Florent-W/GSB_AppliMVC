@@ -1,10 +1,11 @@
 <?php
-
 namespace DeepCopy\f006;
 
 class B
 {
+
     public $cloned = false;
+
     private $bProp;
 
     public function getBProp()
@@ -15,7 +16,7 @@ class B
     public function setBProp($prop)
     {
         $this->bProp = $prop;
-
+        
         return $this;
     }
 

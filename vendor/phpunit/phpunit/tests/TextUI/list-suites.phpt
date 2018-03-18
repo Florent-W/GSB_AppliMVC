@@ -4,7 +4,7 @@ phpunit --list-suites --configuration=__DIR__.'/../_files/configuration.suites.x
 <?php
 $_SERVER['argv'][1] = '--list-suites';
 $_SERVER['argv'][2] = '--configuration';
-$_SERVER['argv'][3] = __DIR__.'/../_files/configuration.suites.xml';
+$_SERVER['argv'][3] = __DIR__ . '/../_files/configuration.suites.xml';
 
 require __DIR__ . '/../bootstrap.php';
 PHPUnit_TextUI_Command::main();
@@ -12,5 +12,5 @@ PHPUnit_TextUI_Command::main();
 PHPUnit %s by Sebastian Bergmann and contributors.
 
 Available test suite(s):
- - Suite One
- - Suite Two
+- Suite One
+- Suite Two

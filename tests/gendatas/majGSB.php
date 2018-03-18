@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Génération d'un jeu d'essai
  *
@@ -13,7 +14,6 @@
  * @version   GIT: <0>
  * @link      http://www.reseaucerta.org Contexte « Laboratoire GSB »
  */
-
 $moisDebut = '201609';
 require './fonctions.php';
 
@@ -26,7 +26,5 @@ creationFraisForfait($pdo);
 creationFraisHorsForfait($pdo);
 majFicheFrais($pdo);
 echo '<br>' . getNbTable($pdo, 'fichefrais') . ' fiches de frais créées !';
-echo '<br>' . getNbTable($pdo, 'lignefraisforfait')
-        . ' lignes de frais au forfait créées !';
-echo '<br>' . getNbTable($pdo, 'lignefraishorsforfait')
-        . ' lignes de frais hors forfait créées !';
+echo '<br>' . getNbTable($pdo, 'lignefraisforfait') . ' lignes de frais au forfait créées !';
+echo '<br>' . getNbTable($pdo, 'lignefraishorsforfait') . ' lignes de frais hors forfait créées !';

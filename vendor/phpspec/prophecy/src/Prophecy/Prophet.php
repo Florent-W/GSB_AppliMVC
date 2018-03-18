@@ -3,12 +3,11 @@
 /*
  * This file is part of the Prophecy.
  * (c) Konstantin Kudryashov <ever.zet@gmail.com>
- *     Marcello Duarte <marcello.duarte@gmail.com>
+ * Marcello Duarte <marcello.duarte@gmail.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace Prophecy;
 
 use Prophecy\Doubler\Doubler;
@@ -29,11 +28,15 @@ use Prophecy\Exception\Prediction\AggregateException;
  */
 class Prophet
 {
+
     private $doubler;
+
     private $revealer;
+
     private $util;
 
     /**
+     *
      * @var ObjectProphecy[]
      */
     private $prophecies = array();
@@ -41,53 +44,49 @@ class Prophet
     /**
      * Initializes Prophet.
      *
-     * @param null|Doubler           $doubler
+     * @param null|Doubler $doubler
      * @param null|RevealerInterface $revealer
-     * @param null|StringUtil        $util
+     * @param null|StringUtil $util
      */
-    public function __construct(Doubler $doubler = null, RevealerInterface $revealer = null,
-                                StringUtil $util = null)
+    public function __construct(Doubler $doubler = null, RevealerInterface $revealer = null, StringUtil $util = null)
     {
         if (null === $doubler) {
-            $doubler = new Doubler;
-            $doubler->registerClassPatch(new ClassPatch\SplFileInfoPatch);
-            $doubler->registerClassPatch(new ClassPatch\TraversablePatch);
-            $doubler->registerClassPatch(new ClassPatch\DisableConstructorPatch);
-            $doubler->registerClassPatch(new ClassPatch\ProphecySubjectPatch);
-            $doubler->registerClassPatch(new ClassPatch\ReflectionClassNewInstancePatch);
+            $doubler = new Doubler();
+            $doubler->registerClassPatch(new ClassPatch\SplFileInfoPatch());
+            $doubler->registerClassPatch(new ClassPatch\TraversablePatch());
+            $doubler->registerClassPatch(new ClassPatch\DisableConstructorPatch());
+            $doubler->registerClassPatch(new ClassPatch\ProphecySubjectPatch());
+            $doubler->registerClassPatch(new ClassPatch\ReflectionClassNewInstancePatch());
             $doubler->registerClassPatch(new ClassPatch\HhvmExceptionPatch());
-            $doubler->registerClassPatch(new ClassPatch\MagicCallPatch);
-            $doubler->registerClassPatch(new ClassPatch\KeywordPatch);
+            $doubler->registerClassPatch(new ClassPatch\MagicCallPatch());
+            $doubler->registerClassPatch(new ClassPatch\KeywordPatch());
         }
-
-        $this->doubler  = $doubler;
-        $this->revealer = $revealer ?: new Revealer;
-        $this->util     = $util ?: new StringUtil;
+        
+        $this->doubler = $doubler;
+        $this->revealer = $revealer ?: new Revealer();
+        $this->util = $util ?: new StringUtil();
     }
 
     /**
      * Creates new object prophecy.
      *
-     * @param null|string $classOrInterface Class or interface name
-     *
+     * @param null|string $classOrInterface
+     *            Class or interface name
+     *            
      * @return ObjectProphecy
      */
     public function prophesize($classOrInterface = null)
     {
-        $this->prophecies[] = $prophecy = new ObjectProphecy(
-            new LazyDouble($this->doubler),
-            new CallCenter($this->util),
-            $this->revealer
-        );
-
+        $this->prophecies[] = $prophecy = new ObjectProphecy(new LazyDouble($this->doubler), new CallCenter($this->util), $this->revealer);
+        
         if ($classOrInterface && class_exists($classOrInterface)) {
             return $prophecy->willExtend($classOrInterface);
         }
-
+        
         if ($classOrInterface && interface_exists($classOrInterface)) {
             return $prophecy->willImplement($classOrInterface);
         }
-
+        
         return $prophecy;
     }
 
@@ -126,7 +125,7 @@ class Prophet
                 $exception->append($e);
             }
         }
-
+        
         if (count($exception->getExceptions())) {
             throw $exception;
         }

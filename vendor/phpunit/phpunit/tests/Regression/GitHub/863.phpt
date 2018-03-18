@@ -2,7 +2,6 @@
 GH-863: Number of tests to run calculated incorrectly when --repeat is used
 --FILE--
 <?php
-
 $_SERVER['argv'][1] = '--no-configuration';
 $_SERVER['argv'][2] = '--repeat';
 $_SERVER['argv'][3] = '50';

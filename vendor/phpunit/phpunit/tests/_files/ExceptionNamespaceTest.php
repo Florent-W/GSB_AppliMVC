@@ -1,9 +1,9 @@
 <?php
-
 namespace My\Space;
 
 class ExceptionNamespaceTest extends \PHPUnit_Framework_TestCase
 {
+
     /**
      * Exception message
      *
@@ -24,8 +24,7 @@ class ExceptionNamespaceTest extends \PHPUnit_Framework_TestCase
      * @expectedExceptionCode My\Space\ExceptionNamespaceTest::ERROR_CODE
      */
     public function testConstants()
-    {
-    }
+    {}
 
     /**
      * @expectedException Class
@@ -33,6 +32,5 @@ class ExceptionNamespaceTest extends \PHPUnit_Framework_TestCase
      * @expectedExceptionMessage My\Space\ExceptionNamespaceTest::UNKNOWN_MESSAGE_CONSTANT
      */
     public function testUnknownConstants()
-    {
-    }
+    {}
 }

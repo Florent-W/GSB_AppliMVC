@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of PHPUnit.
  *
@@ -14,51 +15,58 @@
  */
 class PHPUnit_Framework_Constraint_TraversableContains extends PHPUnit_Framework_Constraint
 {
+
     /**
+     *
      * @var bool
      */
     protected $checkForObjectIdentity;
 
     /**
+     *
      * @var bool
      */
     protected $checkForNonObjectIdentity;
 
     /**
+     *
      * @var mixed
      */
     protected $value;
 
     /**
+     *
      * @param mixed $value
-     * @param bool  $checkForObjectIdentity
-     * @param bool  $checkForNonObjectIdentity
+     * @param bool $checkForObjectIdentity
+     * @param bool $checkForNonObjectIdentity
      *
      * @throws PHPUnit_Framework_Exception
      */
     public function __construct($value, $checkForObjectIdentity = true, $checkForNonObjectIdentity = false)
     {
         parent::__construct();
-
-        if (!is_bool($checkForObjectIdentity)) {
+        
+        if (! is_bool($checkForObjectIdentity)) {
             throw PHPUnit_Util_InvalidArgumentHelper::factory(2, 'boolean');
         }
-
-        if (!is_bool($checkForNonObjectIdentity)) {
+        
+        if (! is_bool($checkForNonObjectIdentity)) {
             throw PHPUnit_Util_InvalidArgumentHelper::factory(3, 'boolean');
         }
-
-        $this->checkForObjectIdentity    = $checkForObjectIdentity;
+        
+        $this->checkForObjectIdentity = $checkForObjectIdentity;
         $this->checkForNonObjectIdentity = $checkForNonObjectIdentity;
-        $this->value                     = $value;
+        $this->value = $value;
     }
 
     /**
-     * Evaluates the constraint for parameter $other. Returns true if the
+     * Evaluates the constraint for parameter $other.
+     * Returns true if the
      * constraint is met, false otherwise.
      *
-     * @param mixed $other Value or object to evaluate.
-     *
+     * @param mixed $other
+     *            Value or object to evaluate.
+     *            
      * @return bool
      */
     protected function matches($other)
@@ -66,12 +74,12 @@ class PHPUnit_Framework_Constraint_TraversableContains extends PHPUnit_Framework
         if ($other instanceof SplObjectStorage) {
             return $other->contains($this->value);
         }
-
+        
         if (is_object($this->value)) {
             foreach ($other as $element) {
                 if ($this->checkForObjectIdentity && $element === $this->value) {
                     return true;
-                } elseif (!$this->checkForObjectIdentity && $element == $this->value) {
+                } elseif (! $this->checkForObjectIdentity && $element == $this->value) {
                     return true;
                 }
             }
@@ -79,12 +87,12 @@ class PHPUnit_Framework_Constraint_TraversableContains extends PHPUnit_Framework
             foreach ($other as $element) {
                 if ($this->checkForNonObjectIdentity && $element === $this->value) {
                     return true;
-                } elseif (!$this->checkForNonObjectIdentity && $element == $this->value) {
+                } elseif (! $this->checkForNonObjectIdentity && $element == $this->value) {
                     return true;
                 }
             }
         }
-
+        
         return false;
     }
 
@@ -108,16 +116,13 @@ class PHPUnit_Framework_Constraint_TraversableContains extends PHPUnit_Framework
      * The beginning of failure messages is "Failed asserting that" in most
      * cases. This method should return the second part of that sentence.
      *
-     * @param mixed $other Evaluated value or object.
-     *
+     * @param mixed $other
+     *            Evaluated value or object.
+     *            
      * @return string
      */
     protected function failureDescription($other)
     {
-        return sprintf(
-            '%s %s',
-            is_array($other) ? 'an array' : 'a traversable',
-            $this->toString()
-        );
+        return sprintf('%s %s', is_array($other) ? 'an array' : 'a traversable', $this->toString());
     }
 }

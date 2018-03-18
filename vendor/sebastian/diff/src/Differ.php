@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of sebastian/diff.
  *
@@ -7,7 +8,6 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace SebastianBergmann\Diff;
 
 use SebastianBergmann\Diff\LCS\LongestCommonSubsequence;
@@ -19,48 +19,52 @@ use SebastianBergmann\Diff\LCS\MemoryEfficientImplementation;
  */
 class Differ
 {
+
     /**
+     *
      * @var string
      */
     private $header;
 
     /**
+     *
      * @var bool
      */
     private $showNonDiffLines;
 
     /**
+     *
      * @param string $header
-     * @param bool   $showNonDiffLines
+     * @param bool $showNonDiffLines
      */
     public function __construct($header = "--- Original\n+++ New\n", $showNonDiffLines = true)
     {
-        $this->header           = $header;
+        $this->header = $header;
         $this->showNonDiffLines = $showNonDiffLines;
     }
 
     /**
      * Returns the diff between two arrays or strings as string.
      *
-     * @param array|string             $from
-     * @param array|string             $to
+     * @param array|string $from
+     * @param array|string $to
      * @param LongestCommonSubsequence $lcs
      *
      * @return string
      */
     public function diff($from, $to, LongestCommonSubsequence $lcs = null)
     {
-        $from  = $this->validateDiffInput($from);
-        $to    = $this->validateDiffInput($to);
-        $diff  = $this->diffToArray($from, $to, $lcs);
-        $old   = $this->checkIfDiffInOld($diff);
+        $from = $this->validateDiffInput($from);
+        $to = $this->validateDiffInput($to);
+        $diff = $this->diffToArray($from, $to, $lcs);
+        $old = $this->checkIfDiffInOld($diff);
         $start = isset($old[0]) ? $old[0] : 0;
-        $end   = \count($diff);
-
+        $end = \count($diff);
+        
         if ($tmp = \array_search($end, $old)) {
             $end = $tmp;
         }
-
+        
         return $this->getBuffer($diff, $old, $start, $end);
     }
 
@@ -73,10 +77,10 @@ class Differ
      */
     private function validateDiffInput($input)
     {
-        if (!\is_array($input) && !\is_string($input)) {
+        if (! \is_array($input) && ! \is_string($input)) {
             return (string) $input;
         }
-
+        
         return $input;
     }
 
@@ -91,9 +95,9 @@ class Differ
     private function checkIfDiffInOld(array $diff)
     {
         $inOld = false;
-        $i     = 0;
-        $old   = array();
-
+        $i = 0;
+        $old = array();
+        
         foreach ($diff as $line) {
             if ($line[1] === 0 /* OLD */) {
                 if ($inOld === false) {
@@ -103,13 +107,13 @@ class Differ
                 if (($i - $inOld) > 5) {
                     $old[$inOld] = $i - 1;
                 }
-
+                
                 $inOld = false;
             }
-
-            ++$i;
+            
+            ++ $i;
         }
-
+        
         return $old;
     }
 
@@ -118,38 +122,38 @@ class Differ
      *
      * @param array $diff
      * @param array $old
-     * @param int   $start
-     * @param int   $end
+     * @param int $start
+     * @param int $end
      *
      * @return string
      */
     private function getBuffer(array $diff, array $old, $start, $end)
     {
         $buffer = $this->header;
-
-        if (!isset($old[$start])) {
+        
+        if (! isset($old[$start])) {
             $buffer = $this->getDiffBufferElementNew($diff, $buffer, $start);
-            ++$start;
+            ++ $start;
         }
-
-        for ($i = $start; $i < $end; $i++) {
+        
+        for ($i = $start; $i < $end; $i ++) {
             if (isset($old[$i])) {
-                $i      = $old[$i];
+                $i = $old[$i];
                 $buffer = $this->getDiffBufferElementNew($diff, $buffer, $i);
             } else {
                 $buffer = $this->getDiffBufferElement($diff, $buffer, $i);
             }
         }
-
+        
         return $buffer;
     }
 
     /**
      * Gets individual buffer element.
      *
-     * @param array  $diff
+     * @param array $diff
      * @param string $buffer
-     * @param int    $diffIndex
+     * @param int $diffIndex
      *
      * @return string
      */
@@ -162,16 +166,16 @@ class Differ
         } elseif ($this->showNonDiffLines === true) {
             $buffer .= ' ' . $diff[$diffIndex][0] . "\n";
         }
-
+        
         return $buffer;
     }
 
     /**
      * Gets individual buffer element with opening.
      *
-     * @param array  $diff
+     * @param array $diff
      * @param string $buffer
-     * @param int    $diffIndex
+     * @param int $diffIndex
      *
      * @return string
      */
@@ -180,7 +184,7 @@ class Differ
         if ($this->showNonDiffLines === true) {
             $buffer .= "@@ @@\n";
         }
-
+        
         return $this->getDiffBufferElement($diff, $buffer, $diffIndex);
     }
 
@@ -188,15 +192,15 @@ class Differ
      * Returns the diff between two arrays or strings as array.
      *
      * Each array element contains two elements:
-     *   - [0] => mixed $token
-     *   - [1] => 2|1|0
+     * - [0] => mixed $token
+     * - [1] => 2|1|0
      *
      * - 2: REMOVED: $token was removed from $from
      * - 1: ADDED: $token was added to $from
      * - 0: OLD: $token is not changed in $to
      *
-     * @param array|string             $from
-     * @param array|string             $to
+     * @param array|string $from
+     * @param array|string $to
      * @param LongestCommonSubsequence $lcs
      *
      * @return array
@@ -205,72 +209,93 @@ class Differ
     {
         if (\is_string($from)) {
             $fromMatches = $this->getNewLineMatches($from);
-            $from        = $this->splitStringByLines($from);
+            $from = $this->splitStringByLines($from);
         } elseif (\is_array($from)) {
             $fromMatches = array();
         } else {
             throw new \InvalidArgumentException('"from" must be an array or string.');
         }
-
+        
         if (\is_string($to)) {
             $toMatches = $this->getNewLineMatches($to);
-            $to        = $this->splitStringByLines($to);
+            $to = $this->splitStringByLines($to);
         } elseif (\is_array($to)) {
             $toMatches = array();
         } else {
             throw new \InvalidArgumentException('"to" must be an array or string.');
         }
-
-        list($from, $to, $start, $end) = self::getArrayDiffParted($from, $to);
-
+        
+        list ($from, $to, $start, $end) = self::getArrayDiffParted($from, $to);
+        
         if ($lcs === null) {
             $lcs = $this->selectLcsImplementation($from, $to);
         }
-
+        
         $common = $lcs->calculate(\array_values($from), \array_values($to));
-        $diff   = array();
-
+        $diff = array();
+        
         if ($this->detectUnmatchedLineEndings($fromMatches, $toMatches)) {
             $diff[] = array(
                 '#Warning: Strings contain different line endings!',
                 0
             );
         }
-
+        
         foreach ($start as $token) {
-            $diff[] = array($token, 0 /* OLD */);
+            $diff[] = array(
+                $token,
+                0 /* OLD */
+            );
         }
-
+        
         \reset($from);
         \reset($to);
-
+        
         foreach ($common as $token) {
             while (($fromToken = \reset($from)) !== $token) {
-                $diff[] = array(\array_shift($from), 2 /* REMOVED */);
+                $diff[] = array(
+                    \array_shift($from),
+                    2 /* REMOVED */
+                );
             }
-
+            
             while (($toToken = \reset($to)) !== $token) {
-                $diff[] = array(\array_shift($to), 1 /* ADDED */);
+                $diff[] = array(
+                    \array_shift($to),
+                    1 /* ADDED */
+                );
             }
-
-            $diff[] = array($token, 0 /* OLD */);
-
+            
+            $diff[] = array(
+                $token,
+                0 /* OLD */
+            );
+            
             \array_shift($from);
             \array_shift($to);
         }
-
+        
         while (($token = \array_shift($from)) !== null) {
-            $diff[] = array($token, 2 /* REMOVED */);
+            $diff[] = array(
+                $token,
+                2 /* REMOVED */
+            );
         }
-
+        
         while (($token = \array_shift($to)) !== null) {
-            $diff[] = array($token, 1 /* ADDED */);
+            $diff[] = array(
+                $token,
+                1 /* ADDED */
+            );
         }
-
+        
         foreach ($end as $token) {
-            $diff[] = array($token, 0 /* OLD */);
+            $diff[] = array(
+                $token,
+                0 /* OLD */
+            );
         }
-
+        
         return $diff;
     }
 
@@ -284,7 +309,7 @@ class Differ
     private function getNewLineMatches($string)
     {
         \preg_match_all('(\r\n|\r|\n)', $string, $stringMatches);
-
+        
         return $stringMatches;
     }
 
@@ -301,6 +326,7 @@ class Differ
     }
 
     /**
+     *
      * @param array $from
      * @param array $to
      *
@@ -313,12 +339,12 @@ class Differ
         // calculation is only an estimation for the matrix and the LCS method
         // will typically allocate a bit more memory than this.
         $memoryLimit = 100 * 1024 * 1024;
-
+        
         if ($this->calculateEstimatedFootprint($from, $to) > $memoryLimit) {
-            return new MemoryEfficientImplementation;
+            return new MemoryEfficientImplementation();
         }
-
-        return new TimeEfficientImplementation;
+        
+        return new TimeEfficientImplementation();
     }
 
     /**
@@ -332,7 +358,7 @@ class Differ
     private function calculateEstimatedFootprint(array $from, array $to)
     {
         $itemSize = PHP_INT_SIZE === 4 ? 76 : 144;
-
+        
         return $itemSize * \pow(\min(\count($from), \count($to)), 2);
     }
 
@@ -346,12 +372,11 @@ class Differ
      */
     private function detectUnmatchedLineEndings(array $fromMatches, array $toMatches)
     {
-        return isset($fromMatches[0], $toMatches[0]) &&
-               \count($fromMatches[0]) === \count($toMatches[0]) &&
-               $fromMatches[0] !== $toMatches[0];
+        return isset($fromMatches[0], $toMatches[0]) && \count($fromMatches[0]) === \count($toMatches[0]) && $fromMatches[0] !== $toMatches[0];
     }
 
     /**
+     *
      * @param array $from
      * @param array $to
      *
@@ -360,40 +385,47 @@ class Differ
     private static function getArrayDiffParted(array &$from, array &$to)
     {
         $start = array();
-        $end   = array();
-
+        $end = array();
+        
         \reset($to);
-
+        
         foreach ($from as $k => $v) {
             $toK = \key($to);
-
+            
             if ($toK === $k && $v === $to[$k]) {
                 $start[$k] = $v;
-
+                
                 unset($from[$k], $to[$k]);
             } else {
                 break;
             }
         }
-
+        
         \end($from);
         \end($to);
-
+        
         do {
             $fromK = \key($from);
-            $toK   = \key($to);
-
+            $toK = \key($to);
+            
             if (null === $fromK || null === $toK || \current($from) !== \current($to)) {
                 break;
             }
-
+            
             \prev($from);
             \prev($to);
-
-            $end = array($fromK => $from[$fromK]) + $end;
+            
+            $end = array(
+                $fromK => $from[$fromK]
+            ) + $end;
             unset($from[$fromK], $to[$toK]);
         } while (true);
-
-        return array($from, $to, $start, $end);
+        
+        return array(
+            $from,
+            $to,
+            $start,
+            $end
+        );
     }
 }

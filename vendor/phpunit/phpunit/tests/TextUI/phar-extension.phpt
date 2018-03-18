@@ -10,11 +10,11 @@ PHPUnit_TextUI_Command::main();
 --EXPECTF--
 PHPUnit %s by Sebastian Bergmann and contributors.
 
-Runtime:       %s
+Runtime: %s
 Configuration: %s/phpunit-example-extension/phpunit.xml
-Extension:     %s/phpunit-example-extension/tools/phpunit.d/phpunit-example-extension-1.0.0.phar
+Extension: %s/phpunit-example-extension/tools/phpunit.d/phpunit-example-extension-1.0.0.phar
 
-.                                                                   1 / 1 (100%)
+. 1 / 1 (100%)
 
 Time: %s, Memory: %s
 

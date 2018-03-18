@@ -24,48 +24,48 @@ PHPUnit %s by Sebastian Bergmann and contributors.
 Warning:       Deprecated JSON test listener used
 
 {
-    "event": "suiteStart",
-    "suite": "BankAccountTest",
-    "tests": 3
+"event": "suiteStart",
+"suite": "BankAccountTest",
+"tests": 3
 }{
-    "event": "testStart",
-    "suite": "BankAccountTest",
-    "test": "BankAccountTest::testBalanceIsInitiallyZero"
+"event": "testStart",
+"suite": "BankAccountTest",
+"test": "BankAccountTest::testBalanceIsInitiallyZero"
 }.{
-    "event": "test",
-    "suite": "BankAccountTest",
-    "test": "BankAccountTest::testBalanceIsInitiallyZero",
-    "status": "pass",
-    "time": %f,
-    "trace": [],
-    "message": "",
-    "output": ""
+"event": "test",
+"suite": "BankAccountTest",
+"test": "BankAccountTest::testBalanceIsInitiallyZero",
+"status": "pass",
+"time": %f,
+"trace": [],
+"message": "",
+"output": ""
 }{
-    "event": "testStart",
-    "suite": "BankAccountTest",
-    "test": "BankAccountTest::testBalanceCannotBecomeNegative"
+"event": "testStart",
+"suite": "BankAccountTest",
+"test": "BankAccountTest::testBalanceCannotBecomeNegative"
 }.{
-    "event": "test",
-    "suite": "BankAccountTest",
-    "test": "BankAccountTest::testBalanceCannotBecomeNegative",
-    "status": "pass",
-    "time": %f,
-    "trace": [],
-    "message": "",
-    "output": ""
+"event": "test",
+"suite": "BankAccountTest",
+"test": "BankAccountTest::testBalanceCannotBecomeNegative",
+"status": "pass",
+"time": %f,
+"trace": [],
+"message": "",
+"output": ""
 }{
-    "event": "testStart",
-    "suite": "BankAccountTest",
-    "test": "BankAccountTest::testBalanceCannotBecomeNegative2"
+"event": "testStart",
+"suite": "BankAccountTest",
+"test": "BankAccountTest::testBalanceCannotBecomeNegative2"
 }.                                                                 3 / 3 (100%){
-    "event": "test",
-    "suite": "BankAccountTest",
-    "test": "BankAccountTest::testBalanceCannotBecomeNegative2",
-    "status": "pass",
-    "time": %f,
-    "trace": [],
-    "message": "",
-    "output": ""
+"event": "test",
+"suite": "BankAccountTest",
+"test": "BankAccountTest::testBalanceCannotBecomeNegative2",
+"status": "pass",
+"time": %f,
+"trace": [],
+"message": "",
+"output": ""
 }
 
 Time: %s, Memory: %s

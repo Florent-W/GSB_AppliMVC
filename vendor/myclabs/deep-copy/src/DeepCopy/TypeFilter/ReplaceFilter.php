@@ -1,19 +1,23 @@
 <?php
-
 namespace DeepCopy\TypeFilter;
 
 /**
+ *
  * @final
  */
 class ReplaceFilter implements TypeFilter
 {
+
     /**
+     *
      * @var callable
      */
     protected $callback;
 
     /**
-     * @param callable $callable Will be called to get the new value for each element to replace
+     *
+     * @param callable $callable
+     *            Will be called to get the new value for each element to replace
      */
     public function __construct(callable $callable)
     {
@@ -21,6 +25,7 @@ class ReplaceFilter implements TypeFilter
     }
 
     /**
+     *
      * {@inheritdoc}
      */
     public function apply($element)

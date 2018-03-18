@@ -1,9 +1,9 @@
 <?php
-
 namespace DeepCopy\f001;
 
 class A
 {
+
     private $aProp;
 
     public function getAProp()
@@ -14,7 +14,7 @@ class A
     public function setAProp($prop)
     {
         $this->aProp = $prop;
-
+        
         return $this;
     }
 }

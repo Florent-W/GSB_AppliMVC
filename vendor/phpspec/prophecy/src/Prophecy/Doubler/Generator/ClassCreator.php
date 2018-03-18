@@ -3,12 +3,11 @@
 /*
  * This file is part of the Prophecy.
  * (c) Konstantin Kudryashov <ever.zet@gmail.com>
- *     Marcello Duarte <marcello.duarte@gmail.com>
+ * Marcello Duarte <marcello.duarte@gmail.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace Prophecy\Doubler\Generator;
 
 use Prophecy\Exception\Doubler\ClassCreatorException;
@@ -21,6 +20,7 @@ use Prophecy\Exception\Doubler\ClassCreatorException;
  */
 class ClassCreator
 {
+
     private $generator;
 
     /**
@@ -30,13 +30,13 @@ class ClassCreator
      */
     public function __construct(ClassCodeGenerator $generator = null)
     {
-        $this->generator = $generator ?: new ClassCodeGenerator;
+        $this->generator = $generator ?: new ClassCodeGenerator();
     }
 
     /**
      * Creates class.
      *
-     * @param string         $classname
+     * @param string $classname
      * @param Node\ClassNode $class
      *
      * @return mixed
@@ -47,21 +47,15 @@ class ClassCreator
     {
         $code = $this->generator->generate($classname, $class);
         $return = eval($code);
-
-        if (!class_exists($classname, false)) {
+        
+        if (! class_exists($classname, false)) {
             if (count($class->getInterfaces())) {
-                throw new ClassCreatorException(sprintf(
-                    'Could not double `%s` and implement interfaces: [%s].',
-                    $class->getParentClass(), implode(', ', $class->getInterfaces())
-                ), $class);
+                throw new ClassCreatorException(sprintf('Could not double `%s` and implement interfaces: [%s].', $class->getParentClass(), implode(', ', $class->getInterfaces())), $class);
             }
-
-            throw new ClassCreatorException(
-                sprintf('Could not double `%s`.', $class->getParentClass()),
-                $class
-            );
+            
+            throw new ClassCreatorException(sprintf('Could not double `%s`.', $class->getParentClass()), $class);
         }
-
+        
         return $return;
     }
 }

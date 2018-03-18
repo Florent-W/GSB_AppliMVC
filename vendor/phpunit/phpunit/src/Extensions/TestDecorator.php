@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of PHPUnit.
  *
@@ -17,6 +18,7 @@
  */
 class PHPUnit_Extensions_TestDecorator extends PHPUnit_Framework_Assert implements PHPUnit_Framework_Test, PHPUnit_Framework_SelfDescribing
 {
+
     /**
      * The Test to be decorated.
      *
@@ -73,7 +75,7 @@ class PHPUnit_Extensions_TestDecorator extends PHPUnit_Framework_Assert implemen
      */
     protected function createResult()
     {
-        return new PHPUnit_Framework_TestResult;
+        return new PHPUnit_Framework_TestResult();
     }
 
     /**
@@ -99,9 +101,9 @@ class PHPUnit_Extensions_TestDecorator extends PHPUnit_Framework_Assert implemen
         if ($result === null) {
             $result = $this->createResult();
         }
-
+        
         $this->basicRun($result);
-
+        
         return $result;
     }
 }

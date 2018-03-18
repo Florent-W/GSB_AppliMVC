@@ -1,21 +1,25 @@
 <?php
-
 namespace DeepCopy\Filter;
 
 use DeepCopy\Reflection\ReflectionHelper;
 
 /**
+ *
  * @final
  */
 class ReplaceFilter implements Filter
 {
+
     /**
+     *
      * @var callable
      */
     protected $callback;
 
     /**
-     * @param callable $callable Will be called to get the new value for each property to replace
+     *
+     * @param callable $callable
+     *            Will be called to get the new value for each property to replace
      */
     public function __construct(callable $callable)
     {
@@ -31,9 +35,9 @@ class ReplaceFilter implements Filter
     {
         $reflectionProperty = ReflectionHelper::getProperty($object, $property);
         $reflectionProperty->setAccessible(true);
-
+        
         $value = call_user_func($this->callback, $reflectionProperty->getValue($object));
-
+        
         $reflectionProperty->setValue($object, $value);
     }
 }

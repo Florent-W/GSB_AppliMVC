@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of phpDocumentor.
  *
@@ -9,7 +10,6 @@
  * @license   http://www.opensource.org/licenses/mit-license.php MIT
  * @link      http://phpdoc.org
  */
-
 namespace phpDocumentor\Reflection\DocBlock\Tags;
 
 use phpDocumentor\Reflection\DocBlock;
@@ -20,6 +20,7 @@ use phpDocumentor\Reflection\DocBlock\Description;
  */
 abstract class BaseTag implements DocBlock\Tag
 {
+
     /** @var string Name of the tag */
     protected $name = '';
 
@@ -46,7 +47,7 @@ abstract class BaseTag implements DocBlock\Tag
         if ($formatter === null) {
             $formatter = new Formatter\PassthroughFormatter();
         }
-
+        
         return $formatter->format($this);
     }
 }

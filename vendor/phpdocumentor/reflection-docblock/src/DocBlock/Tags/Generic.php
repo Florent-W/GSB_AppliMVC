@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of phpDocumentor.
  *
@@ -9,7 +10,6 @@
  * @license   http://www.opensource.org/licenses/mit-license.php MIT
  * @link      http://phpdoc.org
  */
-
 namespace phpDocumentor\Reflection\DocBlock\Tags;
 
 use phpDocumentor\Reflection\DocBlock\Description;
@@ -23,16 +23,19 @@ use Webmozart\Assert\Assert;
  */
 class Generic extends BaseTag implements Factory\StaticMethod
 {
+
     /**
      * Parses a tag and populates the member variables.
      *
-     * @param string $name Name of the tag.
-     * @param Description $description The contents of the given tag.
+     * @param string $name
+     *            Name of the tag.
+     * @param Description $description
+     *            The contents of the given tag.
      */
     public function __construct($name, Description $description = null)
     {
         $this->validateTagName($name);
-
+        
         $this->name = $name;
         $this->description = $description;
     }
@@ -40,25 +43,21 @@ class Generic extends BaseTag implements Factory\StaticMethod
     /**
      * Creates a new tag that represents any unknown tag type.
      *
-     * @param string             $body
-     * @param string             $name
+     * @param string $body
+     * @param string $name
      * @param DescriptionFactory $descriptionFactory
-     * @param TypeContext        $context
+     * @param TypeContext $context
      *
      * @return static
      */
-    public static function create(
-        $body,
-        $name = '',
-        DescriptionFactory $descriptionFactory = null,
-        TypeContext $context = null
-    ) {
+    public static function create($body, $name = '', DescriptionFactory $descriptionFactory = null, TypeContext $context = null)
+    {
         Assert::string($body);
         Assert::stringNotEmpty($name);
         Assert::notNull($descriptionFactory);
-
+        
         $description = $descriptionFactory && $body ? $descriptionFactory->create($body, $context) : null;
-
+        
         return new static($name, $description);
     }
 
@@ -82,10 +81,7 @@ class Generic extends BaseTag implements Factory\StaticMethod
     private function validateTagName($name)
     {
         if (! preg_match('/^' . StandardTagFactory::REGEX_TAGNAME . '$/u', $name)) {
-            throw new \InvalidArgumentException(
-                'The tag name "' . $name . '" is not wellformed. Tags may only consist of letters, underscores, '
-                . 'hyphens and backslashes.'
-            );
+            throw new \InvalidArgumentException('The tag name "' . $name . '" is not wellformed. Tags may only consist of letters, underscores, ' . 'hyphens and backslashes.');
         }
     }
 }

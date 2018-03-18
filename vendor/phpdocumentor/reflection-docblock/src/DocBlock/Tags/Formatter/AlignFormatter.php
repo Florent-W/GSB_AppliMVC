@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of phpDocumentor.
  *
@@ -10,7 +11,6 @@
  * @license   http://www.opensource.org/licenses/mit-license.php MIT
  * @link      http://phpdoc.org
  */
-
 namespace phpDocumentor\Reflection\DocBlock\Tags\Formatter;
 
 use phpDocumentor\Reflection\DocBlock\Tag;
@@ -18,13 +18,15 @@ use phpDocumentor\Reflection\DocBlock\Tags\Formatter;
 
 class AlignFormatter implements Formatter
 {
+
     /** @var int The maximum tag name length. */
     protected $maxLen = 0;
 
     /**
      * Constructor.
      *
-     * @param Tag[] $tags All tags that should later be aligned with the formatter.
+     * @param Tag[] $tags
+     *            All tags that should later be aligned with the formatter.
      */
     public function __construct(array $tags)
     {
@@ -42,6 +44,6 @@ class AlignFormatter implements Formatter
      */
     public function format(Tag $tag)
     {
-        return '@' . $tag->getName() . str_repeat(' ', $this->maxLen - strlen($tag->getName()) + 1) . (string)$tag;
+        return '@' . $tag->getName() . str_repeat(' ', $this->maxLen - strlen($tag->getName()) + 1) . (string) $tag;
     }
 }

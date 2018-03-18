@@ -1,12 +1,11 @@
 <?php
-
 namespace DeepCopy;
 
 /**
  * Deep copies the given value.
  *
  * @param mixed $value
- * @param bool  $useCloneMethod
+ * @param bool $useCloneMethod
  *
  * @return mixed
  */

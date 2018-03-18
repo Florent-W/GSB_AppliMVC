@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of phpDocumentor.
  *
@@ -9,13 +10,13 @@
  * @license   http://www.opensource.org/licenses/mit-license.php MIT
  * @link      http://phpdoc.org
  */
-
 namespace phpDocumentor\Reflection\DocBlock;
 
 use phpDocumentor\Reflection\Types\Context as TypeContext;
 
 interface TagFactory
 {
+
     /**
      * Adds a parameter to the service locator that can be injected in a tag's factory method.
      *
@@ -35,7 +36,7 @@ interface TagFactory
      * These parameters are injected at the last moment and will override any existing parameter with those names.
      *
      * @param string $name
-     * @param mixed  $value
+     * @param mixed $value
      *
      * @return void
      */
@@ -60,11 +61,12 @@ interface TagFactory
     /**
      * Factory method responsible for instantiating the correct sub type.
      *
-     * @param string $tagLine The text for this tag, including description.
+     * @param string $tagLine
+     *            The text for this tag, including description.
      * @param TypeContext $context
      *
      * @throws \InvalidArgumentException if an invalid tag line was presented.
-     *
+     *        
      * @return Tag A new tag object.
      */
     public function create($tagLine, TypeContext $context = null);
@@ -76,17 +78,19 @@ interface TagFactory
      * of a tag with the FQCN of a 'Tag Handler'. The Tag handler should implement the {@see Tag} interface (and thus
      * the create method).
      *
-     * @param string $tagName Name of tag to register a handler for. When registering a namespaced tag, the full
-     *                        name, along with a prefixing slash MUST be provided.
-     * @param string $handler FQCN of handler.
-     *
+     * @param string $tagName
+     *            Name of tag to register a handler for. When registering a namespaced tag, the full
+     *            name, along with a prefixing slash MUST be provided.
+     * @param string $handler
+     *            FQCN of handler.
+     *            
      * @throws \InvalidArgumentException if the tag name is not a string
      * @throws \InvalidArgumentException if the tag name is namespaced (contains backslashes) but does not start with
-     *     a backslash
+     *         a backslash
      * @throws \InvalidArgumentException if the handler is not a string
      * @throws \InvalidArgumentException if the handler is not an existing class
      * @throws \InvalidArgumentException if the handler does not implement the {@see Tag} interface
-     *
+     *        
      * @return void
      */
     public function registerTagHandler($tagName, $handler);

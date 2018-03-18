@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of PHPUnit.
  *
@@ -10,15 +11,15 @@
 
 /**
  * Tests for the BankAccount class.
- *
  */
 class BankAccountWithCustomExtensionTest extends PHPUnit_Framework_TestCase
 {
+
     protected $ba;
 
     protected function setUp()
     {
-        $this->ba = new BankAccount;
+        $this->ba = new BankAccount();
     }
 
     /**
@@ -42,10 +43,10 @@ class BankAccountWithCustomExtensionTest extends PHPUnit_Framework_TestCase
             $this->ba->withdrawMoney(1);
         } catch (BankAccountException $e) {
             $this->assertEquals(0, $this->ba->getBalance());
-
+            
             return;
         }
-
+        
         $this->fail();
     }
 
@@ -57,16 +58,16 @@ class BankAccountWithCustomExtensionTest extends PHPUnit_Framework_TestCase
     public function testBalanceCannotBecomeNegative2()
     {
         try {
-            $this->ba->depositMoney(-1);
+            $this->ba->depositMoney(- 1);
         } catch (BankAccountException $e) {
             $this->assertEquals(0, $this->ba->getBalance());
-
+            
             return;
         }
-
+        
         $this->fail();
     }
-
+    
     /*
      * @covers BankAccount::getBalance
      * @covers BankAccount::depositMoney
@@ -74,13 +75,13 @@ class BankAccountWithCustomExtensionTest extends PHPUnit_Framework_TestCase
      * @group balanceCannotBecomeNegative
      */
     /*
-    public function testDepositingAndWithdrawingMoneyWorks()
-    {
-        $this->assertEquals(0, $this->ba->getBalance());
-        $this->ba->depositMoney(1);
-        $this->assertEquals(1, $this->ba->getBalance());
-        $this->ba->withdrawMoney(1);
-        $this->assertEquals(0, $this->ba->getBalance());
-    }
-    */
+     * public function testDepositingAndWithdrawingMoneyWorks()
+     * {
+     * $this->assertEquals(0, $this->ba->getBalance());
+     * $this->ba->depositMoney(1);
+     * $this->assertEquals(1, $this->ba->getBalance());
+     * $this->ba->withdrawMoney(1);
+     * $this->assertEquals(0, $this->ba->getBalance());
+     * }
+     */
 }

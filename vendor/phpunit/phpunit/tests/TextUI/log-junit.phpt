@@ -17,24 +17,24 @@ PHPUnit %s by Sebastian Bergmann and contributors.
 
 .FEISRW                                                             7 / 7 (100%)<?xml version="1.0" encoding="UTF-8"?>
 <testsuites>
-  <testsuite name="StatusTest" file="%s/StatusTest.php" tests="4" assertions="2" failures="1" errors="1" time="%s">
-    <testcase name="testSuccess" class="StatusTest" file="%s/StatusTest.php" line="%d" assertions="1" time="%s"/>
-    <testcase name="testFailure" class="StatusTest" file="%s/StatusTest.php" line="%d" assertions="1" time="%s">
-      <failure type="PHPUnit_Framework_ExpectationFailedException">StatusTest::testFailure
-Failed asserting that false is true.
+    <testsuite name="StatusTest" file="%s/StatusTest.php" tests="4" assertions="2" failures="1" errors="1" time="%s">
+        <testcase name="testSuccess" class="StatusTest" file="%s/StatusTest.php" line="%d" assertions="1" time="%s"/>
+        <testcase name="testFailure" class="StatusTest" file="%s/StatusTest.php" line="%d" assertions="1" time="%s">
+            <failure type="PHPUnit_Framework_ExpectationFailedException">StatusTest::testFailure
+                Failed asserting that false is true.
 
-%s/StatusTest.php:%s
-</failure>
-    </testcase>
-    <testcase name="testError" class="StatusTest" file="%s/StatusTest.php" line="%d" assertions="0" time="%s">
-      <error type="Exception">StatusTest::testError
-Exception:%w
+                %s/StatusTest.php:%s
+            </failure>
+        </testcase>
+        <testcase name="testError" class="StatusTest" file="%s/StatusTest.php" line="%d" assertions="0" time="%s">
+            <error type="Exception">StatusTest::testError
+                Exception:%w
 
-%s/StatusTest.php:%d
-</error>
-    </testcase>
-    <testcase name="testWarning" class="StatusTest" file="%s/StatusTest.php" line="%d" assertions="0" time="%s"/>
-  </testsuite>
+                %s/StatusTest.php:%d
+            </error>
+        </testcase>
+        <testcase name="testWarning" class="StatusTest" file="%s/StatusTest.php" line="%d" assertions="0" time="%s"/>
+    </testsuite>
 </testsuites>
 
 

@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the PHPUnit_MockObject package.
  *
@@ -15,8 +16,10 @@
  */
 interface PHPUnit_Framework_MockObject_Builder_Stub extends PHPUnit_Framework_MockObject_Builder_Identity
 {
+
     /**
-     * Stubs the matching method with the stub object $stub. Any invocations of
+     * Stubs the matching method with the stub object $stub.
+     * Any invocations of
      * the matched method will now be handled by the stub instead.
      *
      * @param PHPUnit_Framework_MockObject_Stub $stub

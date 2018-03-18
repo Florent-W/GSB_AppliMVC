@@ -11,7 +11,7 @@ PHPUnit_TextUI_Command::main();
 --EXPECTF--
 PHPUnit %s by Sebastian Bergmann and contributors.
 
-EE                                                                  2 / 2 (100%)
+EE 2 / 2 (100%)
 
 Time: %s, Memory: %s
 
@@ -24,10 +24,10 @@ Failed asserting that two arrays are equal.
 --- Expected
 +++ Actual
 @@ @@
- Array (
--    0 => 1
-+    0 => 2
- )
+Array (
+- 0 => 1
++ 0 => 2
+)
 
 
 %s:%i
@@ -38,10 +38,10 @@ Failed asserting that two arrays are equal.
 --- Expected
 +++ Actual
 @@ @@
- Array (
--    0 => 1
-+    0 => 2
- )
+Array (
+- 0 => 1
++ 0 => 2
+)
 
 %s:%i
 

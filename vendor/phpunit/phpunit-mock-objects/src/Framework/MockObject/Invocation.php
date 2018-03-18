@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the PHPUnit_MockObject package.
  *
@@ -15,7 +16,9 @@
  */
 interface PHPUnit_Framework_MockObject_Invocation
 {
+
     /**
+     *
      * @return mixed Mocked return value.
      */
     public function generateReturnValue();

@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the GlobalState package.
  *
@@ -7,7 +8,6 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace SebastianBergmann\GlobalState;
 
 use ReflectionClass;
@@ -17,37 +17,45 @@ use ReflectionClass;
  */
 class Blacklist
 {
+
     /**
+     *
      * @var array
      */
     private $globalVariables = array();
 
     /**
+     *
      * @var array
      */
     private $classes = array();
 
     /**
+     *
      * @var array
      */
     private $classNamePrefixes = array();
 
     /**
+     *
      * @var array
      */
     private $parentClasses = array();
 
     /**
+     *
      * @var array
      */
     private $interfaces = array();
 
     /**
+     *
      * @var array
      */
     private $staticAttributes = array();
 
     /**
+     *
      * @param string $variableName
      */
     public function addGlobalVariable($variableName)
@@ -56,6 +64,7 @@ class Blacklist
     }
 
     /**
+     *
      * @param string $className
      */
     public function addClass($className)
@@ -64,6 +73,7 @@ class Blacklist
     }
 
     /**
+     *
      * @param string $className
      */
     public function addSubclassesOf($className)
@@ -72,6 +82,7 @@ class Blacklist
     }
 
     /**
+     *
      * @param string $interfaceName
      */
     public function addImplementorsOf($interfaceName)
@@ -80,6 +91,7 @@ class Blacklist
     }
 
     /**
+     *
      * @param string $classNamePrefix
      */
     public function addClassNamePrefix($classNamePrefix)
@@ -88,20 +100,22 @@ class Blacklist
     }
 
     /**
+     *
      * @param string $className
      * @param string $attributeName
      */
     public function addStaticAttribute($className, $attributeName)
     {
-        if (!isset($this->staticAttributes[$className])) {
+        if (! isset($this->staticAttributes[$className])) {
             $this->staticAttributes[$className] = array();
         }
-
+        
         $this->staticAttributes[$className][$attributeName] = true;
     }
 
     /**
-     * @param  string $variableName
+     *
+     * @param string $variableName
      * @return bool
      */
     public function isGlobalVariableBlacklisted($variableName)
@@ -110,8 +124,9 @@ class Blacklist
     }
 
     /**
-     * @param  string $className
-     * @param  string $attributeName
+     *
+     * @param string $className
+     * @param string $attributeName
      * @return bool
      */
     public function isStaticAttributeBlacklisted($className, $attributeName)
@@ -119,31 +134,31 @@ class Blacklist
         if (in_array($className, $this->classes)) {
             return true;
         }
-
+        
         foreach ($this->classNamePrefixes as $prefix) {
             if (strpos($className, $prefix) === 0) {
                 return true;
             }
         }
-
+        
         $class = new ReflectionClass($className);
-
+        
         foreach ($this->parentClasses as $type) {
             if ($class->isSubclassOf($type)) {
                 return true;
             }
         }
-
+        
         foreach ($this->interfaces as $type) {
             if ($class->implementsInterface($type)) {
                 return true;
             }
         }
-
+        
         if (isset($this->staticAttributes[$className][$attributeName])) {
             return true;
         }
-
+        
         return false;
     }
 }

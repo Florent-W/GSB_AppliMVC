@@ -1,5 +1,5 @@
 <?php
- 
+
 /**
  * getLesVisiteurs() test case.
  */
@@ -44,4 +44,3 @@ class getLesVisiteursTest extends PHPUnit_Framework_TestCase
         getLesVisiteurs(/* parameters */);
     }
 }
-

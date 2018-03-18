@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of phpDocumentor.
  *
@@ -9,7 +10,6 @@
  * @license   http://www.opensource.org/licenses/mit-license.php MIT
  * @link      http://phpdoc.org
  */
-
 namespace phpDocumentor\Reflection\DocBlock\Tags;
 
 use phpDocumentor\Reflection\DocBlock\Description;
@@ -24,6 +24,7 @@ use Webmozart\Assert\Assert;
  */
 final class Param extends BaseTag implements Factory\StaticMethod
 {
+
     /** @var string */
     protected $name = 'param';
 
@@ -37,6 +38,7 @@ final class Param extends BaseTag implements Factory\StaticMethod
     private $isVariadic = false;
 
     /**
+     *
      * @param string $variableName
      * @param Type $type
      * @param bool $isVariadic
@@ -46,7 +48,7 @@ final class Param extends BaseTag implements Factory\StaticMethod
     {
         Assert::string($variableName);
         Assert::boolean($isVariadic);
-
+        
         $this->variableName = $variableName;
         $this->type = $type;
         $this->isVariadic = $isVariadic;
@@ -54,45 +56,45 @@ final class Param extends BaseTag implements Factory\StaticMethod
     }
 
     /**
+     *
      * {@inheritdoc}
      */
-    public static function create(
-        $body,
-        TypeResolver $typeResolver = null,
-        DescriptionFactory $descriptionFactory = null,
-        TypeContext $context = null
-    ) {
+    public static function create($body, TypeResolver $typeResolver = null, DescriptionFactory $descriptionFactory = null, TypeContext $context = null)
+    {
         Assert::stringNotEmpty($body);
-        Assert::allNotNull([$typeResolver, $descriptionFactory]);
-
+        Assert::allNotNull([
+            $typeResolver,
+            $descriptionFactory
+        ]);
+        
         $parts = preg_split('/(\s+)/Su', $body, 3, PREG_SPLIT_DELIM_CAPTURE);
         $type = null;
         $variableName = '';
         $isVariadic = false;
-
+        
         // if the first item that is encountered is not a variable; it is a type
         if (isset($parts[0]) && (strlen($parts[0]) > 0) && ($parts[0][0] !== '$')) {
             $type = $typeResolver->resolve(array_shift($parts), $context);
             array_shift($parts);
         }
-
+        
         // if the next item starts with a $ or ...$ it must be the variable name
         if (isset($parts[0]) && (strlen($parts[0]) > 0) && ($parts[0][0] == '$' || substr($parts[0], 0, 4) === '...$')) {
             $variableName = array_shift($parts);
             array_shift($parts);
-
+            
             if (substr($variableName, 0, 3) === '...') {
                 $isVariadic = true;
                 $variableName = substr($variableName, 3);
             }
-
+            
             if (substr($variableName, 0, 1) === '$') {
                 $variableName = substr($variableName, 1);
             }
         }
-
+        
         $description = $descriptionFactory->create(implode('', $parts), $context);
-
+        
         return new static($variableName, $type, $isVariadic, $description);
     }
 
@@ -133,9 +135,6 @@ final class Param extends BaseTag implements Factory\StaticMethod
      */
     public function __toString()
     {
-        return ($this->type ? $this->type . ' ' : '')
-        . ($this->isVariadic() ? '...' : '')
-        . '$' . $this->variableName
-        . ($this->description ? ' ' . $this->description : '');
+        return ($this->type ? $this->type . ' ' : '') . ($this->isVariadic() ? '...' : '') . '$' . $this->variableName . ($this->description ? ' ' . $this->description : '');
     }
 }

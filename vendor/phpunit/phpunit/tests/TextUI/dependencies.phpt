@@ -12,9 +12,9 @@ PHPUnit_TextUI_Command::main();
 --EXPECTF--
 PHPUnit %s by Sebastian Bergmann and contributors.
 
-Runtime:       %s
+Runtime: %s
 
-...FSSS                                                             7 / 7 (100%)
+...FSSS 7 / 7 (100%)
 
 Time: %s, Memory: %s
 
@@ -25,7 +25,6 @@ There was 1 failure:
 %s:%i
 
 --
-
 There were 3 skipped tests:
 
 1) DependencyFailureTest::testTwo

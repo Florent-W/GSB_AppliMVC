@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of PHPUnit.
  *
@@ -14,26 +15,19 @@
  */
 class PHPUnit_Util_InvalidArgumentHelper
 {
+
     /**
-     * @param int    $argument
+     *
+     * @param int $argument
      * @param string $type
-     * @param mixed  $value
+     * @param mixed $value
      *
      * @return PHPUnit_Framework_Exception
      */
     public static function factory($argument, $type, $value = null)
     {
         $stack = debug_backtrace(false);
-
-        return new PHPUnit_Framework_Exception(
-            sprintf(
-                'Argument #%d%sof %s::%s() must be a %s',
-                $argument,
-                $value !== null ? ' (' . gettype($value) . '#' . $value . ')' : ' (No Value) ',
-                $stack[1]['class'],
-                $stack[1]['function'],
-                $type
-            )
-        );
+        
+        return new PHPUnit_Framework_Exception(sprintf('Argument #%d%sof %s::%s() must be a %s', $argument, $value !== null ? ' (' . gettype($value) . '#' . $value . ')' : ' (No Value) ', $stack[1]['class'], $stack[1]['function'], $type));
     }
 }

@@ -2,6 +2,7 @@
 
 class ArrayAccessible implements ArrayAccess, IteratorAggregate
 {
+
     private $array;
 
     public function __construct(array $array = [])

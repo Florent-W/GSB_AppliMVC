@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of PHPUnit.
  *
@@ -13,12 +14,15 @@
  */
 class PHPUnit_Util_PHP_Default extends PHPUnit_Util_PHP
 {
+
     /**
+     *
      * @var string
      */
     protected $tempFile;
 
     /**
+     *
      * @var bool
      */
     protected $useTempFile = false;
@@ -27,7 +31,7 @@ class PHPUnit_Util_PHP_Default extends PHPUnit_Util_PHP
      * Runs a single job (PHP code) using a separate PHP process.
      *
      * @param string $job
-     * @param array  $settings
+     * @param array $settings
      *
      * @return array
      *
@@ -36,16 +40,13 @@ class PHPUnit_Util_PHP_Default extends PHPUnit_Util_PHP
     public function runJob($job, array $settings = [])
     {
         if ($this->useTempFile || $this->stdin) {
-            if (!($this->tempFile = tempnam(sys_get_temp_dir(), 'PHPUnit')) ||
-                file_put_contents($this->tempFile, $job) === false) {
-                throw new PHPUnit_Framework_Exception(
-                    'Unable to write temporary file'
-                );
+            if (! ($this->tempFile = tempnam(sys_get_temp_dir(), 'PHPUnit')) || file_put_contents($this->tempFile, $job) === false) {
+                throw new PHPUnit_Framework_Exception('Unable to write temporary file');
             }
-
+            
             $job = $this->stdin;
         }
-
+        
         return $this->runProcess($job, $settings);
     }
 
@@ -63,7 +64,7 @@ class PHPUnit_Util_PHP_Default extends PHPUnit_Util_PHP
      * Handles creating the child process and returning the STDOUT and STDERR
      *
      * @param string $job
-     * @param array  $settings
+     * @param array $settings
      *
      * @return array
      *
@@ -72,55 +73,56 @@ class PHPUnit_Util_PHP_Default extends PHPUnit_Util_PHP
     protected function runProcess($job, $settings)
     {
         $handles = $this->getHandles();
-
+        
         $env = null;
         if ($this->env) {
             $env = isset($_SERVER) ? $_SERVER : [];
             unset($env['argv'], $env['argc']);
             $env = array_merge($env, $this->env);
-
+            
             foreach ($env as $envKey => $envVar) {
                 if (is_array($envVar)) {
                     unset($env[$envKey]);
                 }
             }
         }
-
+        
         $pipeSpec = [
-            0 => isset($handles[0]) ? $handles[0] : ['pipe', 'r'],
-            1 => isset($handles[1]) ? $handles[1] : ['pipe', 'w'],
-            2 => isset($handles[2]) ? $handles[2] : ['pipe', 'w'],
+            0 => isset($handles[0]) ? $handles[0] : [
+                'pipe',
+                'r'
+            ],
+            1 => isset($handles[1]) ? $handles[1] : [
+                'pipe',
+                'w'
+            ],
+            2 => isset($handles[2]) ? $handles[2] : [
+                'pipe',
+                'w'
+            ]
         ];
-        $process = proc_open(
-            $this->getCommand($settings, $this->tempFile),
-            $pipeSpec,
-            $pipes,
-            null,
-            $env
-        );
-
-        if (!is_resource($process)) {
-            throw new PHPUnit_Framework_Exception(
-                'Unable to spawn worker process'
-            );
+        $process = proc_open($this->getCommand($settings, $this->tempFile), $pipeSpec, $pipes, null, $env);
+        
+        if (! is_resource($process)) {
+            throw new PHPUnit_Framework_Exception('Unable to spawn worker process');
         }
-
+        
         if ($job) {
             $this->process($pipes[0], $job);
         }
         fclose($pipes[0]);
-
+        
         if ($this->timeout) {
             $stderr = $stdout = '';
             unset($pipes[0]);
-
+            
             while (true) {
                 $r = $pipes;
                 $w = null;
                 $e = null;
-
+                
                 $n = @stream_select($r, $w, $e, $this->timeout);
-
+                
                 if ($n === false) {
                     break;
                 } elseif ($n === 0) {
@@ -135,11 +137,11 @@ class PHPUnit_Util_PHP_Default extends PHPUnit_Util_PHP
                                 break;
                             }
                         }
-
-                        if (!$pipeOffset) {
+                        
+                        if (! $pipeOffset) {
                             break;
                         }
-
+                        
                         $line = fread($pipe, 8192);
                         if (strlen($line) == 0) {
                             fclose($pipes[$pipeOffset]);
@@ -152,7 +154,7 @@ class PHPUnit_Util_PHP_Default extends PHPUnit_Util_PHP
                             }
                         }
                     }
-
+                    
                     if (empty($pipes)) {
                         break;
                     }
@@ -163,34 +165,38 @@ class PHPUnit_Util_PHP_Default extends PHPUnit_Util_PHP
                 $stdout = stream_get_contents($pipes[1]);
                 fclose($pipes[1]);
             }
-
+            
             if (isset($pipes[2])) {
                 $stderr = stream_get_contents($pipes[2]);
                 fclose($pipes[2]);
             }
         }
-
+        
         if (isset($handles[1])) {
             rewind($handles[1]);
             $stdout = stream_get_contents($handles[1]);
             fclose($handles[1]);
         }
-
+        
         if (isset($handles[2])) {
             rewind($handles[2]);
             $stderr = stream_get_contents($handles[2]);
             fclose($handles[2]);
         }
-
+        
         proc_close($process);
         $this->cleanup();
-
-        return ['stdout' => $stdout, 'stderr' => $stderr];
+        
+        return [
+            'stdout' => $stdout,
+            'stderr' => $stderr
+        ];
     }
 
     /**
+     *
      * @param resource $pipe
-     * @param string   $job
+     * @param string $job
      *
      * @throws PHPUnit_Framework_Exception
      */

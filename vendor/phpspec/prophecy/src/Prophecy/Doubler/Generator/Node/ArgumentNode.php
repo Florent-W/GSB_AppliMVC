@@ -3,12 +3,11 @@
 /*
  * This file is part of the Prophecy.
  * (c) Konstantin Kudryashov <ever.zet@gmail.com>
- *     Marcello Duarte <marcello.duarte@gmail.com>
+ * Marcello Duarte <marcello.duarte@gmail.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace Prophecy\Doubler\Generator\Node;
 
 /**
@@ -18,15 +17,23 @@ namespace Prophecy\Doubler\Generator\Node;
  */
 class ArgumentNode
 {
+
     private $name;
+
     private $typeHint;
+
     private $default;
-    private $optional    = false;
+
+    private $optional = false;
+
     private $byReference = false;
-    private $isVariadic  = false;
-    private $isNullable  = false;
+
+    private $isVariadic = false;
+
+    private $isNullable = false;
 
     /**
+     *
      * @param string $name
      */
     public function __construct($name)
@@ -51,7 +58,7 @@ class ArgumentNode
 
     public function hasDefault()
     {
-        return $this->isOptional() && !$this->isVariadic();
+        return $this->isOptional() && ! $this->isVariadic();
     }
 
     public function getDefault()
@@ -62,7 +69,7 @@ class ArgumentNode
     public function setDefault($default = null)
     {
         $this->optional = true;
-        $this->default  = $default;
+        $this->default = $default;
     }
 
     public function isOptional()

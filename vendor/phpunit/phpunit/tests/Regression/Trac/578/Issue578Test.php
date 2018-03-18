@@ -1,6 +1,8 @@
 <?php
+
 class Issue578Test extends PHPUnit_Framework_TestCase
 {
+
     public function testNoticesDoublePrintStackTrace()
     {
         $this->iniSet('error_reporting', E_ALL | E_NOTICE);

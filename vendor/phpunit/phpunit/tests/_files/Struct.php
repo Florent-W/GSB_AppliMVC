@@ -1,6 +1,8 @@
 <?php
+
 class Struct
 {
+
     public $var;
 
     public function __construct($var)

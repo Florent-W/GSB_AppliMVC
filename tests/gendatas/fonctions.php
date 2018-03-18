@@ -18,8 +18,9 @@
 /**
  * Fonction qui retourne la liste des visiteurs
  *
- * @param PDO $pdo instance de la classe PDO utilisée pour se connecter
- *
+ * @param PDO $pdo
+ *            instance de la classe PDO utilisée pour se connecter
+ *            
  * @return Array de visiteurs
  */
 function getLesVisiteurs($pdo)
@@ -33,9 +34,11 @@ function getLesVisiteurs($pdo)
 /**
  * Fonction générique qui retourne le nombre d'enregistrements d'une table
  *
- * @param PDO    $pdo   Instance de la classe PDO utilisée pour se connecter
- * @param String $table Nom de la table que l'on veut utiliser
- *
+ * @param PDO $pdo
+ *            Instance de la classe PDO utilisée pour se connecter
+ * @param String $table
+ *            Nom de la table que l'on veut utiliser
+ *            
  * @return Integer avec le nombre d'enregistrements
  */
 function getNbTable($pdo, $table)
@@ -49,8 +52,9 @@ function getNbTable($pdo, $table)
 /**
  * Fonction qui retourne la liste des fiches de frais
  *
- * @param PDO $pdo instance de la classe PDO utilisée pour se connecter
- *
+ * @param PDO $pdo
+ *            instance de la classe PDO utilisée pour se connecter
+ *            
  * @return Array de fiches de frais
  */
 function getLesFichesFrais($pdo)
@@ -64,15 +68,14 @@ function getLesFichesFrais($pdo)
 /**
  * Fonction qui retourne les id des fiches de frais
  *
- * @param PDO $pdo instance de la classe PDO utilisée pour se connecter
- *
+ * @param PDO $pdo
+ *            instance de la classe PDO utilisée pour se connecter
+ *            
  * @return Array de id de fiches de frais
  */
 function getLesIdFraisForfait($pdo)
 {
-    $req = 'select fraisforfait.id as id '
-        . 'from fraisforfait '
-        . 'order by fraisforfait.id';
+    $req = 'select fraisforfait.id as id ' . 'from fraisforfait ' . 'order by fraisforfait.id';
     $res = $pdo->query($req);
     $lesLignes = $res->fetchAll();
     return $lesLignes;
@@ -81,8 +84,9 @@ function getLesIdFraisForfait($pdo)
 /**
  * Fonction qui retourne le mois suivant un mois passé en paramètre
  *
- * @param String $mois Contient le mois à utiliser
- *
+ * @param String $mois
+ *            Contient le mois à utiliser
+ *            
  * @return String le mois d'après
  */
 function getMoisSuivant($mois)
@@ -91,9 +95,9 @@ function getMoisSuivant($mois)
     $numMois = substr($mois, 4, 2);
     if ($numMois == '12') {
         $numMois = '01';
-        $numAnnee++;
+        $numAnnee ++;
     } else {
-        $numMois++;
+        $numMois ++;
     }
     if (strlen($numMois) == 1) {
         $numMois = '0' . $numMois;
@@ -104,8 +108,9 @@ function getMoisSuivant($mois)
 /**
  * Fonction qui retourne le mois précédent un mois passé en paramètre
  *
- * @param String $mois Contient le mois à utiliser
- *
+ * @param String $mois
+ *            Contient le mois à utiliser
+ *            
  * @return String le mois d'avant
  */
 function getMoisPrecedent($mois)
@@ -114,9 +119,9 @@ function getMoisPrecedent($mois)
     $numMois = substr($mois, 4, 2);
     if ($numMois == '01') {
         $numMois = '12';
-        $numAnnee--;
+        $numAnnee --;
     } else {
-        $numMois--;
+        $numMois --;
     }
     if (strlen($numMois) == 1) {
         $numMois = '0' . $numMois;
@@ -127,8 +132,9 @@ function getMoisPrecedent($mois)
 /**
  * Fonction qui crée les fiches de frais (via des INSERT SQL)
  *
- * @param PDO $pdo instance de la classe PDO utilisée pour se connecter
- *
+ * @param PDO $pdo
+ *            instance de la classe PDO utilisée pour se connecter
+ *            
  * @return null
  */
 function creationFichesFrais($pdo)
@@ -158,13 +164,10 @@ function creationFichesFrais($pdo)
             $numMois = substr($moisModif, 4, 2);
             $dateModif = $numAnnee . '-' . $numMois . '-' . rand(1, 8);
             $nbJustificatifs = rand(0, 12);
-            $req = 'insert into fichefrais(idvisiteur,mois,nbjustificatifs,'
-                . 'montantvalide,datemodif,idetat) '
-                . "values ('$idVisiteur','$moisCourant',$nbJustificatifs,"
-                . "0,'$dateModif','$etat');";
+            $req = 'insert into fichefrais(idvisiteur,mois,nbjustificatifs,' . 'montantvalide,datemodif,idetat) ' . "values ('$idVisiteur','$moisCourant',$nbJustificatifs," . "0,'$dateModif','$etat');";
             $pdo->exec($req);
             $moisCourant = getMoisPrecedent($moisCourant);
-            $n++;
+            $n ++;
         }
     }
 }
@@ -172,8 +175,9 @@ function creationFichesFrais($pdo)
 /**
  * Fonction qui crée des lignes de frais au forfait (via des INSERT SQL)
  *
- * @param PDO $pdo instance de la classe PDO utilisée pour se connecter
- *
+ * @param PDO $pdo
+ *            instance de la classe PDO utilisée pour se connecter
+ *            
  * @return null
  */
 function creationFraisForfait($pdo)
@@ -190,9 +194,7 @@ function creationFraisForfait($pdo)
             } else {
                 $quantite = rand(2, 20);
             }
-            $req = 'insert into lignefraisforfait(idvisiteur,mois,'
-                . 'idfraisforfait,quantite) '
-                . "values('$idVisiteur','$mois','$idFraisForfait',$quantite);";
+            $req = 'insert into lignefraisforfait(idvisiteur,mois,' . 'idfraisforfait,quantite) ' . "values('$idVisiteur','$mois','$idFraisForfait',$quantite);";
             $pdo->exec($req);
         }
     }
@@ -210,47 +212,58 @@ function getDesFraisHorsForfait()
         1 => array(
             'lib' => 'Repas avec praticien',
             'min' => 30,
-            'max' => 50),
+            'max' => 50
+        ),
         2 => array(
             'lib' => 'Achat de matériel de papèterie',
             'min' => 10,
-            'max' => 50),
+            'max' => 50
+        ),
         3 => array(
             'lib' => 'Taxi',
             'min' => 20,
-            'max' => 80),
+            'max' => 80
+        ),
         4 => array(
             'lib' => "Achat d'espace publicitaire",
             'min' => 20,
-            'max' => 150),
+            'max' => 150
+        ),
         5 => array(
             'lib' => 'Location salle conférence',
             'min' => 120,
-            'max' => 650),
+            'max' => 650
+        ),
         6 => array(
             'lib' => 'Voyage SNCF',
             'min' => 30,
-            'max' => 150),
+            'max' => 150
+        ),
         7 => array(
             'lib' => 'Traiteur, alimentation, boisson',
             'min' => 25,
-            'max' => 450),
+            'max' => 450
+        ),
         8 => array(
             'lib' => 'Rémunération intervenant/spécialiste',
             'min' => 250,
-            'max' => 1200),
+            'max' => 1200
+        ),
         9 => array(
             'lib' => 'Location équipement vidéo/sonore',
             'min' => 100,
-            'max' => 850),
+            'max' => 850
+        ),
         10 => array(
             'lib' => 'Location véhicule',
             'min' => 25,
-            'max' => 450),
+            'max' => 450
+        ),
         11 => array(
             'lib' => 'Frais vestimentaire/représentation',
             'min' => 25,
-            'max' => 450)
+            'max' => 450
+        )
     );
     return $tab;
 }
@@ -259,8 +272,9 @@ function getDesFraisHorsForfait()
  * Fonction qui met à jour les mots de passe des visisteurs avec des mots de
  * pass aléatoire
  *
- * @param PDO $pdo instance de la classe PDO utilisée pour se connecter
- *
+ * @param PDO $pdo
+ *            instance de la classe PDO utilisée pour se connecter
+ *            
  * @return null
  */
 function updateMdpVisiteur($pdo)
@@ -272,7 +286,7 @@ function updateMdpVisiteur($pdo)
     foreach ($lesLignes as $unVisiteur) {
         $mdp = '';
         $id = $unVisiteur['id'];
-        for ($i = 1; $i <= 5; $i++) {
+        for ($i = 1; $i <= 5; $i ++) {
             $uneLettrehasard = substr($lettres, rand(33, 1), 1);
             $mdp = $mdp . $uneLettrehasard;
         }
@@ -284,20 +298,21 @@ function updateMdpVisiteur($pdo)
 /**
  * Fonction qui crée des lignes de frais hors forfait (via des INSERT SQL)
  *
- * @param PDO $pdo instance de la classe PDO utilisée pour se connecter
- *
+ * @param PDO $pdo
+ *            instance de la classe PDO utilisée pour se connecter
+ *            
  * @return null
  */
 function creationFraisHorsForfait($pdo)
 {
     $desFrais = getDesFraisHorsForfait();
     $lesFichesFrais = getLesFichesFrais($pdo);
-
+    
     foreach ($lesFichesFrais as $uneFicheFrais) {
         $idVisiteur = $uneFicheFrais['idvisiteur'];
         $mois = $uneFicheFrais['mois'];
         $nbFrais = rand(0, 5);
-        for ($i = 0; $i <= $nbFrais; $i++) {
+        for ($i = 0; $i <= $nbFrais; $i ++) {
             $hasardNumfrais = rand(1, count($desFrais));
             $frais = $desFrais[$hasardNumfrais];
             $lib = $frais['lib'];
@@ -311,10 +326,7 @@ function creationFraisHorsForfait($pdo)
                 $hasardJour = '0' . $hasardJour;
             }
             $hasardMois = $numAnnee . '-' . $numMois . '-' . $hasardJour;
-            $req = 'insert into lignefraishorsforfait(idvisiteur,mois,libelle,'
-                    . 'date,montant) '
-                    . "values('$idVisiteur','$mois','$lib','$hasardMois',"
-                    . "$hasardMontant);";
+            $req = 'insert into lignefraishorsforfait(idvisiteur,mois,libelle,' . 'date,montant) ' . "values('$idVisiteur','$mois','$lib','$hasardMois'," . "$hasardMontant);";
             $pdo->exec($req);
         }
     }
@@ -324,13 +336,14 @@ function creationFraisHorsForfait($pdo)
  * Fonction qui retourne le mois (au format ID GSB : aaaamm) à partir d'une
  * date passée en paramètre
  *
- * @param String $date Date à utiliser pour extraire le mois
- *
+ * @param String $date
+ *            Date à utiliser pour extraire le mois
+ *            
  * @return String avec le mois au format aaaamm
  */
 function getMois($date)
 {
-    @list($jour, $mois, $annee) = explode('/', $date);
+    @list ($jour, $mois, $annee) = explode('/', $date);
     unset($jour);
     if (strlen($mois) == 1) {
         $mois = '0' . $mois;
@@ -341,8 +354,9 @@ function getMois($date)
 /**
  * Fonction qui met à jour les montants des fiches de frais (via des UPDATE SQL)
  *
- * @param PDO $pdo instance de la classe PDO utilisée pour se connecter
- *
+ * @param PDO $pdo
+ *            instance de la classe PDO utilisée pour se connecter
+ *            
  * @return null
  */
 function majFicheFrais($pdo)
@@ -351,18 +365,11 @@ function majFicheFrais($pdo)
     foreach ($lesFichesFrais as $uneFicheFrais) {
         $idVisiteur = $uneFicheFrais['idvisiteur'];
         $mois = $uneFicheFrais['mois'];
-        $req = 'select sum(montant) as cumul from lignefraishorsforfait '
-            . "where lignefraishorsforfait.idvisiteur = '$idVisiteur' "
-            . "and lignefraishorsforfait.mois = '$mois' ";
+        $req = 'select sum(montant) as cumul from lignefraishorsforfait ' . "where lignefraishorsforfait.idvisiteur = '$idVisiteur' " . "and lignefraishorsforfait.mois = '$mois' ";
         $res = $pdo->query($req);
         $ligne = $res->fetch();
         $cumulMontantHF = $ligne['cumul'];
-        $req = 'select sum(lignefraisforfait.quantite * fraisforfait.montant) '
-                . 'as cumul '
-                . 'from lignefraisforfait, fraisforfait '
-                . 'where lignefraisforfait.idfraisforfait = fraisforfait.id '
-                . "and lignefraisforfait.idvisiteur = '$idVisiteur' "
-                . "and lignefraisforfait.mois = '$mois' ";
+        $req = 'select sum(lignefraisforfait.quantite * fraisforfait.montant) ' . 'as cumul ' . 'from lignefraisforfait, fraisforfait ' . 'where lignefraisforfait.idfraisforfait = fraisforfait.id ' . "and lignefraisforfait.idvisiteur = '$idVisiteur' " . "and lignefraisforfait.mois = '$mois' ";
         $res = $pdo->query($req);
         $ligne = $res->fetch();
         $cumulMontantForfait = $ligne['cumul'];
@@ -373,8 +380,7 @@ function majFicheFrais($pdo)
         } else {
             $montantValide = $montantEngage * rand(80, 100) / 100;
         }
-        $req = "update fichefrais set montantvalide = $montantValide "
-            . "where idvisiteur = '$idVisiteur' and mois = '$mois'";
+        $req = "update fichefrais set montantvalide = $montantValide " . "where idvisiteur = '$idVisiteur' and mois = '$mois'";
         $pdo->exec($req);
     }
 }

@@ -3,12 +3,11 @@
 /*
  * This file is part of the Prophecy.
  * (c) Konstantin Kudryashov <ever.zet@gmail.com>
- *     Marcello Duarte <marcello.duarte@gmail.com>
+ * Marcello Duarte <marcello.duarte@gmail.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace Prophecy;
 
 use Prophecy\Argument\Token;
@@ -20,6 +19,7 @@ use Prophecy\Argument\Token;
  */
 class Argument
 {
+
     /**
      * Checks that argument is exact value or object.
      *
@@ -35,8 +35,9 @@ class Argument
     /**
      * Checks that argument is of specific type or instance of specific class.
      *
-     * @param string $type Type name (`integer`, `string`) or full class name
-     *
+     * @param string $type
+     *            Type name (`integer`, `string`) or full class name
+     *            
      * @return Token\TypeToken
      */
     public static function type($type)
@@ -48,7 +49,7 @@ class Argument
      * Checks that argument object has specific state.
      *
      * @param string $methodName
-     * @param mixed  $value
+     * @param mixed $value
      *
      * @return Token\ObjectStateToken
      */
@@ -76,7 +77,7 @@ class Argument
      */
     public static function any()
     {
-        return new Token\AnyValueToken;
+        return new Token\AnyValueToken();
     }
 
     /**
@@ -86,14 +87,15 @@ class Argument
      */
     public static function cetera()
     {
-        return new Token\AnyValuesToken;
+        return new Token\AnyValuesToken();
     }
 
     /**
      * Checks that argument matches all tokens
      *
-     * @param mixed ... a list of tokens
-     *
+     * @param
+     *            mixed ... a list of tokens
+     *            
      * @return Token\LogicalAndToken
      */
     public static function allOf()
@@ -104,8 +106,9 @@ class Argument
     /**
      * Checks that argument array or countable object has exact number of elements.
      *
-     * @param integer $value array elements count
-     *
+     * @param integer $value
+     *            array elements count
+     *            
      * @return Token\ArrayCountToken
      */
     public static function size($value)
@@ -116,9 +119,11 @@ class Argument
     /**
      * Checks that argument array contains (key, value) pair
      *
-     * @param mixed $key   exact value or token
-     * @param mixed $value exact value or token
-     *
+     * @param mixed $key
+     *            exact value or token
+     * @param mixed $value
+     *            exact value or token
+     *            
      * @return Token\ArrayEntryToken
      */
     public static function withEntry($key, $value)
@@ -153,8 +158,9 @@ class Argument
     /**
      * Checks that argument array has key
      *
-     * @param mixed $key exact value or token
-     *
+     * @param mixed $key
+     *            exact value or token
+     *            
      * @return Token\ArrayEntryToken
      */
     public static function withKey($key)
@@ -165,8 +171,9 @@ class Argument
     /**
      * Checks that argument does not match the value|token.
      *
-     * @param mixed $value either exact value or argument token
-     *
+     * @param mixed $value
+     *            either exact value or argument token
+     *            
      * @return Token\LogicalNotToken
      */
     public static function not($value)
@@ -175,6 +182,7 @@ class Argument
     }
 
     /**
+     *
      * @param string $value
      *
      * @return Token\StringContainsToken

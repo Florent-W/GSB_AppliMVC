@@ -3,12 +3,11 @@
 /*
  * This file is part of the Prophecy.
  * (c) Konstantin Kudryashov <ever.zet@gmail.com>
- *     Marcello Duarte <marcello.duarte@gmail.com>
+ * Marcello Duarte <marcello.duarte@gmail.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace Prophecy\Argument\Token;
 
 use Prophecy\Exception\InvalidArgumentException;
@@ -20,14 +19,19 @@ use Prophecy\Exception\InvalidArgumentException;
  */
 class ArrayEntryToken implements TokenInterface
 {
+
     /** @var \Prophecy\Argument\Token\TokenInterface */
     private $key;
+
     /** @var \Prophecy\Argument\Token\TokenInterface */
     private $value;
 
     /**
-     * @param mixed $key   exact value or token
-     * @param mixed $value exact value or token
+     *
+     * @param mixed $key
+     *            exact value or token
+     * @param mixed $value
+     *            exact value or token
      */
     public function __construct($key, $value)
     {
@@ -36,7 +40,8 @@ class ArrayEntryToken implements TokenInterface
     }
 
     /**
-     * Scores half of combined scores from key and value tokens for same entry. Capped at 8.
+     * Scores half of combined scores from key and value tokens for same entry.
+     * Capped at 8.
      * If argument implements \ArrayAccess without \Traversable, then key token is restricted to ExactValueToken.
      *
      * @param array|\ArrayAccess|\Traversable $argument
@@ -49,21 +54,27 @@ class ArrayEntryToken implements TokenInterface
         if ($argument instanceof \Traversable) {
             $argument = iterator_to_array($argument);
         }
-
+        
         if ($argument instanceof \ArrayAccess) {
             $argument = $this->convertArrayAccessToEntry($argument);
         }
-
-        if (!is_array($argument) || empty($argument)) {
+        
+        if (! is_array($argument) || empty($argument)) {
             return false;
         }
-
-        $keyScores = array_map(array($this->key,'scoreArgument'), array_keys($argument));
-        $valueScores = array_map(array($this->value,'scoreArgument'), $argument);
+        
+        $keyScores = array_map(array(
+            $this->key,
+            'scoreArgument'
+        ), array_keys($argument));
+        $valueScores = array_map(array(
+            $this->value,
+            'scoreArgument'
+        ), $argument);
         $scoreEntry = function ($value, $key) {
             return $value && $key ? min(8, ($key + $value) / 2) : false;
         };
-
+        
         return max(array_map($scoreEntry, $valueScores, $keyScores));
     }
 
@@ -110,7 +121,8 @@ class ArrayEntryToken implements TokenInterface
     /**
      * Wraps non token $value into ExactValueToken
      *
-     * @param $value
+     * @param
+     *            $value
      * @return TokenInterface
      */
     private function wrapIntoExactValueToken($value)
@@ -128,16 +140,14 @@ class ArrayEntryToken implements TokenInterface
      */
     private function convertArrayAccessToEntry(\ArrayAccess $object)
     {
-        if (!$this->key instanceof ExactValueToken) {
-            throw new InvalidArgumentException(sprintf(
-                'You can only use exact value tokens to match key of ArrayAccess object'.PHP_EOL.
-                'But you used `%s`.',
-                $this->key
-            ));
+        if (! $this->key instanceof ExactValueToken) {
+            throw new InvalidArgumentException(sprintf('You can only use exact value tokens to match key of ArrayAccess object' . PHP_EOL . 'But you used `%s`.', $this->key));
         }
-
+        
         $key = $this->key->getValue();
-
-        return $object->offsetExists($key) ? array($key => $object[$key]) : array();
+        
+        return $object->offsetExists($key) ? array(
+            $key => $object[$key]
+        ) : array();
     }
 }

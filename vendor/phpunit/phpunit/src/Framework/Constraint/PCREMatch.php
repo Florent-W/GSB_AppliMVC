@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of PHPUnit.
  *
@@ -19,12 +20,15 @@
  */
 class PHPUnit_Framework_Constraint_PCREMatch extends PHPUnit_Framework_Constraint
 {
+
     /**
+     *
      * @var string
      */
     protected $pattern;
 
     /**
+     *
      * @param string $pattern
      */
     public function __construct($pattern)
@@ -34,11 +38,13 @@ class PHPUnit_Framework_Constraint_PCREMatch extends PHPUnit_Framework_Constrain
     }
 
     /**
-     * Evaluates the constraint for parameter $other. Returns true if the
+     * Evaluates the constraint for parameter $other.
+     * Returns true if the
      * constraint is met, false otherwise.
      *
-     * @param mixed $other Value or object to evaluate.
-     *
+     * @param mixed $other
+     *            Value or object to evaluate.
+     *            
      * @return bool
      */
     protected function matches($other)
@@ -53,9 +59,6 @@ class PHPUnit_Framework_Constraint_PCREMatch extends PHPUnit_Framework_Constrain
      */
     public function toString()
     {
-        return sprintf(
-            'matches PCRE pattern "%s"',
-            $this->pattern
-        );
+        return sprintf('matches PCRE pattern "%s"', $this->pattern);
     }
 }

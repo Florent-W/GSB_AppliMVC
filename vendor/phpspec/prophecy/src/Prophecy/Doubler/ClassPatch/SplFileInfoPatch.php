@@ -3,12 +3,11 @@
 /*
  * This file is part of the Prophecy.
  * (c) Konstantin Kudryashov <ever.zet@gmail.com>
- *     Marcello Duarte <marcello.duarte@gmail.com>
+ * Marcello Duarte <marcello.duarte@gmail.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace Prophecy\Doubler\ClassPatch;
 
 use Prophecy\Doubler\Generator\Node\ClassNode;
@@ -22,6 +21,7 @@ use Prophecy\Doubler\Generator\Node\MethodNode;
  */
 class SplFileInfoPatch implements ClassPatchInterface
 {
+
     /**
      * Supports everything that extends SplFileInfo.
      *
@@ -34,9 +34,7 @@ class SplFileInfoPatch implements ClassPatchInterface
         if (null === $node->getParentClass()) {
             return false;
         }
-        return 'SplFileInfo' === $node->getParentClass()
-            || is_subclass_of($node->getParentClass(), 'SplFileInfo')
-        ;
+        return 'SplFileInfo' === $node->getParentClass() || is_subclass_of($node->getParentClass(), 'SplFileInfo');
     }
 
     /**
@@ -52,27 +50,27 @@ class SplFileInfoPatch implements ClassPatchInterface
             $constructor = new MethodNode('__construct');
             $node->addMethod($constructor);
         }
-
+        
         if ($this->nodeIsDirectoryIterator($node)) {
             $constructor->setCode('return parent::__construct("' . __DIR__ . '");');
-
+            
             return;
         }
-
+        
         if ($this->nodeIsSplFileObject($node)) {
-            $filePath = str_replace('\\','\\\\',__FILE__);
-            $constructor->setCode('return parent::__construct("' . $filePath .'");');
-
+            $filePath = str_replace('\\', '\\\\', __FILE__);
+            $constructor->setCode('return parent::__construct("' . $filePath . '");');
+            
             return;
         }
-
+        
         if ($this->nodeIsSymfonySplFileInfo($node)) {
-            $filePath = str_replace('\\','\\\\',__FILE__);
-            $constructor->setCode('return parent::__construct("' . $filePath .'", "", "");');
-
+            $filePath = str_replace('\\', '\\\\', __FILE__);
+            $constructor->setCode('return parent::__construct("' . $filePath . '", "", "");');
+            
             return;
         }
-
+        
         $constructor->useParentCode();
     }
 
@@ -87,37 +85,38 @@ class SplFileInfoPatch implements ClassPatchInterface
     }
 
     /**
+     *
      * @param ClassNode $node
      * @return boolean
      */
     private function nodeIsDirectoryIterator(ClassNode $node)
     {
         $parent = $node->getParentClass();
-
-        return 'DirectoryIterator' === $parent
-            || is_subclass_of($parent, 'DirectoryIterator');
+        
+        return 'DirectoryIterator' === $parent || is_subclass_of($parent, 'DirectoryIterator');
     }
 
     /**
+     *
      * @param ClassNode $node
      * @return boolean
      */
     private function nodeIsSplFileObject(ClassNode $node)
     {
         $parent = $node->getParentClass();
-
-        return 'SplFileObject' === $parent
-            || is_subclass_of($parent, 'SplFileObject');
+        
+        return 'SplFileObject' === $parent || is_subclass_of($parent, 'SplFileObject');
     }
 
     /**
+     *
      * @param ClassNode $node
      * @return boolean
      */
     private function nodeIsSymfonySplFileInfo(ClassNode $node)
     {
         $parent = $node->getParentClass();
-
+        
         return 'Symfony\\Component\\Finder\\SplFileInfo' === $parent;
     }
 }

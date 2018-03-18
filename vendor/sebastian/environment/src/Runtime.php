@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Environment package.
  *
@@ -7,7 +8,6 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace SebastianBergmann\Environment;
 
 /**
@@ -15,7 +15,9 @@ namespace SebastianBergmann\Environment;
  */
 class Runtime
 {
+
     /**
+     *
      * @var string
      */
     private static $binary;
@@ -44,25 +46,25 @@ class Runtime
             if ((self::$binary = getenv('PHP_BINARY')) === false) {
                 self::$binary = PHP_BINARY;
             }
-
+            
             self::$binary = escapeshellarg(self::$binary) . ' --php';
         }
-
+        
         // PHP >= 5.4.0
         if (self::$binary === null && defined('PHP_BINARY')) {
             if (PHP_BINARY !== '') {
                 self::$binary = escapeshellarg(PHP_BINARY);
             }
         }
-
+        
         // PHP < 5.4.0
         if (self::$binary === null) {
             if (PHP_SAPI == 'cli' && isset($_SERVER['_'])) {
                 if (strpos($_SERVER['_'], 'phpunit') !== false) {
                     $file = file($_SERVER['_']);
-
+                    
                     if (strpos($file[0], ' ') !== false) {
-                        $tmp          = explode(' ', $file[0]);
+                        $tmp = explode(' ', $file[0]);
                         self::$binary = escapeshellarg(trim($tmp[1]));
                     } else {
                         self::$binary = escapeshellarg(ltrim(trim($file[0]), '#!'));
@@ -72,14 +74,14 @@ class Runtime
                 }
             }
         }
-
+        
         if (self::$binary === null) {
             $possibleBinaryLocations = [
                 PHP_BINDIR . '/php',
                 PHP_BINDIR . '/php-cli.exe',
                 PHP_BINDIR . '/php.exe'
             ];
-
+            
             foreach ($possibleBinaryLocations as $binary) {
                 if (is_readable($binary)) {
                     self::$binary = escapeshellarg($binary);
@@ -87,15 +89,16 @@ class Runtime
                 }
             }
         }
-
+        
         if (self::$binary === null) {
             self::$binary = 'php';
         }
-
+        
         return self::$binary;
     }
 
     /**
+     *
      * @return string
      */
     public function getNameWithVersion()
@@ -104,6 +107,7 @@ class Runtime
     }
 
     /**
+     *
      * @return string
      */
     public function getName()
@@ -118,6 +122,7 @@ class Runtime
     }
 
     /**
+     *
      * @return string
      */
     public function getVendorUrl()
@@ -130,6 +135,7 @@ class Runtime
     }
 
     /**
+     *
      * @return string
      */
     public function getVersion()
@@ -168,7 +174,7 @@ class Runtime
      */
     public function isPHP()
     {
-        return !$this->isHHVM() && !$this->isPHPDBG();
+        return ! $this->isHHVM() && ! $this->isPHPDBG();
     }
 
     /**
@@ -178,7 +184,7 @@ class Runtime
      */
     public function isPHPDBG()
     {
-        return PHP_SAPI === 'phpdbg' && !$this->isHHVM();
+        return PHP_SAPI === 'phpdbg' && ! $this->isHHVM();
     }
 
     /**

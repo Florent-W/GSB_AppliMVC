@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of phpDocumentor.
  *
@@ -9,7 +10,6 @@
  *  @license   http://www.opensource.org/licenses/mit-license.php MIT
  *  @link      http://phpdoc.org
  */
-
 namespace phpDocumentor\Reflection\DocBlock\Tags\Reference;
 
 use Webmozart\Assert\Assert;
@@ -19,7 +19,9 @@ use Webmozart\Assert\Assert;
  */
 final class Url implements Reference
 {
+
     /**
+     *
      * @var string
      */
     private $uri;

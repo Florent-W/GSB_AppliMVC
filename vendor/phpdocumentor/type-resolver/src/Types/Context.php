@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of phpDocumentor.
  *
@@ -9,7 +10,6 @@
  * @license   http://www.opensource.org/licenses/mit-license.php MIT
  * @link      http://phpdoc.org
  */
-
 namespace phpDocumentor\Reflection\Types;
 
 /**
@@ -28,6 +28,7 @@ namespace phpDocumentor\Reflection\Types;
  */
 final class Context
 {
+
     /** @var string The current namespace. */
     private $namespace;
 
@@ -38,26 +39,26 @@ final class Context
      * Initializes the new context and normalizes all passed namespaces to be in Qualified Namespace Name (QNN)
      * format (without a preceding `\`).
      *
-     * @param string $namespace The namespace where this DocBlock resides in.
-     * @param array $namespaceAliases List of namespace aliases => Fully Qualified Namespace.
+     * @param string $namespace
+     *            The namespace where this DocBlock resides in.
+     * @param array $namespaceAliases
+     *            List of namespace aliases => Fully Qualified Namespace.
      */
     public function __construct($namespace, array $namespaceAliases = [])
     {
-        $this->namespace = ('global' !== $namespace && 'default' !== $namespace)
-            ? trim((string)$namespace, '\\')
-            : '';
-
+        $this->namespace = ('global' !== $namespace && 'default' !== $namespace) ? trim((string) $namespace, '\\') : '';
+        
         foreach ($namespaceAliases as $alias => $fqnn) {
             if ($fqnn[0] === '\\') {
                 $fqnn = substr($fqnn, 1);
             }
             if ($fqnn[strlen($fqnn) - 1] === '\\') {
-                $fqnn = substr($fqnn, 0, -1);
+                $fqnn = substr($fqnn, 0, - 1);
             }
-
+            
             $namespaceAliases[$alias] = $fqnn;
         }
-
+        
         $this->namespaceAliases = $namespaceAliases;
     }
 

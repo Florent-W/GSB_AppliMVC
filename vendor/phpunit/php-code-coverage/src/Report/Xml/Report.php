@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the php-code-coverage package.
  *
@@ -7,21 +8,18 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace SebastianBergmann\CodeCoverage\Report\Xml;
 
 class Report extends File
 {
+
     public function __construct($name)
     {
-        $this->dom = new \DOMDocument;
+        $this->dom = new \DOMDocument();
         $this->dom->loadXML('<?xml version="1.0" ?><phpunit xmlns="http://schema.phpunit.de/coverage/1.0"><file /></phpunit>');
-
-        $this->contextNode = $this->dom->getElementsByTagNameNS(
-            'http://schema.phpunit.de/coverage/1.0',
-            'file'
-        )->item(0);
-
+        
+        $this->contextNode = $this->dom->getElementsByTagNameNS('http://schema.phpunit.de/coverage/1.0', 'file')->item(0);
+        
         $this->setName($name);
     }
 
@@ -37,13 +35,8 @@ class Report extends File
 
     public function getFunctionObject($name)
     {
-        $node = $this->contextNode->appendChild(
-            $this->dom->createElementNS(
-                'http://schema.phpunit.de/coverage/1.0',
-                'function'
-            )
-        );
-
+        $node = $this->contextNode->appendChild($this->dom->createElementNS('http://schema.phpunit.de/coverage/1.0', 'function'));
+        
         return new Method($node, $name);
     }
 
@@ -59,13 +52,8 @@ class Report extends File
 
     private function getUnitObject($tagName, $name)
     {
-        $node = $this->contextNode->appendChild(
-            $this->dom->createElementNS(
-                'http://schema.phpunit.de/coverage/1.0',
-                $tagName
-            )
-        );
-
+        $node = $this->contextNode->appendChild($this->dom->createElementNS('http://schema.phpunit.de/coverage/1.0', $tagName));
+        
         return new Unit($node, $name);
     }
 }

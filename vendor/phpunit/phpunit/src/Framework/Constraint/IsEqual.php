@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of PHPUnit.
  *
@@ -19,70 +20,78 @@
  */
 class PHPUnit_Framework_Constraint_IsEqual extends PHPUnit_Framework_Constraint
 {
+
     /**
+     *
      * @var mixed
      */
     protected $value;
 
     /**
+     *
      * @var float
      */
     protected $delta = 0.0;
 
     /**
+     *
      * @var int
      */
     protected $maxDepth = 10;
 
     /**
+     *
      * @var bool
      */
     protected $canonicalize = false;
 
     /**
+     *
      * @var bool
      */
     protected $ignoreCase = false;
 
     /**
+     *
      * @var SebastianBergmann\Comparator\ComparisonFailure
      */
     protected $lastFailure;
 
     /**
+     *
      * @param mixed $value
      * @param float $delta
-     * @param int   $maxDepth
-     * @param bool  $canonicalize
-     * @param bool  $ignoreCase
+     * @param int $maxDepth
+     * @param bool $canonicalize
+     * @param bool $ignoreCase
      *
      * @throws PHPUnit_Framework_Exception
      */
     public function __construct($value, $delta = 0.0, $maxDepth = 10, $canonicalize = false, $ignoreCase = false)
     {
         parent::__construct();
-
-        if (!is_numeric($delta)) {
+        
+        if (! is_numeric($delta)) {
             throw PHPUnit_Util_InvalidArgumentHelper::factory(2, 'numeric');
         }
-
-        if (!is_int($maxDepth)) {
+        
+        if (! is_int($maxDepth)) {
             throw PHPUnit_Util_InvalidArgumentHelper::factory(3, 'integer');
         }
-
-        if (!is_bool($canonicalize)) {
+        
+        if (! is_bool($canonicalize)) {
             throw PHPUnit_Util_InvalidArgumentHelper::factory(4, 'boolean');
         }
-
-        if (!is_bool($ignoreCase)) {
+        
+        if (! is_bool($ignoreCase)) {
             throw PHPUnit_Util_InvalidArgumentHelper::factory(5, 'boolean');
         }
-
-        $this->value        = $value;
-        $this->delta        = $delta;
-        $this->maxDepth     = $maxDepth;
+        
+        $this->value = $value;
+        $this->delta = $delta;
+        $this->maxDepth = $maxDepth;
         $this->canonicalize = $canonicalize;
-        $this->ignoreCase   = $ignoreCase;
+        $this->ignoreCase = $ignoreCase;
     }
 
     /**
@@ -95,10 +104,13 @@ class PHPUnit_Framework_Constraint_IsEqual extends PHPUnit_Framework_Constraint
      * a boolean value instead: true in case of success, false in case of a
      * failure.
      *
-     * @param mixed  $other        Value or object to evaluate.
-     * @param string $description  Additional information about the test
-     * @param bool   $returnResult Whether to return a result or throw an exception
-     *
+     * @param mixed $other
+     *            Value or object to evaluate.
+     * @param string $description
+     *            Additional information about the test
+     * @param bool $returnResult
+     *            Whether to return a result or throw an exception
+     *            
      * @return mixed
      *
      * @throws PHPUnit_Framework_ExpectationFailedException
@@ -111,33 +123,21 @@ class PHPUnit_Framework_Constraint_IsEqual extends PHPUnit_Framework_Constraint
         if ($this->value === $other) {
             return true;
         }
-
+        
         $comparatorFactory = SebastianBergmann\Comparator\Factory::getInstance();
-
+        
         try {
-            $comparator = $comparatorFactory->getComparatorFor(
-                $this->value,
-                $other
-            );
-
-            $comparator->assertEquals(
-                $this->value,
-                $other,
-                $this->delta,
-                $this->canonicalize,
-                $this->ignoreCase
-            );
+            $comparator = $comparatorFactory->getComparatorFor($this->value, $other);
+            
+            $comparator->assertEquals($this->value, $other, $this->delta, $this->canonicalize, $this->ignoreCase);
         } catch (SebastianBergmann\Comparator\ComparisonFailure $f) {
             if ($returnResult) {
                 return false;
             }
-
-            throw new PHPUnit_Framework_ExpectationFailedException(
-                trim($description . "\n" . $f->getMessage()),
-                $f
-            );
+            
+            throw new PHPUnit_Framework_ExpectationFailedException(trim($description . "\n" . $f->getMessage()), $f);
         }
-
+        
         return true;
     }
 
@@ -149,29 +149,19 @@ class PHPUnit_Framework_Constraint_IsEqual extends PHPUnit_Framework_Constraint
     public function toString()
     {
         $delta = '';
-
+        
         if (is_string($this->value)) {
             if (strpos($this->value, "\n") !== false) {
                 return 'is equal to <text>';
             } else {
-                return sprintf(
-                    'is equal to <string:%s>',
-                    $this->value
-                );
+                return sprintf('is equal to <string:%s>', $this->value);
             }
         } else {
             if ($this->delta != 0) {
-                $delta = sprintf(
-                    ' with delta <%F>',
-                    $this->delta
-                );
+                $delta = sprintf(' with delta <%F>', $this->delta);
             }
-
-            return sprintf(
-                'is equal to %s%s',
-                $this->exporter->export($this->value),
-                $delta
-            );
+            
+            return sprintf('is equal to %s%s', $this->exporter->export($this->value), $delta);
         }
     }
 }

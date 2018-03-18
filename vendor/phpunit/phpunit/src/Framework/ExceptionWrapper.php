@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of PHPUnit.
  *
@@ -19,17 +20,21 @@
  */
 class PHPUnit_Framework_ExceptionWrapper extends PHPUnit_Framework_Exception
 {
+
     /**
+     *
      * @var string
      */
     protected $className;
 
     /**
+     *
      * @var PHPUnit_Framework_ExceptionWrapper|null
      */
     protected $previous;
 
     /**
+     *
      * @param Throwable|Exception $e
      */
     public function __construct($e)
@@ -37,23 +42,24 @@ class PHPUnit_Framework_ExceptionWrapper extends PHPUnit_Framework_Exception
         // PDOException::getCode() is a string.
         // @see http://php.net/manual/en/class.pdoexception.php#95812
         parent::__construct($e->getMessage(), (int) $e->getCode());
-
+        
         $this->className = get_class($e);
-        $this->file      = $e->getFile();
-        $this->line      = $e->getLine();
-
+        $this->file = $e->getFile();
+        $this->line = $e->getLine();
+        
         $this->serializableTrace = $e->getTrace();
-
+        
         foreach ($this->serializableTrace as $i => $call) {
             unset($this->serializableTrace[$i]['args']);
         }
-
+        
         if ($e->getPrevious()) {
             $this->previous = new self($e->getPrevious());
         }
     }
 
     /**
+     *
      * @return string
      */
     public function getClassName()
@@ -62,6 +68,7 @@ class PHPUnit_Framework_ExceptionWrapper extends PHPUnit_Framework_Exception
     }
 
     /**
+     *
      * @return PHPUnit_Framework_ExceptionWrapper
      */
     public function getPreviousWrapped()
@@ -70,20 +77,21 @@ class PHPUnit_Framework_ExceptionWrapper extends PHPUnit_Framework_Exception
     }
 
     /**
+     *
      * @return string
      */
     public function __toString()
     {
         $string = PHPUnit_Framework_TestFailure::exceptionToString($this);
-
+        
         if ($trace = PHPUnit_Util_Filter::getFilteredStacktrace($this)) {
             $string .= "\n" . $trace;
         }
-
+        
         if ($this->previous) {
             $string .= "\nCaused by\n" . $this->previous;
         }
-
+        
         return $string;
     }
 }

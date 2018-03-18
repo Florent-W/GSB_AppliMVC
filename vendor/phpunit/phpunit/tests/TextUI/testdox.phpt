@@ -13,6 +13,6 @@ PHPUnit_TextUI_Command::main();
 PHPUnit %s by Sebastian Bergmann and contributors.
 
 BankAccount
- [x] Balance is initially zero
- [x] Balance cannot become negative
+[x] Balance is initially zero
+[x] Balance cannot become negative
 

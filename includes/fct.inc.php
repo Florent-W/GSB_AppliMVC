@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Fonctions pour l'application GSB
  *
@@ -28,11 +29,15 @@ function estConnecte()
 /**
  * Enregistre dans une variable session les infos d'un visiteur
  *
- * @param String $idVisiteur ID du visiteur
- * @param String $nom        Nom du visiteur
- * @param String $prenom     Prénom du visiteur
- * @param String $type       Type du visiteur
- *
+ * @param String $idVisiteur
+ *            ID du visiteur
+ * @param String $nom
+ *            Nom du visiteur
+ * @param String $prenom
+ *            Prénom du visiteur
+ * @param String $type
+ *            Type du visiteur
+ *            
  * @return null
  */
 function connecter($idVisiteur, $nom, $prenom, $type)
@@ -40,7 +45,7 @@ function connecter($idVisiteur, $nom, $prenom, $type)
     $_SESSION['idVisiteur'] = $idVisiteur;
     $_SESSION['nom'] = $nom;
     $_SESSION['prenom'] = $prenom;
-    $_SESSION['type'] = $type; 
+    $_SESSION['type'] = $type;
 }
 
 /**
@@ -57,13 +62,15 @@ function deconnecter()
  * Transforme une date au format français jj/mm/aaaa vers le format anglais
  * aaaa-mm-jj
  *
- * @param String $maDate au format  jj/mm/aaaa
- *
+ * @param String $maDate
+ *            au format jj/mm/aaaa
+ *            
  * @return Date au format anglais aaaa-mm-jj
+ *         @assert (12/02/2008) == 2008-02-12
  */
 function dateFrancaisVersAnglais($maDate)
 {
-    @list($jour, $mois, $annee) = explode('/', $maDate);
+    @list ($jour, $mois, $annee) = explode('/', $maDate);
     return date('Y-m-d', mktime(0, 0, 0, $mois, $jour, $annee));
 }
 
@@ -71,13 +78,14 @@ function dateFrancaisVersAnglais($maDate)
  * Transforme une date au format format anglais aaaa-mm-jj vers le format
  * français jj/mm/aaaa
  *
- * @param String $maDate au format  aaaa-mm-jj
- *
+ * @param String $maDate
+ *            au format aaaa-mm-jj
+ *            
  * @return Date au format format français jj/mm/aaaa
  */
 function dateAnglaisVersFrancais($maDate)
 {
-    @list($annee, $mois, $jour) = explode('-', $maDate);
+    @list ($annee, $mois, $jour) = explode('-', $maDate);
     $date = $jour . '/' . $mois . '/' . $annee;
     return $date;
 }
@@ -85,13 +93,14 @@ function dateAnglaisVersFrancais($maDate)
 /**
  * Retourne le mois au format aaaamm selon le jour dans le mois
  *
- * @param String $date au format  jj/mm/aaaa
- *
+ * @param String $date
+ *            au format jj/mm/aaaa
+ *            
  * @return String Mois au format aaaamm
  */
 function getMois($date)
 {
-    @list($jour, $mois, $annee) = explode('/', $date);
+    @list ($jour, $mois, $annee) = explode('/', $date);
     unset($jour);
     if (strlen($mois) == 1) {
         $mois = '0' . $mois;
@@ -104,8 +113,9 @@ function getMois($date)
 /**
  * Indique si une valeur est un entier positif ou nul
  *
- * @param Integer $valeur Valeur
- *
+ * @param Integer $valeur
+ *            Valeur
+ *            
  * @return Boolean vrai ou faux
  */
 function estEntierPositif($valeur)
@@ -116,15 +126,16 @@ function estEntierPositif($valeur)
 /**
  * Indique si un tableau de valeurs est constitué d'entiers positifs ou nuls
  *
- * @param Array $tabEntiers Un tableau d'entier
- *
+ * @param Array $tabEntiers
+ *            Un tableau d'entier
+ *            
  * @return Boolean vrai ou faux
  */
 function estTableauEntiers($tabEntiers)
 {
     $boolReturn = true;
     foreach ($tabEntiers as $unEntier) {
-        if (!estEntierPositif($unEntier)) {
+        if (! estEntierPositif($unEntier)) {
             $boolReturn = false;
         }
     }
@@ -134,25 +145,27 @@ function estTableauEntiers($tabEntiers)
 /**
  * Vérifie si une date est inférieure d'un an à la date actuelle
  *
- * @param String $dateTestee Date à tester
- *
+ * @param String $dateTestee
+ *            Date à tester
+ *            
  * @return Boolean vrai ou faux
  */
 function estDateDepassee($dateTestee)
 {
     $dateActuelle = date('d/m/Y');
-    @list($jour, $mois, $annee) = explode('/', $dateActuelle);
-    $annee--;
+    @list ($jour, $mois, $annee) = explode('/', $dateActuelle);
+    $annee --;
     $anPasse = $annee . $mois . $jour;
-    @list($jourTeste, $moisTeste, $anneeTeste) = explode('/', $dateTestee);
+    @list ($jourTeste, $moisTeste, $anneeTeste) = explode('/', $dateTestee);
     return ($anneeTeste . $moisTeste . $jourTeste < $anPasse);
 }
 
 /**
  * Vérifie la validité du format d'une date française jj/mm/aaaa
  *
- * @param String $date Date à tester
- *
+ * @param String $date
+ *            Date à tester
+ *            
  * @return Boolean vrai ou faux
  */
 function estDateValide($date)
@@ -162,10 +175,10 @@ function estDateValide($date)
     if (count($tabDate) != 3) {
         $dateOK = false;
     } else {
-        if (!estTableauEntiers($tabDate)) {
+        if (! estTableauEntiers($tabDate)) {
             $dateOK = false;
         } else {
-            if (!checkdate($tabDate[1], $tabDate[0], $tabDate[2])) {
+            if (! checkdate($tabDate[1], $tabDate[0], $tabDate[2])) {
                 $dateOK = false;
             }
         }
@@ -176,8 +189,9 @@ function estDateValide($date)
 /**
  * Fonction qui retourne le mois suivant un mois passé en paramètre
  *
- * @param String $mois Contient le mois à utiliser
- *
+ * @param String $mois
+ *            Contient le mois à utiliser
+ *            
  * @return String la même date passé en paramètre mais avec un mois de plus
  */
 function getMoisSuivant($mois)
@@ -187,9 +201,9 @@ function getMoisSuivant($mois)
     $numJour = substr($mois, 8, 2);
     if ($numMois == '12') {
         $numMois = '01';
-        $numAnnee++;
+        $numAnnee ++;
     } else {
-        $numMois++;
+        $numMois ++;
     }
     if (strlen($numMois) == 1) {
         $numMois = '0' . $numMois;
@@ -200,8 +214,9 @@ function getMoisSuivant($mois)
 /**
  * Vérifie que le tableau de frais ne contient que des valeurs numériques
  *
- * @param Array $lesFrais Tableau d'entier
- *
+ * @param Array $lesFrais
+ *            Tableau d'entier
+ *            
  * @return Boolean vrai ou faux
  */
 function lesQteFraisValides($lesFrais)
@@ -215,10 +230,13 @@ function lesQteFraisValides($lesFrais)
  *
  * Des message d'erreurs sont ajoutés au tableau des erreurs
  *
- * @param String $dateFrais Date des frais
- * @param String $libelle   Libellé des frais
- * @param Float  $montant   Montant des frais
- *
+ * @param String $dateFrais
+ *            Date des frais
+ * @param String $libelle
+ *            Libellé des frais
+ * @param Float $montant
+ *            Montant des frais
+ *            
  * @return null
  */
 function valideInfosFrais($dateFrais, $libelle, $montant)
@@ -226,13 +244,11 @@ function valideInfosFrais($dateFrais, $libelle, $montant)
     if ($dateFrais == '') {
         ajouterErreur('Le champ date ne doit pas être vide');
     } else {
-        if (!estDatevalide($dateFrais)) {
+        if (! estDatevalide($dateFrais)) {
             ajouterErreur('Date invalide');
         } else {
             if (estDateDepassee($dateFrais)) {
-                ajouterErreur(
-                    "date d'enregistrement du frais dépassé, plus de 1 an"
-                );
+                ajouterErreur("date d'enregistrement du frais dépassé, plus de 1 an");
             }
         }
     }
@@ -241,7 +257,7 @@ function valideInfosFrais($dateFrais, $libelle, $montant)
     }
     if ($montant == '') {
         ajouterErreur('Le champ montant ne peut pas être vide');
-    } elseif (!is_numeric($montant)) {
+    } elseif (! is_numeric($montant)) {
         ajouterErreur('Le champ montant doit être numérique');
     }
 }
@@ -249,13 +265,14 @@ function valideInfosFrais($dateFrais, $libelle, $montant)
 /**
  * Ajoute le libellé d'une erreur au tableau des erreurs
  *
- * @param String $msg Libellé de l'erreur
- *
+ * @param String $msg
+ *            Libellé de l'erreur
+ *            
  * @return null
  */
 function ajouterErreur($msg)
 {
-    if (!isset($_REQUEST['erreurs'])) {
+    if (! isset($_REQUEST['erreurs'])) {
         $_REQUEST['erreurs'] = array();
     }
     $_REQUEST['erreurs'][] = $msg;
@@ -268,10 +285,9 @@ function ajouterErreur($msg)
  */
 function nbErreurs()
 {
-    if (!isset($_REQUEST['erreurs'])) {
+    if (! isset($_REQUEST['erreurs'])) {
         return 0;
     } else {
         return count($_REQUEST['erreurs']);
     }
 }
-

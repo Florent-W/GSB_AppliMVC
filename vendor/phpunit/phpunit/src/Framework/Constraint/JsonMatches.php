@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of PHPUnit.
  *
@@ -13,7 +14,9 @@
  */
 class PHPUnit_Framework_Constraint_JsonMatches extends PHPUnit_Framework_Constraint
 {
+
     /**
+     *
      * @var string
      */
     protected $value;
@@ -30,13 +33,15 @@ class PHPUnit_Framework_Constraint_JsonMatches extends PHPUnit_Framework_Constra
     }
 
     /**
-     * Evaluates the constraint for parameter $other. Returns true if the
+     * Evaluates the constraint for parameter $other.
+     * Returns true if the
      * constraint is met, false otherwise.
      *
      * This method can be overridden to implement the evaluation algorithm.
      *
-     * @param mixed $other Value or object to evaluate.
-     *
+     * @param mixed $other
+     *            Value or object to evaluate.
+     *            
      * @return bool
      */
     protected function matches($other)
@@ -45,12 +50,12 @@ class PHPUnit_Framework_Constraint_JsonMatches extends PHPUnit_Framework_Constra
         if (json_last_error()) {
             return false;
         }
-
+        
         $decodedValue = json_decode($this->value);
         if (json_last_error()) {
             return false;
         }
-
+        
         return $decodedOther == $decodedValue;
     }
 
@@ -61,9 +66,6 @@ class PHPUnit_Framework_Constraint_JsonMatches extends PHPUnit_Framework_Constra
      */
     public function toString()
     {
-        return sprintf(
-            'matches JSON string "%s"',
-            $this->value
-        );
+        return sprintf('matches JSON string "%s"', $this->value);
     }
 }

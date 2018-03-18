@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of PHPUnit.
  *
@@ -10,10 +11,10 @@
 
 /**
  * A class with a __toString() method.
- *
  */
 class ClassWithToString
 {
+
     public function __toString()
     {
         return 'string representation';

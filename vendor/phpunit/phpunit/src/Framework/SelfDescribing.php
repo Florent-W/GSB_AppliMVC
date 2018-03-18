@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of PHPUnit.
  *
@@ -13,6 +14,7 @@
  */
 interface PHPUnit_Framework_SelfDescribing
 {
+
     /**
      * Returns a string representation of the object.
      *

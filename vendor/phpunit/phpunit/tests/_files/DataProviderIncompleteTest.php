@@ -1,6 +1,8 @@
 <?php
+
 class DataProviderIncompleteTest extends PHPUnit_Framework_TestCase
 {
+
     /**
      * @dataProvider incompleteTestProviderMethod
      */
@@ -20,18 +22,34 @@ class DataProviderIncompleteTest extends PHPUnit_Framework_TestCase
     public function incompleteTestProviderMethod()
     {
         $this->markTestIncomplete('incomplete');
-
+        
         return [
-          [0, 0, 0],
-          [0, 1, 1],
+            [
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                1,
+                1
+            ]
         ];
     }
 
     public static function providerMethod()
     {
         return [
-          [0, 0, 0],
-          [0, 1, 1],
+            [
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                1,
+                1
+            ]
         ];
     }
 }

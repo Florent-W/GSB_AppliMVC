@@ -21,7 +21,7 @@ PHPUnit_TextUI_Command::main();
 --EXPECTF--
 PHPUnit %s by Sebastian Bergmann and contributors.
 
-..                                                                  2 / 2 (100%)
+.. 2 / 2 (100%)
 
 Time: %s, Memory: %s
 
@@ -31,10 +31,10 @@ OK (2 tests, 2 assertions)
 Code Coverage Report:%w
 %s
 %w
- Summary:%w
-  Classes: 100.00% (1/1)%w
-  Methods: 100.00% (2/2)%w
-  Lines:%s
+Summary:%w
+Classes: 100.00% (1/1)%w
+Methods: 100.00% (2/2)%w
+Lines:%s
 
 IgnoreCodeCoverageClass
-  Methods: 100.00% ( 2/ 2)   Lines: 100.00% (  2/  2)
+Methods: 100.00% ( 2/ 2) Lines: 100.00% ( 2/ 2)

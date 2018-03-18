@@ -1,6 +1,8 @@
 <?php
+
 class PartialMockTestClass
 {
+
     public $constructorCalled = false;
 
     public function __construct()
@@ -9,10 +11,8 @@ class PartialMockTestClass
     }
 
     public function doSomething()
-    {
-    }
+    {}
 
     public function doAnotherThing()
-    {
-    }
+    {}
 }

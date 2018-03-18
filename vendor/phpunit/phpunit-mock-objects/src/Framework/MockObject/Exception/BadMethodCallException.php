@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the PHPUnit_MockObject package.
  *
@@ -9,6 +10,7 @@
  */
 
 /**
+ *
  * @since Class available since Release 2.0.6
  */
 class PHPUnit_Framework_MockObject_BadMethodCallException extends BadMethodCallException implements PHPUnit_Framework_MockObject_Exception

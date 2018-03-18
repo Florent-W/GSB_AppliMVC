@@ -3,12 +3,11 @@
 /*
  * This file is part of the Prophecy.
  * (c) Konstantin Kudryashov <ever.zet@gmail.com>
- *     Marcello Duarte <marcello.duarte@gmail.com>
+ * Marcello Duarte <marcello.duarte@gmail.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace Prophecy\Doubler\ClassPatch;
 
 use Prophecy\Doubler\Generator\Node\ClassNode;
@@ -20,6 +19,7 @@ use Prophecy\Doubler\Generator\Node\ClassNode;
  */
 class KeywordPatch implements ClassPatchInterface
 {
+
     /**
      * Support any class
      *
@@ -64,9 +64,11 @@ class KeywordPatch implements ClassPatchInterface
     private function getKeywords()
     {
         if (\PHP_VERSION_ID >= 70000) {
-            return array('__halt_compiler');
+            return array(
+                '__halt_compiler'
+            );
         }
-
+        
         return array(
             '__halt_compiler',
             'abstract',
@@ -134,7 +136,7 @@ class KeywordPatch implements ClassPatchInterface
             'var',
             'while',
             'xor',
-            'yield',
+            'yield'
         );
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of phpDocumentor.
  *
@@ -9,7 +10,6 @@
  * @license   http://www.opensource.org/licenses/mit-license.php MIT
  * @link      http://phpdoc.org
  */
-
 namespace phpDocumentor\Reflection\Types;
 
 use phpDocumentor\Reflection\Type;
@@ -19,6 +19,7 @@ use phpDocumentor\Reflection\Type;
  */
 final class Null_ implements Type
 {
+
     /**
      * Returns a rendered output of the Type as it would be used in a DocBlock.
      *

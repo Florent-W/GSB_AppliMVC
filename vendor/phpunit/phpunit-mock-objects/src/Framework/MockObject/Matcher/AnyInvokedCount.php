@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the PHPUnit_MockObject package.
  *
@@ -10,13 +11,16 @@
 
 /**
  * Invocation matcher which checks if a method has been invoked zero or more
- * times. This matcher will always match.
+ * times.
+ * This matcher will always match.
  *
  * @since Class available since Release 1.0.0
  */
 class PHPUnit_Framework_MockObject_Matcher_AnyInvokedCount extends PHPUnit_Framework_MockObject_Matcher_InvokedRecorder
 {
+
     /**
+     *
      * @return string
      */
     public function toString()
@@ -27,6 +31,5 @@ class PHPUnit_Framework_MockObject_Matcher_AnyInvokedCount extends PHPUnit_Frame
     /**
      */
     public function verify()
-    {
-    }
+    {}
 }

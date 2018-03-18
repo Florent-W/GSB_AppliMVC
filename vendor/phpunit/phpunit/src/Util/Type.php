@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of PHPUnit.
  *
@@ -13,29 +14,28 @@
  */
 class PHPUnit_Util_Type
 {
+
     /**
+     *
      * @param string $type
      *
      * @return bool
      */
     public static function isType($type)
     {
-        return in_array(
-            $type,
-            [
-                'numeric',
-                'integer',
-                'int',
-                'float',
-                'string',
-                'boolean',
-                'bool',
-                'null',
-                'array',
-                'object',
-                'resource',
-                'scalar'
-            ]
-        );
+        return in_array($type, [
+            'numeric',
+            'integer',
+            'int',
+            'float',
+            'string',
+            'boolean',
+            'bool',
+            'null',
+            'array',
+            'object',
+            'resource',
+            'scalar'
+        ]);
     }
 }

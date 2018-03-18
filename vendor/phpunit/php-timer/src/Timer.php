@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the PHP_Timer package.
  *
@@ -13,21 +14,25 @@
  */
 class PHP_Timer
 {
+
     /**
+     *
      * @var array
      */
     private static $times = array(
-      'hour'   => 3600000,
-      'minute' => 60000,
-      'second' => 1000
+        'hour' => 3600000,
+        'minute' => 60000,
+        'second' => 1000
     );
 
     /**
+     *
      * @var array
      */
     private static $startTimes = array();
 
     /**
+     *
      * @var float
      */
     public static $requestTime;
@@ -53,21 +58,21 @@ class PHP_Timer
     /**
      * Formats the elapsed time as a string.
      *
-     * @param  float  $time
+     * @param float $time
      * @return string
      */
     public static function secondsToTimeString($time)
     {
         $ms = round($time * 1000);
-
+        
         foreach (self::$times as $unit => $value) {
             if ($ms >= $value) {
                 $time = floor($ms / $value * 100.0) / 100.0;
-
+                
                 return $time . ' ' . ($time == 1 ? $unit : $unit . 's');
             }
         }
-
+        
         return $ms . ' ms';
     }
 
@@ -88,11 +93,7 @@ class PHP_Timer
      */
     public static function resourceUsage()
     {
-        return sprintf(
-            'Time: %s, Memory: %4.2fMB',
-            self::timeSinceStartOfRequest(),
-            memory_get_peak_usage(true) / 1048576
-        );
+        return sprintf('Time: %s, Memory: %4.2fMB', self::timeSinceStartOfRequest(), memory_get_peak_usage(true) / 1048576);
     }
 }
 

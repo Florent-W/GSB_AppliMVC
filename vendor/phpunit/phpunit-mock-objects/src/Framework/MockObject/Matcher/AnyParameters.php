@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the PHPUnit_MockObject package.
  *
@@ -15,7 +16,9 @@
  */
 class PHPUnit_Framework_MockObject_Matcher_AnyParameters extends PHPUnit_Framework_MockObject_Matcher_StatelessInvocation
 {
+
     /**
+     *
      * @return string
      */
     public function toString()
@@ -24,6 +27,7 @@ class PHPUnit_Framework_MockObject_Matcher_AnyParameters extends PHPUnit_Framewo
     }
 
     /**
+     *
      * @param PHPUnit_Framework_MockObject_Invocation $invocation
      *
      * @return bool

@@ -3,12 +3,11 @@
 /*
  * This file is part of the Prophecy.
  * (c) Konstantin Kudryashov <ever.zet@gmail.com>
- *     Marcello Duarte <marcello.duarte@gmail.com>
+ * Marcello Duarte <marcello.duarte@gmail.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace Prophecy\Argument\Token;
 
 /**
@@ -18,11 +17,13 @@ namespace Prophecy\Argument\Token;
  */
 interface TokenInterface
 {
+
     /**
      * Calculates token match score for provided argument.
      *
-     * @param $argument
-     *
+     * @param
+     *            $argument
+     *            
      * @return bool|int
      */
     public function scoreArgument($argument);

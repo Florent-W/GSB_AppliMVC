@@ -1,7 +1,10 @@
 <?php
+
 class TestIterator implements Iterator
 {
+
     protected $array;
+
     protected $position = 0;
 
     public function __construct($array = [])
@@ -31,6 +34,6 @@ class TestIterator implements Iterator
 
     public function next()
     {
-        $this->position++;
+        $this->position ++;
     }
 }

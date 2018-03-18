@@ -11,7 +11,7 @@ PHPUnit_TextUI_Command::main();
 --EXPECTF--
 PHPUnit %s by Sebastian Bergmann and contributors.
 
-FFFFFFFFFFFFF                                                     13 / 13 (100%)
+FFFFFFFFFFFFF 13 / 13 (100%)
 
 Time: %s, Memory: %s
 
@@ -23,10 +23,10 @@ Failed asserting that two arrays are equal.
 --- Expected
 +++ Actual
 @@ @@
- Array (
--    0 => 1
-+    0 => 2
- )
+Array (
+- 0 => 1
++ 0 => 2
+)
 
 %s:%i
 
@@ -42,10 +42,10 @@ Failed asserting that two objects are equal.
 --- Expected
 +++ Actual
 @@ @@
- stdClass Object (
--    'foo' => 'bar'
-+    'bar' => 'foo'
- )
+stdClass Object (
+- 'foo' => 'bar'
++ 'bar' => 'foo'
+)
 
 %s:%i
 
@@ -72,7 +72,7 @@ Failed asserting that two strings are equal.
 --- Expected
 +++ Actual
 @@ @@
- 'foo
+'foo
 -bar
 +baz
  '

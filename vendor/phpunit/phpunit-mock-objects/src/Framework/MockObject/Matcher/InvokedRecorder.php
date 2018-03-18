@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the PHPUnit_MockObject package.
  *
@@ -19,12 +20,15 @@
  */
 abstract class PHPUnit_Framework_MockObject_Matcher_InvokedRecorder implements PHPUnit_Framework_MockObject_Matcher_Invocation
 {
+
     /**
+     *
      * @var PHPUnit_Framework_MockObject_Invocation[]
      */
     protected $invocations = [];
 
     /**
+     *
      * @return int
      */
     public function getInvocationCount()
@@ -33,6 +37,7 @@ abstract class PHPUnit_Framework_MockObject_Matcher_InvokedRecorder implements P
     }
 
     /**
+     *
      * @return PHPUnit_Framework_MockObject_Invocation[]
      */
     public function getInvocations()
@@ -41,6 +46,7 @@ abstract class PHPUnit_Framework_MockObject_Matcher_InvokedRecorder implements P
     }
 
     /**
+     *
      * @return bool
      */
     public function hasBeenInvoked()
@@ -49,6 +55,7 @@ abstract class PHPUnit_Framework_MockObject_Matcher_InvokedRecorder implements P
     }
 
     /**
+     *
      * @param PHPUnit_Framework_MockObject_Invocation $invocation
      */
     public function invoked(PHPUnit_Framework_MockObject_Invocation $invocation)
@@ -57,6 +64,7 @@ abstract class PHPUnit_Framework_MockObject_Matcher_InvokedRecorder implements P
     }
 
     /**
+     *
      * @param PHPUnit_Framework_MockObject_Invocation $invocation
      *
      * @return bool

@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the php-code-coverage package.
  *
@@ -7,7 +8,6 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace SebastianBergmann\CodeCoverage\Node;
 
 use SebastianBergmann\CodeCoverage\Util;
@@ -17,27 +17,33 @@ use SebastianBergmann\CodeCoverage\Util;
  */
 abstract class AbstractNode implements \Countable
 {
+
     /**
+     *
      * @var string
      */
     private $name;
 
     /**
+     *
      * @var string
      */
     private $path;
 
     /**
+     *
      * @var array
      */
     private $pathArray;
 
     /**
+     *
      * @var AbstractNode
      */
     private $parent;
 
     /**
+     *
      * @var string
      */
     private $id;
@@ -45,20 +51,21 @@ abstract class AbstractNode implements \Countable
     /**
      * Constructor.
      *
-     * @param string       $name
+     * @param string $name
      * @param AbstractNode $parent
      */
     public function __construct($name, AbstractNode $parent = null)
     {
-        if (substr($name, -1) == '/') {
-            $name = substr($name, 0, -1);
+        if (substr($name, - 1) == '/') {
+            $name = substr($name, 0, - 1);
         }
-
-        $this->name   = $name;
+        
+        $this->name = $name;
         $this->parent = $parent;
     }
 
     /**
+     *
      * @return string
      */
     public function getName()
@@ -67,18 +74,19 @@ abstract class AbstractNode implements \Countable
     }
 
     /**
+     *
      * @return string
      */
     public function getId()
     {
         if ($this->id === null) {
             $parent = $this->getParent();
-
+            
             if ($parent === null) {
                 $this->id = 'index';
             } else {
                 $parentId = $parent->getId();
-
+                
                 if ($parentId == 'index') {
                     $this->id = str_replace(':', '_', $this->name);
                 } else {
@@ -86,11 +94,12 @@ abstract class AbstractNode implements \Countable
                 }
             }
         }
-
+        
         return $this->id;
     }
 
     /**
+     *
      * @return string
      */
     public function getPath()
@@ -102,11 +111,12 @@ abstract class AbstractNode implements \Countable
                 $this->path = $this->parent->getPath() . '/' . $this->name;
             }
         }
-
+        
         return $this->path;
     }
 
     /**
+     *
      * @return array
      */
     public function getPathAsArray()
@@ -117,14 +127,15 @@ abstract class AbstractNode implements \Countable
             } else {
                 $this->pathArray = $this->parent->getPathAsArray();
             }
-
+            
             $this->pathArray[] = $this;
         }
-
+        
         return $this->pathArray;
     }
 
     /**
+     *
      * @return AbstractNode
      */
     public function getParent()
@@ -141,11 +152,7 @@ abstract class AbstractNode implements \Countable
      */
     public function getTestedClassesPercent($asString = true)
     {
-        return Util::percent(
-            $this->getNumTestedClasses(),
-            $this->getNumClasses(),
-            $asString
-        );
+        return Util::percent($this->getNumTestedClasses(), $this->getNumClasses(), $asString);
     }
 
     /**
@@ -157,11 +164,7 @@ abstract class AbstractNode implements \Countable
      */
     public function getTestedTraitsPercent($asString = true)
     {
-        return Util::percent(
-            $this->getNumTestedTraits(),
-            $this->getNumTraits(),
-            $asString
-        );
+        return Util::percent($this->getNumTestedTraits(), $this->getNumTraits(), $asString);
     }
 
     /**
@@ -173,11 +176,7 @@ abstract class AbstractNode implements \Countable
      */
     public function getTestedClassesAndTraitsPercent($asString = true)
     {
-        return Util::percent(
-            $this->getNumTestedClassesAndTraits(),
-            $this->getNumClassesAndTraits(),
-            $asString
-        );
+        return Util::percent($this->getNumTestedClassesAndTraits(), $this->getNumClassesAndTraits(), $asString);
     }
 
     /**
@@ -189,11 +188,7 @@ abstract class AbstractNode implements \Countable
      */
     public function getTestedMethodsPercent($asString = true)
     {
-        return Util::percent(
-            $this->getNumTestedMethods(),
-            $this->getNumMethods(),
-            $asString
-        );
+        return Util::percent($this->getNumTestedMethods(), $this->getNumMethods(), $asString);
     }
 
     /**
@@ -205,11 +200,7 @@ abstract class AbstractNode implements \Countable
      */
     public function getLineExecutedPercent($asString = true)
     {
-        return Util::percent(
-            $this->getNumExecutedLines(),
-            $this->getNumExecutableLines(),
-            $asString
-        );
+        return Util::percent($this->getNumExecutedLines(), $this->getNumExecutableLines(), $asString);
     }
 
     /**

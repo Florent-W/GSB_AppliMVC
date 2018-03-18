@@ -8,8 +8,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
-$functions         = require __DIR__ . '/arginfo.php';
+$functions = require __DIR__ . '/arginfo.php';
 $resourceFunctions = [];
 
 foreach ($functions as $function => $arguments) {

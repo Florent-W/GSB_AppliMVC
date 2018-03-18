@@ -9,6 +9,7 @@
  */
 class RequirementsClassDocBlockTest
 {
+
     /**
      * @requires PHP 5.4
      * @requires PHPUnit 3.7
@@ -17,6 +18,5 @@ class RequirementsClassDocBlockTest
      * @requires extension testExtMethod
      */
     public function testMethod()
-    {
-    }
+    {}
 }

@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the php-code-coverage package.
  *
@@ -7,7 +8,6 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace SebastianBergmann\CodeCoverage\Node;
 
 /**
@@ -15,17 +15,21 @@ namespace SebastianBergmann\CodeCoverage\Node;
  */
 class Iterator implements \RecursiveIterator
 {
+
     /**
+     *
      * @var int
      */
     private $position;
 
     /**
+     *
      * @var AbstractNode[]
      */
     private $nodes;
 
     /**
+     *
      * @param Directory $node
      */
     public function __construct(Directory $node)
@@ -76,7 +80,7 @@ class Iterator implements \RecursiveIterator
      */
     public function next()
     {
-        $this->position++;
+        $this->position ++;
     }
 
     /**
@@ -86,9 +90,7 @@ class Iterator implements \RecursiveIterator
      */
     public function getChildren()
     {
-        return new self(
-            $this->nodes[$this->position]
-        );
+        return new self($this->nodes[$this->position]);
     }
 
     /**

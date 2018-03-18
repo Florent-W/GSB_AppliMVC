@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the PHPUnit_MockObject package.
  *
@@ -15,6 +16,7 @@
  */
 class PHPUnit_Framework_MockObject_Stub_ReturnValueMap implements PHPUnit_Framework_MockObject_Stub
 {
+
     protected $valueMap;
 
     public function __construct(array $valueMap)
@@ -25,18 +27,18 @@ class PHPUnit_Framework_MockObject_Stub_ReturnValueMap implements PHPUnit_Framew
     public function invoke(PHPUnit_Framework_MockObject_Invocation $invocation)
     {
         $parameterCount = count($invocation->parameters);
-
+        
         foreach ($this->valueMap as $map) {
-            if (!is_array($map) || $parameterCount != count($map) - 1) {
+            if (! is_array($map) || $parameterCount != count($map) - 1) {
                 continue;
             }
-
+            
             $return = array_pop($map);
             if ($invocation->parameters === $map) {
                 return $return;
             }
         }
-
+        
         return;
     }
 

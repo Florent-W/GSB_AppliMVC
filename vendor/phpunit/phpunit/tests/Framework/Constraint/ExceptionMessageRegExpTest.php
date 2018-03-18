@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of PHPUnit.
  *
@@ -7,9 +8,9 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 class ExceptionMessageRegExpTest extends PHPUnit_Framework_TestCase
 {
+
     /**
      * @expectedException \Exception
      * @expectedExceptionMessageRegExp /^A polymorphic \w+ message/

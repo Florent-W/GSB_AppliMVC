@@ -1,6 +1,8 @@
 <?php
+
 class MethodCallbackByReference
 {
+
     public function bar(&$a, &$b, $c)
     {
         Legacy::bar($a, $b, $c);

@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of PHPUnit.
  *
@@ -13,17 +14,21 @@
  */
 class PHPUnit_Util_TestSuiteIterator implements RecursiveIterator
 {
+
     /**
+     *
      * @var int
      */
     protected $position;
 
     /**
+     *
      * @var PHPUnit_Framework_Test[]
      */
     protected $tests;
 
     /**
+     *
      * @param PHPUnit_Framework_TestSuite $testSuite
      */
     public function __construct(PHPUnit_Framework_TestSuite $testSuite)
@@ -74,7 +79,7 @@ class PHPUnit_Util_TestSuiteIterator implements RecursiveIterator
      */
     public function next()
     {
-        $this->position++;
+        $this->position ++;
     }
 
     /**
@@ -84,9 +89,7 @@ class PHPUnit_Util_TestSuiteIterator implements RecursiveIterator
      */
     public function getChildren()
     {
-        return new self(
-            $this->tests[$this->position]
-        );
+        return new self($this->tests[$this->position]);
     }
 
     /**

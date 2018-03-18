@@ -1,4 +1,5 @@
 <?php
+
 /**
  * phpDocumentor
  *
@@ -11,11 +12,13 @@
 namespace phpDocumentor\Reflection;
 
 /**
- * Interface for project factories. A project factory shall convert a set of files
+ * Interface for project factories.
+ * A project factory shall convert a set of files
  * into an object implementing the Project interface.
  */
 interface ProjectFactory
 {
+
     /**
      * Creates a project from the set of files.
      *

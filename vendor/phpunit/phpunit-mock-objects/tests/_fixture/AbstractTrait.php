@@ -1,6 +1,7 @@
 <?php
-trait AbstractTrait
-{
+
+trait AbstractTrait {
+
     abstract public function doSomething();
 
     public function mockableMethod()

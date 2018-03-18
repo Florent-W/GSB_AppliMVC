@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the php-code-coverage package.
  *
@@ -7,7 +8,6 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace SebastianBergmann\CodeCoverage;
 
 /**
@@ -15,6 +15,7 @@ namespace SebastianBergmann\CodeCoverage;
  */
 class Filter
 {
+
     /**
      * Source files that are whitelisted.
      *
@@ -31,9 +32,9 @@ class Filter
      */
     public function addDirectoryToWhitelist($directory, $suffix = '.php', $prefix = '')
     {
-        $facade = new \File_Iterator_Facade;
-        $files  = $facade->getFilesAsArray($directory, $suffix, $prefix);
-
+        $facade = new \File_Iterator_Facade();
+        $files = $facade->getFilesAsArray($directory, $suffix, $prefix);
+        
         foreach ($files as $file) {
             $this->addFileToWhitelist($file);
         }
@@ -70,9 +71,9 @@ class Filter
      */
     public function removeDirectoryFromWhitelist($directory, $suffix = '.php', $prefix = '')
     {
-        $facade = new \File_Iterator_Facade;
-        $files  = $facade->getFilesAsArray($directory, $suffix, $prefix);
-
+        $facade = new \File_Iterator_Facade();
+        $files = $facade->getFilesAsArray($directory, $suffix, $prefix);
+        
         foreach ($files as $file) {
             $this->removeFileFromWhitelist($file);
         }
@@ -86,7 +87,7 @@ class Filter
     public function removeFileFromWhitelist($filename)
     {
         $filename = realpath($filename);
-
+        
         unset($this->whitelistedFiles[$filename]);
     }
 
@@ -99,17 +100,10 @@ class Filter
      */
     public function isFile($filename)
     {
-        if ($filename == '-' ||
-            strpos($filename, 'vfs://') === 0 ||
-            strpos($filename, 'xdebug://debug-eval') !== false ||
-            strpos($filename, 'eval()\'d code') !== false ||
-            strpos($filename, 'runtime-created function') !== false ||
-            strpos($filename, 'runkit created function') !== false ||
-            strpos($filename, 'assert code') !== false ||
-            strpos($filename, 'regexp code') !== false) {
+        if ($filename == '-' || strpos($filename, 'vfs://') === 0 || strpos($filename, 'xdebug://debug-eval') !== false || strpos($filename, 'eval()\'d code') !== false || strpos($filename, 'runtime-created function') !== false || strpos($filename, 'runkit created function') !== false || strpos($filename, 'assert code') !== false || strpos($filename, 'regexp code') !== false) {
             return false;
         }
-
+        
         return file_exists($filename);
     }
 
@@ -122,13 +116,13 @@ class Filter
      */
     public function isFiltered($filename)
     {
-        if (!$this->isFile($filename)) {
+        if (! $this->isFile($filename)) {
             return true;
         }
-
+        
         $filename = realpath($filename);
-
-        return !isset($this->whitelistedFiles[$filename]);
+        
+        return ! isset($this->whitelistedFiles[$filename]);
     }
 
     /**
@@ -148,7 +142,7 @@ class Filter
      */
     public function hasWhitelist()
     {
-        return !empty($this->whitelistedFiles);
+        return ! empty($this->whitelistedFiles);
     }
 
     /**

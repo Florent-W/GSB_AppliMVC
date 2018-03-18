@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of phpDocumentor.
  *
@@ -9,7 +10,6 @@
  * @license   http://www.opensource.org/licenses/mit-license.php MIT
  * @link      http://phpdoc.org
  */
-
 namespace phpDocumentor\Reflection\Types;
 
 /**
@@ -23,10 +23,15 @@ namespace phpDocumentor\Reflection\Types;
  */
 final class ContextFactory
 {
-    /** The literal used at the end of a use statement. */
+
+    /**
+     * The literal used at the end of a use statement.
+     */
     const T_LITERAL_END_OF_USE = ';';
 
-    /** The literal used between sets of use statements */
+    /**
+     * The literal used between sets of use statements
+     */
     const T_LITERAL_USE_SEPARATOR = ',';
 
     /**
@@ -35,7 +40,7 @@ final class ContextFactory
      * @param \Reflector $reflector
      *
      * @see Context for more information on Contexts.
-     *
+     *     
      * @return Context
      */
     public function createFromReflector(\Reflector $reflector)
@@ -43,25 +48,27 @@ final class ContextFactory
         if (method_exists($reflector, 'getDeclaringClass')) {
             $reflector = $reflector->getDeclaringClass();
         }
-
+        
         $fileName = $reflector->getFileName();
         $namespace = $reflector->getNamespaceName();
-
+        
         if (file_exists($fileName)) {
             return $this->createForNamespace($namespace, file_get_contents($fileName));
         }
-
+        
         return new Context($namespace, []);
     }
 
     /**
      * Build a Context for a namespace in the provided file contents.
      *
-     * @param string $namespace It does not matter if a `\` precedes the namespace name, this method first normalizes.
-     * @param string $fileContents the file's contents to retrieve the aliases from with the given namespace.
-     *
+     * @param string $namespace
+     *            It does not matter if a `\` precedes the namespace name, this method first normalizes.
+     * @param string $fileContents
+     *            the file's contents to retrieve the aliases from with the given namespace.
+     *            
      * @see Context for more information on Contexts.
-     *
+     *     
      * @return Context
      */
     public function createForNamespace($namespace, $fileContents)
@@ -70,7 +77,7 @@ final class ContextFactory
         $useStatements = [];
         $currentNamespace = '';
         $tokens = new \ArrayIterator(token_get_all($fileContents));
-
+        
         while ($tokens->valid()) {
             switch ($tokens->current()[0]) {
                 case T_NAMESPACE:
@@ -82,18 +89,16 @@ final class ContextFactory
                     // valid namespace use statements so should be ignored.
                     $braceLevel = 0;
                     $firstBraceFound = false;
-                    while ($tokens->valid() && ($braceLevel > 0 || !$firstBraceFound)) {
-                        if ($tokens->current() === '{'
-                            || $tokens->current()[0] === T_CURLY_OPEN
-                            || $tokens->current()[0] === T_DOLLAR_OPEN_CURLY_BRACES) {
-                            if (!$firstBraceFound) {
+                    while ($tokens->valid() && ($braceLevel > 0 || ! $firstBraceFound)) {
+                        if ($tokens->current() === '{' || $tokens->current()[0] === T_CURLY_OPEN || $tokens->current()[0] === T_DOLLAR_OPEN_CURLY_BRACES) {
+                            if (! $firstBraceFound) {
                                 $firstBraceFound = true;
                             }
-                            $braceLevel++;
+                            $braceLevel ++;
                         }
-
+                        
                         if ($tokens->current() === '}') {
-                            $braceLevel--;
+                            $braceLevel --;
                         }
                         $tokens->next();
                     }
@@ -106,7 +111,7 @@ final class ContextFactory
             }
             $tokens->next();
         }
-
+        
         return new Context($namespace, $useStatements);
     }
 
@@ -121,14 +126,13 @@ final class ContextFactory
     {
         // skip to the first string or namespace separator
         $this->skipToNextStringOrNamespaceSeparator($tokens);
-
+        
         $name = '';
-        while ($tokens->valid() && ($tokens->current()[0] === T_STRING || $tokens->current()[0] === T_NS_SEPARATOR)
-        ) {
+        while ($tokens->valid() && ($tokens->current()[0] === T_STRING || $tokens->current()[0] === T_NS_SEPARATOR)) {
             $name .= $tokens->current()[1];
             $tokens->next();
         }
-
+        
         return $name;
     }
 
@@ -143,17 +147,17 @@ final class ContextFactory
     {
         $uses = [];
         $continue = true;
-
+        
         while ($continue) {
             $this->skipToNextStringOrNamespaceSeparator($tokens);
-
-            list($alias, $fqnn) = $this->extractUseStatement($tokens);
+            
+            list ($alias, $fqnn) = $this->extractUseStatement($tokens);
             $uses[$alias] = $fqnn;
             if ($tokens->current()[0] === self::T_LITERAL_END_OF_USE) {
                 $continue = false;
             }
         }
-
+        
         return $uses;
     }
 
@@ -181,11 +185,10 @@ final class ContextFactory
      */
     private function extractUseStatement(\ArrayIterator $tokens)
     {
-        $result = [''];
-        while ($tokens->valid()
-            && ($tokens->current()[0] !== self::T_LITERAL_USE_SEPARATOR)
-            && ($tokens->current()[0] !== self::T_LITERAL_END_OF_USE)
-        ) {
+        $result = [
+            ''
+        ];
+        while ($tokens->valid() && ($tokens->current()[0] !== self::T_LITERAL_USE_SEPARATOR) && ($tokens->current()[0] !== self::T_LITERAL_END_OF_USE)) {
             if ($tokens->current()[0] === T_AS) {
                 $result[] = '';
             }
@@ -194,17 +197,17 @@ final class ContextFactory
             }
             $tokens->next();
         }
-
+        
         if (count($result) == 1) {
             $backslashPos = strrpos($result[0], '\\');
-
+            
             if (false !== $backslashPos) {
                 $result[] = substr($result[0], $backslashPos + 1);
             } else {
                 $result[] = $result[0];
             }
         }
-
+        
         return array_reverse($result);
     }
 }

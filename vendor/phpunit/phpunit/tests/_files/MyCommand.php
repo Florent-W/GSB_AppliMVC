@@ -2,6 +2,7 @@
 
 class MyCommand extends PHPUnit_TextUI_Command
 {
+
     public function __construct()
     {
         $this->longOptions['my-option='] = 'myHandler';

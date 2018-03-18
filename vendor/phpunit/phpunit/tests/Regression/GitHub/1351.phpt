@@ -18,7 +18,7 @@ PHPUnit_TextUI_Command::main();
 --EXPECTF--
 PHPUnit %s by Sebastian Bergmann and contributors.
 
-F.E.E                                                               5 / 5 (100%)
+F.E.E 5 / 5 (100%)
 
 Time: %s, Memory: %s
 
@@ -36,7 +36,6 @@ PDOException: SQLSTATE[HY000]: General error: 1 no such table: php_wtf
 %A
 
 --
-
 There was 1 failure:
 
 1) Issue1351Test::testFailurePre

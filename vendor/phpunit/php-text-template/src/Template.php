@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Text_Template package.
  *
@@ -15,22 +16,27 @@
  */
 class Text_Template
 {
+
     /**
+     *
      * @var string
      */
     protected $template = '';
 
     /**
+     *
      * @var string
      */
     protected $openDelimiter = '{';
 
     /**
+     *
      * @var string
      */
     protected $closeDelimiter = '}';
 
     /**
+     *
      * @var array
      */
     protected $values = array();
@@ -38,38 +44,32 @@ class Text_Template
     /**
      * Constructor.
      *
-     * @param  string                   $file
+     * @param string $file
      * @throws InvalidArgumentException
      */
     public function __construct($file = '', $openDelimiter = '{', $closeDelimiter = '}')
     {
         $this->setFile($file);
-        $this->openDelimiter  = $openDelimiter;
+        $this->openDelimiter = $openDelimiter;
         $this->closeDelimiter = $closeDelimiter;
     }
 
     /**
      * Sets the template file.
      *
-     * @param  string                   $file
+     * @param string $file
      * @throws InvalidArgumentException
      */
     public function setFile($file)
     {
         $distFile = $file . '.dist';
-
+        
         if (file_exists($file)) {
             $this->template = file_get_contents($file);
-        }
-
-        else if (file_exists($distFile)) {
+        } else if (file_exists($distFile)) {
             $this->template = file_get_contents($distFile);
-        }
-
-        else {
-            throw new InvalidArgumentException(
-              'Template file could not be loaded.'
-            );
+        } else {
+            throw new InvalidArgumentException('Template file could not be loaded.');
         }
     }
 
@@ -77,11 +77,11 @@ class Text_Template
      * Sets one or more template variables.
      *
      * @param array $values
-     * @param bool  $merge
+     * @param bool $merge
      */
     public function setVar(array $values, $merge = TRUE)
     {
-        if (!$merge || empty($this->values)) {
+        if (! $merge || empty($this->values)) {
             $this->values = $values;
         } else {
             $this->values = array_merge($this->values, $values);
@@ -96,11 +96,11 @@ class Text_Template
     public function render()
     {
         $keys = array();
-
+        
         foreach ($this->values as $key => $value) {
             $keys[] = $this->openDelimiter . $key . $this->closeDelimiter;
         }
-
+        
         return str_replace($keys, $this->values, $this->template);
     }
 
@@ -112,24 +112,14 @@ class Text_Template
     public function renderTo($target)
     {
         $fp = @fopen($target, 'wt');
-
+        
         if ($fp) {
             fwrite($fp, $this->render());
             fclose($fp);
         } else {
             $error = error_get_last();
-
-            throw new RuntimeException(
-              sprintf(
-                'Could not write to %s: %s',
-                $target,
-                substr(
-                  $error['message'],
-                  strpos($error['message'], ':') + 2
-                )
-              )
-            );
+            
+            throw new RuntimeException(sprintf('Could not write to %s: %s', $target, substr($error['message'], strpos($error['message'], ':') + 2)));
         }
     }
 }
-

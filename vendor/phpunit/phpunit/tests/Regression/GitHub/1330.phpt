@@ -2,7 +2,6 @@
 GH-1330: Allow non-ambiguous shortened longopts
 --FILE--
 <?php
-
 $_SERVER['argv'][1] = '--deb';
 $_SERVER['argv'][2] = '--config';
 $_SERVER['argv'][3] = __DIR__ . '/1330/phpunit1330.xml';

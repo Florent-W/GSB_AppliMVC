@@ -13,7 +13,7 @@ PHPUnit_TextUI_Command::main();
 PHPUnit %s by Sebastian Bergmann and contributors.
 
 DataProviderTestDox
- [x] Does something with one
- [x] Does something with two
- [x] Does something else with one
- [x] Does something else with two
+[x] Does something with one
+[x] Does something with two
+[x] Does something else with one
+[x] Does something else with two
