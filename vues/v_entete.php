@@ -71,8 +71,7 @@
 						</a>
 						</li>
 					</ul> <?php
-                
-} else if ($type == "Comptable") {
+                } else if ($type == "Comptable") {
                     ?>
                                 <ul class="nav nav-pills pull-right"
 						role="tablist">

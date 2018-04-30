@@ -47,7 +47,7 @@ if ($ficheFraisTrouver == 1) { // Si une fiche bien été trouvée, on affiche l
 						value="<?php echo $id . '/' . $mois ?>">
                                         <?php echo $nomUtilisateur . ' ' . $prenomUtilisateur . ' : ' . $numMois . '/' . $numAnnee ?> </option>
                                     <?php
-            }            // Affichage du reste des fiches valides dans le select
+            } // Affichage du reste des fiches valides dans le select
             else {
                 ?>
                                     <option
@@ -156,8 +156,7 @@ if ($ficheFraisTrouver == 1) { // Si une fiche bien été trouvée, on affiche l
 			</div>
 		</div>
                 <?php
-        
-}
+        }
         ?>
 
                 <div>
@@ -165,8 +164,8 @@ if ($ficheFraisTrouver == 1) { // Si une fiche bien été trouvée, on affiche l
 				value="<?php echo $nbJustificatifs ?>" size="5" readonly>
 		</div>
 
-                <?php 
-// Formulaire permettant d'indiquer que la fiche à été payée ou qu'elle reste en paiement
+                <?php
+        // Formulaire permettant d'indiquer que la fiche à été payée ou qu'elle reste en paiement
         ?> 
 
                 <input type="hidden" name="lstMois"

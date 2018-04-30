@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+
+<!– see http://www.phpunit.de/wiki/Documentation –>
+
+<phpunit bootstrap=”bootstrap.php”
+
+
+<logging>
+
+        <log type=”coverage-html” target=”C:\xampp\tmp\report” lowUpperBound=”35″
+
+          highLowerBound=”70″/>
+</logging>
+</phpunit>

@@ -22,11 +22,9 @@
  * @version   Release: 1.0
  * @link      http://www.php.net/manual/fr/book.pdo.php PHP Data Objects sur php.net
  */
-require_once 'includes/class.fonction.inc.php';
-
 class PdoGsb
 {
-
+ 
     private static $serveur = 'mysql:host=localhost';
 
     private static $bdd = 'dbname=gsb_frais';
@@ -38,12 +36,25 @@ class PdoGsb
     private static $monPdo;
 
     private static $monPdoGsb = null;
-
+ 
+    /*
+    private static $serveur = 'mysql:host=db731402101.db.1and1.com';
+    
+    private static $bdd = 'dbname=db731402101';
+    
+    private static $user = 'dbo731402101';
+    
+    private static $mdp = 'GsbMotdepasse';
+    
+    private static $monPdo;
+    
+    private static $monPdoGsb = null;
+*/
     /**
      * Constructeur privé, créer l'instance de PDO qui sera sollicitée
      * pour toutes les méthodes de la classe
      */
-    private function __construct()
+    public function __construct()
     {
         PdoGsb::$monPdo = new PDO(PdoGsb::$serveur . ';' . PdoGsb::$bdd, PdoGsb::$user, PdoGsb::$mdp);
         PdoGsb::$monPdo->query('SET CHARACTER SET utf8');
@@ -136,7 +147,6 @@ class PdoGsb
      *            Mois sous la forme aaaamm
      *            
      * @return le nombre entier de justificatifs
-     *         @assert (1, 201202) == 1
      */
     public function getNbjustificatifs($idVisiteur, $mois)
     {
@@ -161,6 +171,12 @@ class PdoGsb
         return $requetePrepare->fetchAll();
     }
 
+    /**
+     * Retourne les infos du premier visiteur par id
+     *
+     *
+     * @return les informations du premier visiteur (array)
+     */
     public function getInfosPremierVisiteur()
     {
         $requetePrepare = PdoGsb::$monPdo->prepare('SELECT * FROM visiteur ORDER BY id ASC LIMIT 1');
@@ -168,6 +184,12 @@ class PdoGsb
         return $requetePrepare->fetch();
     }
 
+    /**
+     * Retourne les infos de la dernière fiche de f par date
+     *
+     *
+     * @return les informations du premier visiteur (array)
+     */
     public function getInfosDerniereFiche()
     {
         $requetePrepare = PdoGsb::$monPdo->prepare('SELECT * FROM fichefrais ORDER BY mois DESC LIMIT 1');
@@ -609,7 +631,8 @@ class PdoGsb
     /**
      * Retourne les informations d'un visiteur que l'on met en paramètre
      *
-     * @param string id d'un visiteur
+     * @param
+     *            string id d'un visiteur
      *            
      * @return les informations d'un visiteur sous la forme d'un tableau associatif
      */

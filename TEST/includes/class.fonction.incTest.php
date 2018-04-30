@@ -8,7 +8,6 @@
  * @package   GSB
  * @author    Florent WELTMANN <florent.weltmann@gmail.com>
  */
-
 require_once '..\includes\class.fonction.inc.php';
 
 /**
@@ -103,7 +102,7 @@ class fonctionTest extends PHPUnit_Framework_TestCase
 
     /**
      * @covers fonction::connecter
-     * 
+     *
      * @todo Implement testConnecter().
      */
     public function testConnecter()
@@ -114,7 +113,7 @@ class fonctionTest extends PHPUnit_Framework_TestCase
 
     /**
      * @covers fonction::deconnecter
-     * 
+     *
      * @todo Implement testDeconnecter().
      */
     public function testDeconnecter()
@@ -189,8 +188,8 @@ class fonctionTest extends PHPUnit_Framework_TestCase
 
     public function testEstDateDepassee2()
     {
-        $this->assertEquals(false, $this->object->estDateDepassee('21/02/2018')) // test ne fonctionnera plus à partir du 21/02/2019
-        ;
+        $this->assertEquals(false, $this->object->estDateDepassee('21/02/2018')); // test ne fonctionnera plus à partir du 21/02/2019
+        
     }
 
     /**
@@ -261,7 +260,7 @@ class fonctionTest extends PHPUnit_Framework_TestCase
 
     /**
      * @covers fonction::ajouterErreur
-     * 
+     *
      * @todo Implement testAjouterErreur().
      */
     public function testAjouterErreur()
@@ -275,13 +274,11 @@ class fonctionTest extends PHPUnit_Framework_TestCase
      */
     public function testNbErreurs()
     {
-        // Remove the following lines when you implement this test.
         $this->assertGreaterThanOrEqual(0, $this->object->nbErreurs());
     }
 
     public function testNbErreurs2()
     {
-        // Remove the following lines when you implement this test.
         $this->assertNotEquals(- 1, $this->object->nbErreurs());
     }
 }

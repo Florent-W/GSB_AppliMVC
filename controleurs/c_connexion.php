@@ -49,7 +49,12 @@ switch ($action) {
             
             $connecter = $instanceFonction->connecter($id, $nom, $prenom, $type);
             
-            header('Location: index.php');
+            echo '<script language="Javascript">
+           <!--
+                 document.location.replace("index.php");
+           // -->
+     </script>';
+                        
         }
         break;
     default:

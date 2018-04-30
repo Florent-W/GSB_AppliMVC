@@ -23,7 +23,6 @@ $leVisiteur = filter_input(INPUT_POST, 'lstVisiteur', FILTER_SANITIZE_STRING);
 $visiteurASelectionner = $leVisiteur;
 
 $tousUtilisateurs = $pdo->getIdVisiteurs(); // récupération de tous les id des visiteurs
-
 $visiteurSelectionInfos = $pdo->getVisiteurSelection($leVisiteur);
 
 $leVisiteurNom = $visiteurSelectionInfos['nom'];
@@ -67,7 +66,7 @@ switch ($action) {
                 $ajoutErreur = $instanceFonction->ajouterErreur('Les valeurs des frais doivent être numériques');
                 include 'vues/v_erreurs.php';
             }
-        }        // Si l'utilisateur à souhaité reporter une ligne de frais hors forfait, toutes les informations de cette ligne sont récupérées et son mois passe au suivant
+        } // Si l'utilisateur à souhaité reporter une ligne de frais hors forfait, toutes les informations de cette ligne sont récupérées et son mois passe au suivant
         else if (isset($_POST['idReporterLigneHorsForfait'])) {
             
             $idReporterLigneHorsForfait = $_POST['idReporterLigneHorsForfait'];
@@ -94,7 +93,7 @@ switch ($action) {
             // Mise à jour des frais hors forfaits avec la nouvelle date
             $pdo->majFraisHorsForfait($idReporterLigneHorsForfait, $libelle, $dateSuivante, $moisSuivant, $montant);
             $lesFraisHorsForfait = $pdo->getLesFraisHorsForfait($idVisiteur, $mois);
-        }        // Si l'utilisateur souhaite supprimer une ligne hors forfait, "REFUSE : " est ajouté au libellé et si il n'y a plus la place pour l'ajouté, les dernières lettres du libellé sont effacés pour faire de la place
+        } // Si l'utilisateur souhaite supprimer une ligne hors forfait, "REFUSE : " est ajouté au libellé et si il n'y a plus la place pour l'ajouté, les dernières lettres du libellé sont effacés pour faire de la place
         else if (isset($_POST['idSuppressionLigneHorsForfait'])) {
             $idSupprimerLigneHorsForfait = $_POST['idSuppressionLigneHorsForfait'];
             $libelle = $_POST['libelle'];
@@ -113,7 +112,7 @@ switch ($action) {
             // Mise à jour de la ligne hors forfait avec le nouveau libellé
             $pdo->majFraisHorsForfait($idSupprimerLigneHorsForfait, $libelle, $date, $mois, $montant);
             $lesFraisHorsForfait = $pdo->getLesFraisHorsForfait($idVisiteur, $mois);
-        }        // Si l'utilisateur souhaite valider la fiche, son état passe à validé et la date où à été effectué ce changement est ajoutée dans la base de données
+        } // Si l'utilisateur souhaite valider la fiche, son état passe à validé et la date où à été effectué ce changement est ajoutée dans la base de données
         else if (isset($_POST['validation'])) {
             $etat = "VA";
             $pdo->majEtatFicheFrais($idVisiteur, $mois, $etat);

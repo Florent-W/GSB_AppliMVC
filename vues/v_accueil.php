@@ -89,7 +89,6 @@ echo $_SESSION['prenom'] . ' ' . $_SESSION['nom']?></small>
 	</div>
 </div>
 <?php
-
 } else {
     ?>
 <div class="row">

@@ -45,7 +45,7 @@ switch ($uc) {
         break;
     case 'majMotDePasse':
         if ($type == "Administrateur") {
-            include 'controleurs/c_miseAJourMotdePasse.php';
+            include 'controleurs/c_miseAJourMotDePasse.php';
         } else {
             ajouterErreur('Accès non autorisé pour cette page');
             include 'vues/v_erreurs.php';

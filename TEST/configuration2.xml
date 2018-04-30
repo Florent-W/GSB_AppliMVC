@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit
+colors="true"
+    stopOnFailure="false"
+    convertErrorsToExceptions="true"
+    convertNoticesToExceptions="true"
+    convertWarningsToExceptions="true"
+    UpperBound="35" highLowerBound="70">
+	<filter>
+    <whitelist processUncoveredFilesFromWhitelist="true">
+        <directory>../includes</directory>
+    </whitelist>
+</filter>
+	<logging>
+  <log type="coverage-html" target="RapportTests" lowUpperBound="35"
+       highLowerBound="70"/> 
+	   </logging> 
+</phpunit>

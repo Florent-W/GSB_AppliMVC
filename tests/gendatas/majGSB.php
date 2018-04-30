@@ -17,7 +17,9 @@
 $moisDebut = '201609';
 require './fonctions.php';
 
-$pdo = new PDO('mysql:host=localhost;dbname=gsb_frais', 'root', '');
+// maj en local $pdo = new PDO('mysql:host=localhost;dbname=gsb_frais', 'root', '');
+
+$pdo = new PDO('mysql:host=db731402101.db.1and1.com;dbname=db731402101', 'dbo731402101', 'GsbMotdepasse');
 $pdo->query('SET CHARACTER SET utf8');
 
 set_time_limit(0);
