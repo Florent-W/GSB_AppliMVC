@@ -159,10 +159,10 @@ if ($ficheFraisTrouver == 1) { // Si une fiche bien été trouvée, on affiche l
         }
         ?>
 
-                <div>
+                <p>
 			Nombre de justificatifs : <input type="text" name="nbJustificatif"
 				value="<?php echo $nbJustificatifs ?>" size="5" readonly>
-		</div>
+		</p>
 
                 <?php
         // Formulaire permettant d'indiquer que la fiche à été payée ou qu'elle reste en paiement
@@ -179,9 +179,10 @@ if ($ficheFraisTrouver == 1) { // Si une fiche bien été trouvée, on affiche l
 			value="1"
 			<?php echo $id ?>" onclick="return confirm('Voulez-vous vraiment mettre en paiement ce frais ?');">Mise
 			en paiement</button>
+			<br/> <br/>
+</form> 
 
-</form>
-</div>
+
 <?php
     }
 } else { // Si aucune fiche de frais n'est à validée, un message d'erreur est affiché avec un retour au menu

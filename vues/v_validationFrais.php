@@ -241,8 +241,8 @@ if ($action == "validerMajFraisForfait") {
 	<input type="hidden" name="lstMois" value="<?php echo $leMois ?>"> <input
 		type="hidden" name="lstVisiteur" value="<?php echo $leVisiteur ?>">
 	<button class="btn btn-success" type="submit" name="validation"
-		onclick="return confirm('Voulez-vous confirmer ?');">Valider</button>
-</form>
+		onclick="return confirm('Voulez-vous confirmer ?');">Valider</button> 
+</form> <br/>
 <?php
     } else {
         $ajoutErreur = $instanceFonction->ajouterErreur('Pas de fiche de frais pour ce visiteur ce mois.');
