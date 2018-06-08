@@ -8,10 +8,7 @@
  * @package   GSB
  * @author    Florent WELTMANN <florent.weltmann@gmail.com>
  */
-?> <?php
-// récupération de l'action à faire dans l'URL
-$action = filter_input(INPUT_GET, 'action', FILTER_SANITIZE_STRING);
-?>
+?> 
 <div class="row">
 	<div class="col-xs-2">
 		<h4>Choisir le visiteur :</h4>
@@ -231,18 +228,18 @@ if ($action == "validerMajFraisForfait") {
             </div>
             <?php // Permet de valider une fiche en prenant en compte la date de modification et en passant l'état de la fiche à validé si l'utilisateur le confirme. ?>
         </div>
-<div>
+<p>
 	Nombre de justificatifs : <input type="text" name="nbJustificatif"
 		value="<?php echo $nbJustificatifs ?>" size="5" readonly>
-</div>
+</p>
 <form method="post"
 	action="index.php?uc=validerFrais&action=validerMajFraisForfait"
 	role="form">
 	<input type="hidden" name="lstMois" value="<?php echo $leMois ?>"> <input
 		type="hidden" name="lstVisiteur" value="<?php echo $leVisiteur ?>">
 	<button class="btn btn-success" type="submit" name="validation"
-		onclick="return confirm('Voulez-vous confirmer ?');">Valider</button> 
-</form> <br/>
+		onclick="return confirm('Voulez-vous confirmer ?');">Valider</button>
+</form>
 <?php
     } else {
         $ajoutErreur = $instanceFonction->ajouterErreur('Pas de fiche de frais pour ce visiteur ce mois.');

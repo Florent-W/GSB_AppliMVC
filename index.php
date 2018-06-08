@@ -47,7 +47,7 @@ switch ($uc) {
         if ($type == "Administrateur") {
             include 'controleurs/c_miseAJourMotDePasse.php';
         } else {
-            ajouterErreur('Accès non autorisé pour cette page');
+            $ajoutErreur = $instanceFonction->ajouterErreur('Accès non autorisé pour cette page');
             include 'vues/v_erreurs.php';
         }
         break;
@@ -55,7 +55,7 @@ switch ($uc) {
         if ($type == "Visiteur") {
             include 'controleurs/c_gererFrais.php';
         } else {
-            ajouterErreur('Accès non autorisé pour cette page');
+            $ajoutErreur = $instanceFonction->ajouterErreur('Accès non autorisé pour cette page');
             include 'vues/v_erreurs.php';
         }
         break;
@@ -63,7 +63,7 @@ switch ($uc) {
         if ($type == "Visiteur") {
             include 'controleurs/c_etatFrais.php';
         } else {
-            ajouterErreur('Accès non autorisé pour cette page');
+            $ajoutErreur = $instanceFonction->ajouterErreur('Accès non autorisé pour cette page');
             include 'vues/v_erreurs.php';
         }
         break;
@@ -71,7 +71,7 @@ switch ($uc) {
         if ($type == "Comptable") {
             include 'controleurs/c_validerFrais.php';
         } else {
-            ajouterErreur('Accès non autorisé pour cette page');
+            $ajoutErreur = $instanceFonction->ajouterErreur('Accès non autorisé pour cette page');
             include 'vues/v_erreurs.php';
         }
         break;
@@ -79,7 +79,7 @@ switch ($uc) {
         if ($type == "Comptable") {
             include 'controleurs/c_suivrePaiement.php';
         } else {
-            ajouterErreur('Accès non autorisé pour cette page');
+            $ajoutErreur = $instanceFonction->ajouterErreur('Accès non autorisé pour cette page');
             include 'vues/v_erreurs.php';
         }
         break;

@@ -8,10 +8,7 @@
  * @package   GSB
  * @author    Florent WELTMANN <florent.weltmann@gmail.com>
  */
-?>  <?php
-// récupération de l'action à faire dans l'URL
-$action = filter_input(INPUT_GET, 'action', FILTER_SANITIZE_STRING);
-?>
+?> 
 <?php
 if ($ficheFraisTrouver == 1) { // Si une fiche bien été trouvée, on affiche la page
     ?><h2 class="titreOrange">
@@ -179,10 +176,10 @@ if ($ficheFraisTrouver == 1) { // Si une fiche bien été trouvée, on affiche l
 			value="1"
 			<?php echo $id ?>" onclick="return confirm('Voulez-vous vraiment mettre en paiement ce frais ?');">Mise
 			en paiement</button>
-			<br/> <br/>
-</form> 
 
-
+</form>
+<p>
+</p>
 <?php
     }
 } else { // Si aucune fiche de frais n'est à validée, un message d'erreur est affiché avec un retour au menu

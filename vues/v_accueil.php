@@ -89,7 +89,34 @@ echo $_SESSION['prenom'] . ' ' . $_SESSION['nom']?></small>
 	</div>
 </div>
 <?php
-} else {
+} 
+else if ($_SESSION['type'] == "Administrateur") {
+    ?>
+<div class="row">
+	<div class="col-md-12">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<h3 class="panel-title">
+					<span class="glyphicon glyphicon-bookmark"></span> Navigation
+				</h3>
+			</div>
+			<div class="panel-body">
+				<div class="row">
+						<div class="col-xs-12 col-md-12">
+							<a href="index.php?uc=majMotDePasse"
+								class="btn btn-primary btn-lg" role="button"> <span
+								class="glyphicon glyphicon-list-alt"></span> <br> Mettre à jour les mots de passes
+							</a>
+						</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<?php  
+}
+
+else {
     ?>
 <div class="row">
 	<div class="col-md-12">
