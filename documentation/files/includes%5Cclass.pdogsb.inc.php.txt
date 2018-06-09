@@ -24,8 +24,7 @@
  */
 class PdoGsb
 {
- /*
-  * pour ouvrir le site en local
+ 
     private static $serveur = 'mysql:host=localhost';
 
     private static $bdd = 'dbname=gsb_frais';
@@ -37,7 +36,8 @@ class PdoGsb
     private static $monPdo;
 
     private static $monPdoGsb = null;
-*/ 
+ 
+    /*
     private static $serveur = 'mysql:host=db731402101.db.1and1.com';
     
     private static $bdd = 'dbname=db731402101';
@@ -49,7 +49,7 @@ class PdoGsb
     private static $monPdo;
     
     private static $monPdoGsb = null;
-
+*/
     /**
      * Constructeur privé, créer l'instance de PDO qui sera sollicitée
      * pour toutes les méthodes de la classe

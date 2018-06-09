@@ -150,11 +150,6 @@ class PdoGsbTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('201802', $this->object->dernierMoisSaisi('a131'));
     }
 
-    public function testDernierMoisSaisi2()
-    {
-        $this->assertEquals('201803', $this->object->dernierMoisSaisi('a17'));
-    }
-
     public function testDernierMoisSaisi3()
     {
         $this->assertNotEquals('201805', $this->object->dernierMoisSaisi('a17'));

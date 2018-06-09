@@ -106,6 +106,10 @@ else if ($_SESSION['type'] == "Administrateur") {
 							<a href="index.php?uc=majMotDePasse"
 								class="btn btn-primary btn-lg" role="button"> <span
 								class="glyphicon glyphicon-list-alt"></span> <br> Mettre à jour les mots de passes
+							</a>                       
+							<a href="index.php?uc=majStatut"
+								class="btn btn-primary btn-lg" role="button"> <span
+								class="glyphicon glyphicon-pencil"></span> <br> Mettre à jour les statuts
 							</a>
 						</div>
 				</div>

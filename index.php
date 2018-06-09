@@ -51,6 +51,14 @@ switch ($uc) {
             include 'vues/v_erreurs.php';
         }
         break;
+     case 'majStatut':
+        if ($type == "Administrateur") {
+            include 'controleurs/c_miseAJourStatut.php';
+        } else {
+            $ajoutErreur = $instanceFonction->ajouterErreur('Accès non autorisé pour cette page');
+            include 'vues/v_erreurs.php';
+        }
+        break;    
     case 'gererFrais':
         if ($type == "Visiteur") {
             include 'controleurs/c_gererFrais.php';

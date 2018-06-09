@@ -586,6 +586,24 @@ class PdoGsb
     }
 
     /**
+     * Mise à jour du mot de passe d'un visiteur
+     *
+     * @param String $idVisiteur
+     *            ID du visiteur
+     * @param String $motDePasse
+     *            Le nouveau mot de passe
+     *            
+     * @return null
+     */
+    public function majStatut($idVisiteur, $statut)
+    {
+        $requetePrepare = PdoGSB::$monPdo->prepare('UPDATE visiteur ' . 'SET type = :unStatut ' . 'WHERE visiteur.id = :unIdVisiteur ');
+        $requetePrepare->bindParam(':unIdVisiteur', $idVisiteur, PDO::PARAM_STR);
+        $requetePrepare->bindParam(':unStatut', $statut, PDO::PARAM_STR);
+        $requetePrepare->execute();
+    }
+    
+    /**
      * Recupération de l'id d'un visiteur
      *
      * @param String $login
@@ -603,10 +621,10 @@ class PdoGsb
     }
 
     /**
-     * Retourne les informations d'un visiteur
+     * Retourne les informations des visiteurs
      *
      *
-     * @return les informations d'un visiteur sous la forme d'un tableau associatif
+     * @return les informations des visiteurs sous la forme d'un tableau associatif
      */
     public function getVisiteur()
     {
@@ -638,7 +656,7 @@ class PdoGsb
      */
     public function getVisiteurSelection($leVisiteur)
     {
-        $requetePrepare = PdoGsb::$monPdo->prepare('SELECT visiteur.nom as nom, visiteur.prenom as prenom ' . 'FROM visiteur where visiteur.id = :unId');
+        $requetePrepare = PdoGsb::$monPdo->prepare('SELECT visiteur.nom as nom, visiteur.prenom as prenom, visiteur.type as type ' . 'FROM visiteur where visiteur.id = :unId');
         $requetePrepare->bindParam(':unId', $leVisiteur, PDO::PARAM_STR);
         $requetePrepare->execute();
         return $requetePrepare->fetch();
